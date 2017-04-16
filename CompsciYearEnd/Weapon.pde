@@ -3,7 +3,7 @@
  The shield on the other hand will have a block chance and defence stat and all other values will be zero. 
  
  */
-Class Weapon;
+class Weapon
 {
   int damage; // flat value with rng
   int accuracy; // percentage rng
@@ -13,6 +13,22 @@ Class Weapon;
   int blockChance;
   int defence;  
 
+  Weapon (int dm, int ac, int s, int cM, int cC, int bC, int df)
+  {
+    damage = dm;
+    accuracy = ac;
+    speed = s;
+    critMultiplyer = cM;
+    critChance = cC;
+    blockChance = bC;
+    defence = df;   
+  }
+  
+  
+  
+  
+  
+  
   void attack (Enemy target) 
   {
     if (int crit = (int)random(10)+1 <= critChance) //?
