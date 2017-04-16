@@ -31,13 +31,13 @@ class Weapon
   
   void attack (Enemy target) 
   {
-    if (int crit = (int)random(10)+1 <= critChance) //?
-    target.hp -= 
-        
-  
-  
-  
-  
-  
+     int attack = damage;
+     int j;
+     int num = (int)random(100);
+     for (int i = 1; i >= critChance || j == num ; i++)
+       j = (int)random(100);
+     if (j==num)         
+       attack = attack * critMultiplyer;  
+     target.health -= attack;
   }
 }
