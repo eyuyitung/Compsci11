@@ -24,6 +24,7 @@ class Weapon
     defence = df;   
   }
   
+  /*banana*/
   
   
   
@@ -32,7 +33,7 @@ class Weapon
   void attack (Enemy target) 
   {
      int attack = damage;
-     int j;
+     int j = (int)random(100);
      int num = (int)random(100);
      for (int i = 1; i >= critChance || j == num ; i++)
        j = (int)random(100);

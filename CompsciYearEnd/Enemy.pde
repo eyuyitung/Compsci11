@@ -15,5 +15,5 @@ class Enemy
 
   Enemy[] enemyBasic = new Enemy[3]; //
 
-  enemyBasic[0]=Enemy(
+  //enemyBasic[0]=Enemy(
 }
