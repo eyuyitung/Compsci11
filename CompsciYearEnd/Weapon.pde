@@ -24,12 +24,6 @@ class Weapon
     defence = df;   
   }
   
-  /*banana*/
-  
-  
-  
-  
-  
   void attack (Enemy target) 
   {
      int attack = damage;
