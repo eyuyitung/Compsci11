@@ -13,6 +13,7 @@ class Weapon
   int blockChance;
   int defence;  
 
+  // base level constructor for weapon objects
   Weapon (int dm, int ac, int s, int cM, int cC, int bC, int df)
   {
     damage = dm;
@@ -21,18 +22,31 @@ class Weapon
     critMultiplyer = cM;
     critChance = cC;
     blockChance = bC;
-    defence = df;   
+    defence = df;
   }
+
+  // more concise constructor for normal weapons (excluding shield)
+  Weapon (int dm, int ac, int s, int cM, int cC)
+  {
+    this (dm, ac, s, cM, cC, 0, 0);
+  }
+
+  // concise contructor for shields
+  Weapon (int bC, int df)
+  {
+    Weapon (0, 0, 0, 0, 0, bC, df);
+  }
+
   
   void attack (Enemy target) 
   {
-     int attack = damage;
-     int j = (int)random(100);
-     int num = (int)random(100);
-     for (int i = 1; i >= critChance || j == num ; i++)
-       j = (int)random(100);
-     if (j==num)         
-       attack = attack * critMultiplyer;  
-     target.health -= attack;
+    int attack = damage;
+    int j = (int)random(100);
+    int num = (int)random(100);
+    for (int i = 1; i >= critChance || j == num; i++)
+      j = (int)random(100);
+    if (j==num)         
+      attack = attack * critMultiplyer;  
+    target.health -= attack;
   }
 }
