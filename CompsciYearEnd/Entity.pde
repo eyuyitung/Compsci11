@@ -5,6 +5,7 @@ class Entity
   int speed;
   int health;
   int accuracy;
+  
   Entity (int a, int d, int s, int h)
   {
     attack=a;
@@ -12,10 +13,23 @@ class Entity
     speed=s;
     health=h;
   }
+  
+  
 
-  Entity[] enemyBasic = new Entity[3]; //
 
-  enemyBasic[0]=Entity(
-  enemyBasic[1]=Entity(
-  enemyBasic[2]=Entity(
+  Entity[] characterStats = new Entity[8]; 
+{
+  // for player
+  characterStats[0] = Entity(5,5,5,50);
+  // for basic enemies
+  characterStats[1] = Entity(
+  characterStats[2] = Entity(
+  characterStats[3] = Entity(
+  // for mini bosses
+  characterStats[4] = Entity(
+  characterStats[5] = Entity(
+  characterStats[6] = Entity(
+  // for final boss
+  characterStats[7] = Entity(
+  
 }
