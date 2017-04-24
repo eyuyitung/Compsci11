@@ -34,11 +34,11 @@ class Weapon
   // concise contructor for shields
   Weapon (int bC, int df)
   {
-    Weapon (0, 0, 0, 0, 0, bC, df);
+    this (0, 0, 0, 0, 0, bC, df);
   }
 
-  
-  void attack (Enemy target) 
+
+  void attack (Entity target) 
   {
     int attack = damage;
     int j = (int)random(100);
