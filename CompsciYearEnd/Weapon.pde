@@ -37,7 +37,6 @@ class Weapon
     this (0, 0, 0, 0, 0, bC, df);
   }
 
-
   void attack (Entity target) 
   {
     int attack = damage;
