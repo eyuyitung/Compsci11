@@ -4,13 +4,4 @@ class Armor
   int speed;
   int accuracy;
   Armor [] bonus = new Armor[3];
-                           
-  
-  
-  
-  
-  
-  
-  
-  
 }
