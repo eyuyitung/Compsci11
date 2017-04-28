@@ -1,3 +1,4 @@
+/*
 int screen = 0;
 PImage startScreen;
 PImage characterS;
@@ -96,3 +97,4 @@ void mouseReleased()
     screen = 10;
   
 } 
+*/
