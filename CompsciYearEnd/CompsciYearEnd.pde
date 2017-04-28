@@ -12,8 +12,15 @@ int screen = 0;
 PImage startScreen;
 PImage characterS;
 PImage cslayout;
-int x = -1;
-int y = -1;
+int mx = -1;
+int my = -1;
+int x1 = 300;
+int x2 = 350;
+int x3 = 300;
+int y1 = 300;
+int y2 = 325;
+int y3 = 350;
+int selection = 1; //selection on main menu 1= start 0= help -1= config
 import java.awt.*;
 PFont startFont;
 int[] startx = {750, 950, 950, 750};
@@ -38,7 +45,7 @@ void setup() {
 }
 
 void draw() {
- //Start screen
+  //Start screen
   if(screen == 0)
   {
     image(startScreen, 0,0);
@@ -53,7 +60,22 @@ void draw() {
     line(700,650,width,650);
     text("Config", 700, 700);
     line(675,750,width,750);
+    beginShape();
+      vertex(x1,y1);
+      vertex(x2,y2);
+      vertex(x3,y3);
+    endShape();
+   /*
+    if (selection == 1 && down == true)
+      x1 -= 50;
+      x2 -= 50;
+      x3 -= 50;
+      y1 -= 100;
+      y2 -= 100;
+      y3 -= 100;
+      */
   }
+  println (down);
   //Character Selection
   if(screen == 1)
   {
@@ -81,8 +103,8 @@ void draw() {
   {
    background(105); 
   }
-  x = mouseX;
-  y = mouseY; 
+  mx = mouseX;
+  my = mouseY; 
 }
 
 void keyPressed() {
@@ -121,13 +143,13 @@ void keyReleased() {
 void mouseReleased()
 {
  
-  if (screen == 0 && start.contains(x, y))
+  if (screen == 0 && start.contains(mx, my))
     screen = 1;
-  if (screen == 0 && help.contains(x, y))
+  else if (screen == 0 && help.contains(mx, my))
     screen = 2;
-  if (screen == 0 && config.contains(x,y))
+  else if (screen == 0 && config.contains(mx,my))
     screen = 3;
-  if (screen == 1 && csstart.contains(x,y))
+  else if (screen == 1 && csstart.contains(mx,my))
     screen = 10;
   
 } 
