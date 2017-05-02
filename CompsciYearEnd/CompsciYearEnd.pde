@@ -12,8 +12,15 @@ int screen = 0;
 PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
 PImage characterS;
 PImage cslayout;
-int x = -1;
-int y = -1;
+int mx = -1;
+int my = -1;
+int x1 = 300;
+int x2 = 350;
+int x3 = 300;
+int y1 = 300;
+int y2 = 325;
+int y3 = 350;
+int selection = 1; //selection on main menu 1= start 0= help -1= config
 import java.awt.*;
 int statpoints = 20;
 PFont startFont;
@@ -114,7 +121,11 @@ void setup() {
 
 void draw() {
   //Start screen
+<<<<<<< HEAD
   if (screen == 0)
+=======
+  if(screen == 0)
+>>>>>>> origin/eric_dev
   {
     if (frameCount % 8 == 0)
     {
@@ -158,8 +169,27 @@ void draw() {
     text("Help", 725, 600);
     line(700, 650, width, 650);
     text("Config", 700, 700);
+<<<<<<< HEAD
     line(675, 750, width, 750);
+=======
+    line(675,750,width,750);
+    beginShape();
+      vertex(x1,y1);
+      vertex(x2,y2);
+      vertex(x3,y3);
+    endShape();
+   /*
+    if (selection == 1 && down == true)
+      x1 -= 50;
+      x2 -= 50;
+      x3 -= 50;
+      y1 -= 100;
+      y2 -= 100;
+      y3 -= 100;
+      */
+>>>>>>> origin/eric_dev
   }
+  println (down);
   //Character Selection
   if (screen == 1)
   {
@@ -198,10 +228,15 @@ void draw() {
   {
     background(105);
   }
+<<<<<<< HEAD
   x = mouseX;
   y = mouseY; 
   println("x = " + x);
   println("y = " + y);
+=======
+  mx = mouseX;
+  my = mouseY; 
+>>>>>>> origin/eric_dev
 }
 
 void keyPressed() {
@@ -239,6 +274,7 @@ void keyReleased() {
 
 void mouseReleased()
 {
+<<<<<<< HEAD
   //Screenswitching
   if (screen == 0 && start.contains(x, y))
   {
@@ -250,6 +286,16 @@ void mouseReleased()
   if (screen == 0 && config.contains(x, y))
     screen = 3;
   if (screen == 1 && csstart.contains(x, y))
+=======
+ 
+  if (screen == 0 && start.contains(mx, my))
+    screen = 1;
+  else if (screen == 0 && help.contains(mx, my))
+    screen = 2;
+  else if (screen == 0 && config.contains(mx,my))
+    screen = 3;
+  else if (screen == 1 && csstart.contains(mx,my))
+>>>>>>> origin/eric_dev
     screen = 10;
   if (screen == 1 && csback.contains(x, y))
   {
