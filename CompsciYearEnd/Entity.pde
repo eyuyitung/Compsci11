@@ -1,6 +1,7 @@
 
 class Entity
 {
+  String name;
   int attack;
   int defence;
   int speed;
@@ -8,18 +9,25 @@ class Entity
 
   // used to set the base stats of the player
   
-  Entity (int a, int d, int s, int h)
+  Entity (int a, int d, int s, int h, String n)
   {
     attack=a;
     defence=d;
     speed=s;
     health=h;
+    n = name;
   }
 
-  Entity ()
-  {
-    this(5,5,5,50);
+  Entity (int l) // enemy 1 (l = level of enemy)
+  {s
+    this(l*5,l*5,l*5,l*50,"Goblin");
   }
+  
+  Entity () // enemy 1 (l = level of enemy)
+  {
+    this(5,5,5,50,"");
+  }
+    
   /*
   // used to correspond the stats with the stats of the player
   Entity (Entity[] player, float acc)

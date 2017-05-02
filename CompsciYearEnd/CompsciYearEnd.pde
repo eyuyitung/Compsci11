@@ -12,6 +12,7 @@ int screen = 0;
 PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
 PImage characterS;
 PImage cslayout;
+int fr = 90; //frame rate of main menu, must be multiple of 8
 int mx = -1;
 int my = -1;
 int x1 = 300;
@@ -90,15 +91,7 @@ Polygon speedadd = new Polygon(hpattdefspdaddx, speedsubaddy, 3);
 
 
 
-
-
-
-
-
-
-
-
-Entity character1 = new Entity();
+Entity player = new Entity();
 
 
 
@@ -113,7 +106,7 @@ void setup() {
   pic6 = loadImage("6.gif");
   pic7 = loadImage("7.gif");
   pic8 = loadImage("8.gif");
-  frameRate(5);
+  frameRate(fr);
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
@@ -121,41 +114,41 @@ void setup() {
 
 void draw() {
   //Start screen
-<<<<<<< HEAD
+
   if (screen == 0)
-=======
+
   if(screen == 0)
->>>>>>> origin/eric_dev
+
   {
-    if (frameCount % 8 == 0)
+    if (frameCount % fr == fr/8)
     {
       image(pic1, 0, 0);
     }
-    if (frameCount % 8 == 1)
+    if (frameCount % fr == (fr/8)*2)
     {
       image(pic2, 0, 0);
     }
-    if (frameCount % 8 == 2)
+    if (frameCount % fr == (fr/8)*3)
     {
       image(pic3, 0, 0);
     }
-    if (frameCount % 8 == 3)
+    if (frameCount % fr == (fr/2))
     {
       image(pic4, 0, 0);
     }
-    if (frameCount % 8 == 4)
+    if (frameCount % fr == (fr/8)*5)
     {
       image(pic5, 0, 0);
     }
-    if (frameCount % 8 == 5)
+    if (frameCount % fr == (fr/8)*6)
     {
       image(pic6, 0, 0);
     }
-    if (frameCount % 8 == 6)
+    if (frameCount % fr == (fr/8)*7)
     {
       image(pic7, 0, 0);
     }
-    if (frameCount % 8 == 7)
+    if (frameCount % fr == 0)
     {
       image(pic8, 0, 0);
     } 
@@ -169,25 +162,26 @@ void draw() {
     text("Help", 725, 600);
     line(700, 650, width, 650);
     text("Config", 700, 700);
-<<<<<<< HEAD
+
     line(675, 750, width, 750);
-=======
+
     line(675,750,width,750);
     beginShape();
       vertex(x1,y1);
       vertex(x2,y2);
       vertex(x3,y3);
     endShape();
-   /*
+   
     if (selection == 1 && down == true)
+    {
       x1 -= 50;
       x2 -= 50;
       x3 -= 50;
-      y1 -= 100;
-      y2 -= 100;
-      y3 -= 100;
-      */
->>>>>>> origin/eric_dev
+      y1 += 100;
+      y2 += 100;
+      y3 += 100;
+    }
+
   }
   println (down);
   //Character Selection
@@ -206,10 +200,10 @@ void draw() {
     line(875, 790, width, 790);
 
     textAlign(CENTER, CENTER);
-    text(character1.health, 727, 291);
-    text(character1.attack, 726, 420);
-    text(character1.defence, 726, 549);
-    text(character1.speed, 726, 678);
+    text(player.health, 727, 291);
+    text(player.attack, 726, 420);
+    text(player.defence, 726, 549);
+    text(player.speed, 726, 678);
     textSize(17);
     text(statpoints, 925, 131);
   }
@@ -228,15 +222,15 @@ void draw() {
   {
     background(105);
   }
-<<<<<<< HEAD
-  x = mouseX;
-  y = mouseY; 
-  println("x = " + x);
-  println("y = " + y);
-=======
+
   mx = mouseX;
   my = mouseY; 
->>>>>>> origin/eric_dev
+  println("x = " + mx);
+  println("y = " + my);
+
+  mx = mouseX;
+  my = mouseY; 
+
 }
 
 void keyPressed() {
@@ -274,19 +268,19 @@ void keyReleased() {
 
 void mouseReleased()
 {
-<<<<<<< HEAD
+
   //Screenswitching
-  if (screen == 0 && start.contains(x, y))
+  if (screen == 0 && start.contains(mx, my))
   {
     screen = 1;
     frameRate(60);
   }
-  if (screen == 0 && help.contains(x, y))
+  if (screen == 0 && help.contains(mx, my))
     screen = 2;
-  if (screen == 0 && config.contains(x, y))
+  if (screen == 0 && config.contains(mx, my))
     screen = 3;
-  if (screen == 1 && csstart.contains(x, y))
-=======
+  if (screen == 1 && csstart.contains(mx, my))
+
  
   if (screen == 0 && start.contains(mx, my))
     screen = 1;
@@ -295,59 +289,59 @@ void mouseReleased()
   else if (screen == 0 && config.contains(mx,my))
     screen = 3;
   else if (screen == 1 && csstart.contains(mx,my))
->>>>>>> origin/eric_dev
+
     screen = 10;
-  if (screen == 1 && csback.contains(x, y))
+  if (screen == 1 && csback.contains(mx, my))
   {
     screen = 0;
-    character1.health = 50;
-    character1.attack = 5;
-    character1.defence = 5;
-    character1.speed = 5;
-    frameRate(6);
+    player.health = 50;
+    player.attack = 5;
+    player.defence = 5;
+    player.speed = 5;
+    frameRate(fr);
   }
   //stat changing
   if (statpoints <= 20)
   {
-    if (screen == 1 && healthsub.contains(x, y) && character1.health > 50)
+    if (screen == 1 && healthsub.contains(mx, my) && player.health > 50)
     {
-      character1.health -= 1;
+      player.health -= 1;
       statpoints += 1;
     }
-    if (screen == 1 && attacksub.contains(x, y) && character1.attack > 5)
+    if (screen == 1 && attacksub.contains(mx, my) && player.attack > 5)
     {
-      character1.attack -= 1;
+      player.attack -= 1;
       statpoints +=1;
     } 
-    if (screen == 1 && defencesub.contains(x, y) && character1.defence > 5)
+    if (screen == 1 && defencesub.contains(mx, my) && player.defence > 5)
     {
-      character1.defence -= 1;
+      player.defence -= 1;
       statpoints +=1;
     }
-    if (screen == 1 && speedsub.contains(x, y) && character1.speed > 5)
+    if (screen == 1 && speedsub.contains(mx, my) && player.speed > 5)
     {
-      character1.speed -= 1;
+      player.speed -= 1;
       statpoints += 1;
     } else if (statpoints > 0)
     {
-      if (screen ==1 && healthadd.contains(x, y))
+      if (screen ==1 && healthadd.contains(mx, my))
       {
-        character1.health += 1;
+        player.health += 1;
         statpoints -= 1;
       }
-      if (screen == 1 && attackadd.contains(x, y))
+      if (screen == 1 && attackadd.contains(mx, my))
       {
-        character1.attack += 1;
+        player.attack += 1;
         statpoints -= 1;
       }
-      if (screen == 1 && defenceadd.contains(x, y))
+      if (screen == 1 && defenceadd.contains(mx, my))
       {
-        character1.defence += 1;
+        player.defence += 1;
         statpoints -= 1;
       }
-      if (screen == 1 && speedadd.contains(x, y))
+      if (screen == 1 && speedadd.contains(mx, my))
       {
-        character1.speed += 1;
+        player.speed += 1;
         statpoints -= 1;
       }
     }
