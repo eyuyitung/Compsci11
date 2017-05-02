@@ -1,26 +1,24 @@
 
 class Entity
 {
-  float attack;
-  float defence;
-  float speed;
-  float health;
-  float accuracy;
+  int attack;
+  int defence;
+  int speed;
+  int health;
 
   // used to set the base stats of the player
   
-  Entity (float a, float d, float s, float h, float acc)
+  Entity (int a, int d, int s, int h)
   {
     attack=a;
     defence=d;
     speed=s;
     health=h;
-    accuracy=acc;
   }
 
   Entity ()
   {
-    this(0,0,0,0,0); 
+    this(5,5,5,50);
   }
   /*
   // used to correspond the stats with the stats of the player
