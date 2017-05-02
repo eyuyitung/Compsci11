@@ -12,19 +12,23 @@ int screen = 0;
 PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
 PImage characterS;
 PImage cslayout;
-int fr = 90; //frame rate of main menu, must be multiple of 8
+int fr = 48; //frame rate of main menu, must be multiple of 8
+int frameDelay;
 int mx = -1;
 int my = -1;
-int x1 = 300;
-int x2 = 350;
-int x3 = 300;
-int y1 = 300;
-int y2 = 325;
-int y3 = 350;
+int x1 = 715;
+int x2 = 715;
+int x3 = 745;
+int y1 = 515;
+int y2 = 535;
+int y3 = 525;
 int selection = 1; //selection on main menu 1= start 0= help -1= config
 import java.awt.*;
 int statpoints = 20;
 PFont startFont;
+Entity player = new Entity();
+
+
 
 
 //Menu button hitboxes
@@ -89,13 +93,6 @@ Polygon defenceadd = new Polygon(hpattdefspdaddx, defencesubaddy, 3);
 Polygon speedsub = new Polygon(hpattdefspdsubx, speedsubaddy, 3);
 Polygon speedadd = new Polygon(hpattdefspdaddx, speedsubaddy, 3);
 
-
-
-Entity player = new Entity();
-
-
-
-
 void setup() {
   size(1000, 800);
   pic1 = loadImage("1.gif");
@@ -112,43 +109,40 @@ void setup() {
   startFont = createFont("Century Gothic Italic", 38);
 }
 
-void draw() {
+void draw() 
   //Start screen
-
+{
   if (screen == 0)
-
-  if(screen == 0)
-
   {
-    if (frameCount % fr == fr/8)
+    if (frameCount % fr == 0)
     {
       image(pic1, 0, 0);
     }
-    if (frameCount % fr == (fr/8)*2)
+    if (frameCount % fr == fr/8)
     {
       image(pic2, 0, 0);
     }
-    if (frameCount % fr == (fr/8)*3)
+    if (frameCount % fr == (fr/8)*2)
     {
       image(pic3, 0, 0);
     }
-    if (frameCount % fr == (fr/2))
+    if (frameCount % fr == (fr/8)*3)
     {
       image(pic4, 0, 0);
     }
-    if (frameCount % fr == (fr/8)*5)
+    if (frameCount % fr == fr/2)
     {
       image(pic5, 0, 0);
     }
-    if (frameCount % fr == (fr/8)*6)
+    if (frameCount % fr == (fr/8)*5)
     {
       image(pic6, 0, 0);
     }
-    if (frameCount % fr == (fr/8)*7)
+    if (frameCount % fr == (fr/8)*6)
     {
       image(pic7, 0, 0);
     }
-    if (frameCount % fr == 0)
+    if (frameCount % fr == (fr/8)*7)
     {
       image(pic8, 0, 0);
     } 
@@ -165,29 +159,62 @@ void draw() {
 
     line(675, 750, width, 750);
 
-    line(675,750,width,750);
+    line(675, 750, width, 750);
+
+    // triangle pointer for keyboard controls
     beginShape();
-      vertex(x1,y1);
-      vertex(x2,y2);
-      vertex(x3,y3);
+    vertex(x1, y1);
+    vertex(x2, y2);
+    vertex(x3, y3);
     endShape();
-   
-    if (selection == 1 && down == true)
+
+    if (selection == 1 && down == true && frameCount > frameDelay)
     {
-      x1 -= 50;
-      x2 -= 50;
-      x3 -= 50;
+      x1 -= 25;
+      x2 -= 25;
+      x3 -= 25;
       y1 += 100;
       y2 += 100;
       y3 += 100;
+      selection = 2;
+      frameDelay = frameCount + fr/2;
+    } else if (selection == 2 && down == true && frameCount > frameDelay)
+    {
+      x1 -= 25;
+      x2 -= 25;
+      x3 -= 25;
+      y1 += 100;
+      y2 += 100;
+      y3 += 100;
+      selection = 3;
+      frameDelay = frameCount + fr/2;
+    } else if (selection == 3 && up == true && frameCount > frameDelay)
+    {
+      x1 += 25;
+      x2 += 25;
+      x3 += 25;
+      y1 -= 100;
+      y2 -= 100;
+      y3 -= 100;
+      selection = 2;
+      frameDelay = frameCount + fr/2;
+    } else if (selection == 2 && up == true && frameCount > frameDelay)
+    {
+      x1 += 25;
+      x2 += 25;
+      x3 += 25;
+      y1 -= 100;
+      y2 -= 100;
+      y3 -= 100;
+      selection = 1;
+      frameDelay = frameCount + fr/2;
     }
+  }  
 
-  }
-  println (down);
   //Character Selection
   if (screen == 1)
   {
-    
+
     image(characterS, 0, 0);
     image(cslayout, 0, 0);
     textFont(startFont);
@@ -229,8 +256,7 @@ void draw() {
   println("y = " + my);
 
   mx = mouseX;
-  my = mouseY; 
-
+  my = mouseY;
 }
 
 void keyPressed() {
@@ -273,7 +299,7 @@ void mouseReleased()
   if (screen == 0 && start.contains(mx, my))
   {
     screen = 1;
-    frameRate(60);
+    frameRate(fr);
   }
   if (screen == 0 && help.contains(mx, my))
     screen = 2;
@@ -281,16 +307,16 @@ void mouseReleased()
     screen = 3;
   if (screen == 1 && csstart.contains(mx, my))
 
- 
-  if (screen == 0 && start.contains(mx, my))
-    screen = 1;
-  else if (screen == 0 && help.contains(mx, my))
-    screen = 2;
-  else if (screen == 0 && config.contains(mx,my))
-    screen = 3;
-  else if (screen == 1 && csstart.contains(mx,my))
 
-    screen = 10;
+    if (screen == 0 && start.contains(mx, my))
+      screen = 1;
+    else if (screen == 0 && help.contains(mx, my))
+      screen = 2;
+    else if (screen == 0 && config.contains(mx, my))
+      screen = 3;
+    else if (screen == 1 && csstart.contains(mx, my))
+
+      screen = 10;
   if (screen == 1 && csback.contains(mx, my))
   {
     screen = 0;

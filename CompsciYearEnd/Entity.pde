@@ -19,7 +19,7 @@ class Entity
   }
 
   Entity (int l) // enemy 1 (l = level of enemy)
-  {s
+  {
     this(l*5,l*5,l*5,l*50,"Goblin");
   }
   
