@@ -7,12 +7,12 @@
 int pw = 40; // player width
 int ph = 40; // player height
 int s = 27; // player speed
-boolean up, down, left, right;
+boolean up, down, left, right,enter,back;
 int screen = 0;
 PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
 PImage characterS;
 PImage cslayout;
-int fr = 48; //frame rate of main menu, must be multiple of 8
+int fr = 96; //frame rate of main menu, must be multiple of 8
 int frameDelay;
 int mx = -1;
 int my = -1;
@@ -260,116 +260,132 @@ void draw()
 }
 
 void keyPressed() {
-  if (key == CODED && keyCode == UP || key == 'w') {
-    up = true;
-  }
-  if (key == CODED && keyCode == DOWN || key == 's') {
-    down = true;
-  }
+  if (key == CODED) {
+    if (keyCode == UP || key == 'w') {
+      up = true;
+    }
+    if (keyCode == DOWN || key == 's') {
+      down = true;
+    }
 
-  if (key == CODED && keyCode == LEFT || key == 'a') {
-    left = true;
-  }
+    if (keyCode == LEFT || key == 'a') {
+      left = true;
+    }
 
-  if (key == CODED && keyCode == RIGHT || key == 'd') {
-    right = true;
+    if (keyCode == RIGHT || key == 'd') {
+      right = true;
+    }
+    if (keyCode == ENTER){
+      enter = true;
+    }
+     if (keyCode == BACKSPACE){
+      back = true; 
+     }
   }
 }
 void keyReleased() {
-  if (key == CODED && keyCode == UP || key == 'w') {
-    up = false;
-  }
-  if (key == CODED && keyCode == DOWN || key == 's') {
-    down = false;
-  }
+  if (key == CODED)
+  {
+    if (keyCode == UP || key == 'w') {
+      up = false;
+    }
+    if (keyCode == DOWN || key == 's') {
+      down = false;
+    }
 
-  if (key == CODED && keyCode == LEFT || key == 'a') {
-    left = false;
-  }
+    if (keyCode == LEFT || key == 'a') {
+      left = false;
+    }
 
-  if (key == CODED && keyCode == RIGHT || key == 'd') {
-    right = false;
+    if (keyCode == RIGHT || key == 'd') {
+      right = false;
+    }
+    if (keyCode == ENTER){
+      enter = false;
+    }
+    if (keyCode == BACKSPACE){
+      back = false; 
+    }
   }
 }
-
-void mouseReleased()
-{
-
-  //Screenswitching
-  if (screen == 0 && start.contains(mx, my))
+  void mouseReleased()
   {
-    screen = 1;
-    frameRate(fr);
-  }
-  if (screen == 0 && help.contains(mx, my))
-    screen = 2;
-  if (screen == 0 && config.contains(mx, my))
-    screen = 3;
-  if (screen == 1 && csstart.contains(mx, my))
 
-
+    //Screenswitching
     if (screen == 0 && start.contains(mx, my))
+    {
       screen = 1;
-    else if (screen == 0 && help.contains(mx, my))
+      frameRate(fr);
+    }
+    if (screen == 0 && help.contains(mx, my))
       screen = 2;
-    else if (screen == 0 && config.contains(mx, my))
+    if (screen == 0 && config.contains(mx, my))
       screen = 3;
-    else if (screen == 1 && csstart.contains(mx, my))
+    if (screen == 1 && csstart.contains(mx, my))
 
-      screen = 10;
-  if (screen == 1 && csback.contains(mx, my))
-  {
-    screen = 0;
-    player.health = 50;
-    player.attack = 5;
-    player.defence = 5;
-    player.speed = 5;
-    frameRate(fr);
-  }
-  //stat changing
-  if (statpoints <= 20)
-  {
-    if (screen == 1 && healthsub.contains(mx, my) && player.health > 50)
+
+      if (screen == 0 && start.contains(mx, my))
+        screen = 1;
+      else if (screen == 0 && help.contains(mx, my))
+        screen = 2;
+      else if (screen == 0 && config.contains(mx, my))
+        screen = 3;
+      else if (screen == 1 && csstart.contains(mx, my))
+
+        screen = 10;
+    if (screen == 1 && csback.contains(mx, my))
     {
-      player.health -= 1;
-      statpoints += 1;
+      screen = 0;
+      player.health = 50;
+      player.attack = 5;
+      player.defence = 5;
+      player.speed = 5;
+      frameRate(fr);
     }
-    if (screen == 1 && attacksub.contains(mx, my) && player.attack > 5)
+    //stat changing
+    if (statpoints <= 20)
     {
-      player.attack -= 1;
-      statpoints +=1;
-    } 
-    if (screen == 1 && defencesub.contains(mx, my) && player.defence > 5)
-    {
-      player.defence -= 1;
-      statpoints +=1;
+      if (screen == 1 && healthsub.contains(mx, my) && player.health > 50)
+      {
+        player.health -= 1;
+        statpoints += 1;
+      }
+      if (screen == 1 && attacksub.contains(mx, my) && player.attack > 5)
+      {
+        player.attack -= 1;
+        statpoints +=1;
+      } 
+      if (screen == 1 && defencesub.contains(mx, my) && player.defence > 5)
+      {
+        player.defence -= 1;
+        statpoints +=1;
+      }
+      if (screen == 1 && speedsub.contains(mx, my) && player.speed > 5)
+      {
+        player.speed -= 1;
+        statpoints += 1;
+      } else if (statpoints > 0)
+      {
+        if (screen ==1 && healthadd.contains(mx, my))
+        {
+          player.health += 1;
+          statpoints -= 1;
+        }
+        if (screen == 1 && attackadd.contains(mx, my))
+        {
+          player.attack += 1;
+          statpoints -= 1;
+        }
+        if (screen == 1 && defenceadd.contains(mx, my))
+        {
+          player.defence += 1;
+          statpoints -= 1;
+        }
+        if (screen == 1 && speedadd.contains(mx, my))
+        {
+          player.speed += 1;
+          statpoints -= 1;
+        }
+      }
     }
-    if (screen == 1 && speedsub.contains(mx, my) && player.speed > 5)
-    {
-      player.speed -= 1;
-      statpoints += 1;
-    } else if (statpoints > 0)
-    {
-      if (screen ==1 && healthadd.contains(mx, my))
-      {
-        player.health += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && attackadd.contains(mx, my))
-      {
-        player.attack += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && defenceadd.contains(mx, my))
-      {
-        player.defence += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && speedadd.contains(mx, my))
-      {
-        player.speed += 1;
-        statpoints -= 1;
-      }
-    }
-  }
-} 
+  } 
