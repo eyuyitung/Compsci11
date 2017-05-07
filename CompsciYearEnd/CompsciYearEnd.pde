@@ -209,6 +209,7 @@ void draw()
       selection = 1;
       frameDelay = frameCount + fr/2;
     }
+  }
     //allowing menu selecion by keyboard controls
     if (enter == true) {
       if (selection == 1)
@@ -227,7 +228,7 @@ void draw()
       if (screen == 3)
         screen = 0;
     }
-  }
+    
 
 
 
@@ -293,7 +294,7 @@ void keyPressed() {
   if (key == CODED && keyCode == RIGHT || key == 'd') {
     right = true;
   }
-  if (key == ENTER) {
+  if (key == ENTER || key == RETURN) {
     enter = true;
   }
   if (key == BACKSPACE) {
@@ -318,7 +319,7 @@ void keyReleased() {
   if (key == CODED && keyCode == RIGHT || key == 'd') {
     right = false;
   }
-  if (key  == ENTER) {
+  if (key  == ENTER || key == RETURN) {
     enter = false;
   }
   if (key == BACKSPACE) {
