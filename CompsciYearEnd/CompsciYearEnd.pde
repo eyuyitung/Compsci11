@@ -9,6 +9,7 @@ int ph = 40; // player height
 int s = 27; // player speed
 boolean up, down, left, right, enter, back;
 int screen = 0;
+Main world;
 PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
 PImage characterS;
 PImage cslayout;
@@ -265,7 +266,33 @@ void draw()
   {
     background(81);
   }
+  //lore + intro
+  if (screen == 4)
+  {
+    background(240);
+  }
+  //traversable world
+  if (screen == 6)
+  {
+    world.Display();
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   //Battle
+  
   if (screen == 10)
   {
     background(105);
@@ -274,9 +301,6 @@ void draw()
   mx = mouseX;
   my = mouseY; 
   println("x = " + mx + " y = " + my);
-
-  mx = mouseX;
-  my = mouseY;
 }
 
 void keyPressed() {
