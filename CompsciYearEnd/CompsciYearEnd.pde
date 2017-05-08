@@ -28,8 +28,8 @@ import java.awt.*;
 int statpoints = 20;
 PFont startFont;
 Entity player = new Entity();
-
-
+boolean mReleased;
+Menu main = new Menu(0);
 
 
 //Menu button hitboxes
@@ -113,7 +113,7 @@ void setup() {
 void draw() 
   //Start screen
 {
-  if (screen == 0)
+  if (main.screen == 0)
   {
     if (frameCount % fr == 0)
     {
@@ -126,91 +126,90 @@ void draw()
     if (frameCount % fr == (fr/8)*2)
     {
       image(pic3, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*3)
-    {
-      image(pic4, 0, 0);
-    }
-    if (frameCount % fr == fr/2)
-    {
-      image(pic5, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*5)
-    {
-      image(pic6, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*6)
-    {
-      image(pic7, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*7)
-    {
-      image(pic8, 0, 0);
-    } 
-    textFont(startFont);
-    textAlign(TOP, TOP);
-    //fill(0, 102, 153, 51);
-    text("Start Game", 750, 500);
-    strokeWeight(2);
-    stroke(255);
-    line(725, 550, width, 550);
-    text("Help", 725, 600);
-    line(700, 650, width, 650);
-    text("Config", 700, 700);
+      if (frameCount % fr == (fr/8)*3)
+      {
+        image(pic4, 0, 0);
+      }
+      if (frameCount % fr == fr/2)
+      {
+        image(pic5, 0, 0);
+      }
+      if (frameCount % fr == (fr/8)*5)
+      {
+        image(pic6, 0, 0);
+      }
+      if (frameCount % fr == (fr/8)*6)
+      {
+        image(pic7, 0, 0);
+      }
+      if (frameCount % fr == (fr/8)*7)
+      {
+        image(pic8, 0, 0);
+      } 
+      textFont(startFont);
+      textAlign(TOP, TOP);
+      //fill(0, 102, 153, 51);
+      text("Start Game", 750, 500);
+      strokeWeight(2);
+      stroke(255);
+      line(725, 550, width, 550);
+      text("Help", 725, 600);
+      line(700, 650, width, 650);
+      text("Config", 700, 700);
 
-    line(675, 750, width, 750);
+      line(675, 750, width, 750);
 
-    line(675, 750, width, 750);
+      line(675, 750, width, 750);
 
-    // triangle pointer for keyboard controls
-    beginShape();
-    vertex(x1, y1);
-    vertex(x2, y2);
-    vertex(x3, y3);
-    endShape();
+      // triangle pointer for keyboard controls
+      beginShape();
+      vertex(x1, y1);
+      vertex(x2, y2);
+      vertex(x3, y3);
+      endShape();
 
-    if (selection == 1 && down == true && frameCount > frameDelay)
-    {
-      x1 -= 25;
-      x2 -= 25;
-      x3 -= 25;
-      y1 += 100;
-      y2 += 100;
-      y3 += 100;
-      selection = 2;
-      frameDelay = frameCount + fr/2;
-    } else if (selection == 2 && down == true && frameCount > frameDelay)
-    {
-      x1 -= 25;
-      x2 -= 25;
-      x3 -= 25;
-      y1 += 100;
-      y2 += 100;
-      y3 += 100;
-      selection = 3;
-      frameDelay = frameCount + fr/2;
-    } else if (selection == 3 && up == true && frameCount > frameDelay)
-    {
-      x1 += 25;
-      x2 += 25;
-      x3 += 25;
-      y1 -= 100;
-      y2 -= 100;
-      y3 -= 100;
-      selection = 2;
-      frameDelay = frameCount + fr/2;
-    } else if (selection == 2 && up == true && frameCount > frameDelay)
-    {
-      x1 += 25;
-      x2 += 25;
-      x3 += 25;
-      y1 -= 100;
-      y2 -= 100;
-      y3 -= 100;
-      selection = 1;
-      frameDelay = frameCount + fr/2;
+      if (selection == 1 && down == true && frameCount > frameDelay)
+      {
+        x1 -= 25;
+        x2 -= 25;
+        x3 -= 25;
+        y1 += 100;
+        y2 += 100;
+        y3 += 100;
+        selection = 2;
+        frameDelay = frameCount + fr/2;
+      } else if (selection == 2 && down == true && frameCount > frameDelay)
+      {
+        x1 -= 25;
+        x2 -= 25;
+        x3 -= 25;
+        y1 += 100;
+        y2 += 100;
+        y3 += 100;
+        selection = 3;
+        frameDelay = frameCount + fr/2;
+      } else if (selection == 3 && up == true && frameCount > frameDelay)
+      {
+        x1 += 25;
+        x2 += 25;
+        x3 += 25;
+        y1 -= 100;
+        y2 -= 100;
+        y3 -= 100;
+        selection = 2;
+        frameDelay = frameCount + fr/2;
+      } else if (selection == 2 && up == true && frameCount > frameDelay)
+      {
+        x1 += 25;
+        x2 += 25;
+        x3 += 25;
+        y1 -= 100;
+        y2 -= 100;
+        y3 -= 100;
+        selection = 1;
+        frameDelay = frameCount + fr/2;
+      }
     }
-  }
     //allowing menu selecion by keyboard controls
     if (enter == true) {
       if (selection == 1)
@@ -229,205 +228,189 @@ void draw()
       if (screen == 3)
         screen = 0;
     }
-    
 
 
 
-  //Character Selection
-  if (screen == 1)
-  {
 
-    image(characterS, 0, 0);
-    image(cslayout, 0, 0);
-    textFont(startFont);
-    textAlign(TOP, TOP);
-    textSize(30);
-    stroke(255);
-    text("Back", 35, 755);
-    line(0, 790, 125, 790);
-    text("Start", 900, 755);
-    line(875, 790, width, 790);
+    //Character Selection
+    if (main.screen == 1)
+    {
 
-    textAlign(CENTER, CENTER);
-    text(player.health, 727, 291);
-    text(player.attack, 726, 420);
-    text(player.defence, 726, 549);
-    text(player.speed, 726, 678);
-    textSize(17);
-    text(statpoints, 925, 131);
-  }
-  //Help
-  if (screen == 2)
-  {
-    background(21);
-  }
-  //Config
-  if (screen == 3)
-  {
-    background(81);
-  }
-  //lore + intro
-  if (screen == 4)
-  {
-    background(240);
-  }
-  //traversable world
-  if (screen == 6)
-  {
-    world.Display();
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  //Battle
-  
-  if (screen == 10)
-  {
-    background(105);
-  }
+      image(characterS, 0, 0);
+      image(cslayout, 0, 0);
+      textFont(startFont);
+      textAlign(TOP, TOP);
+      textSize(30);
+      stroke(255);
+      text("Back", 35, 755);
+      line(0, 790, 125, 790);
+      text("Start", 900, 755);
+      line(875, 790, width, 790);
 
-  mx = mouseX;
-  my = mouseY; 
-  println("x = " + mx + " y = " + my);
-}
+      textAlign(CENTER, CENTER);
+      text(player.health, 727, 291);
+      text(player.attack, 726, 420);
+      text(player.defence, 726, 549);
+      text(player.speed, 726, 678);
+      textSize(17);
+      text(statpoints, 925, 131);
+    }
+    //Help
+    if (screen == 2)
+    {
+      background(21);
+    }
+    //Config
+    if (screen == 3)
+    {
+      background(81);
+    }
+    //lore + intro
+    if (screen == 4)
+    {
+      background(240);
+    }
+    //traversable world
+    if (screen == 6)
+    {
+      //  world.Display();
+    }  
+    //Battle
 
-void keyPressed() {
-  if (key == CODED && keyCode == UP || key == 'w') {
-    up = true;
-  }
-  if (key == CODED && keyCode == DOWN || key == 's') {
-    down = true;
-  }
+    if (screen == 10)
+    {
+      background(105);
+    }
 
-  if (key == CODED && keyCode == LEFT || key == 'a') {
-    left = true;
-  }
-
-  if (key == CODED && keyCode == RIGHT || key == 'd') {
-    right = true;
-  }
-  if (key == ENTER || key == RETURN) {
-    enter = true;
-  }
-  if (key == BACKSPACE) {
-    back = true;
+    mx = mouseX;
+    my = mouseY; 
+    println("x = " + mx + " y = " + my);
+    main.mr = false;
   }
 }
-void keyReleased() {
+  void keyPressed() {
+    if (key == CODED && keyCode == UP || key == 'w') {
+      up = true;
+    }
+    if (key == CODED && keyCode == DOWN || key == 's') {
+      down = true;
+    }
 
+    if (key == CODED && keyCode == LEey == 'a') {
+      left = true;
+    }
 
+    if (key == CODED && keyCode == RIGHT || key == 'd') {
+      right = true;
+    }
+    if (key == ENTER || key == RETURN) {
+      enter = true;
+    }
+    if (key == BACKSPACE) {
+      back = true;
+    }
+  }
+  void keyReleased() {
+    if (key == CODED && keyCode == UP || key == 'w') {
+      up = false;
+    }
+    if (key == CODED && keyCode == DOWN || key == 's') {
+      down = false;
+    }
 
-  if (key == CODED && keyCode == UP || key == 'w') {
-    up = false;
-  }
-  if (key == CODED && keyCode == DOWN || key == 's') {
-    down = false;
-  }
+    if (key == CODED && keyCode == LEFT || key == 'a') {
+      left = false;
+    }
 
-  if (key == CODED && keyCode == LEFT || key == 'a') {
-    left = false;
+    if (key == CODED && keyCode == RIGHT || key == 'd') {
+      right = false;
+    }
+    if (key  == ENTER || key == RETURN) {
+      enter = false;
+    }
+    if (key == BACKSPACE) {
+      back = false;
+    }
   }
-
-  if (key == CODED && keyCode == RIGHT || key == 'd') {
-    right = false;
-  }
-  if (key  == ENTER || key == RETURN) {
-    enter = false;
-  }
-  if (key == BACKSPACE) {
-    back = false;
-  }
-}
-void mouseReleased()
-{
-
+  void mouseReleased()
+  {
+    main.mr = true;
+    /*
   //Screenswitching
-  if (screen == 0 && start.contains(mx, my))
-  {
-    screen = 1;
-    frameRate(fr);
-  }
-  if (screen == 0 && help.contains(mx, my))
-    screen = 2;
-  if (screen == 0 && config.contains(mx, my))
-    screen = 3;
-  if (screen == 1 && csstart.contains(mx, my))
-
-
-    if (screen == 0 && start.contains(mx, my))
-      screen = 1;
-    else if (screen == 0 && help.contains(mx, my))
-      screen = 2;
-    else if (screen == 0 && config.contains(mx, my))
-      screen = 3;
-    else if (screen == 1 && csstart.contains(mx, my))
-
-      screen = 10;
-  if (screen == 1 && csback.contains(mx, my))
-  {
-    screen = 0;
-    player.health = 50;
-    player.attack = 5;
-    player.defence = 5;
-    player.speed = 5;
-    frameRate(fr);
-  }
-  //stat changing
-  if (statpoints <= 20)
-  {
-    if (screen == 1 && healthsub.contains(mx, my) && player.health > 50)
-    {
-      player.health -= 1;
-      statpoints += 1;
-    }
-    if (screen == 1 && attacksub.contains(mx, my) && player.attack > 5)
-    {
-      player.attack -= 1;
-      statpoints +=1;
-    } 
-    if (screen == 1 && defencesub.contains(mx, my) && player.defence > 5)
-    {
-      player.defence -= 1;
-      statpoints +=1;
-    }
-    if (screen == 1 && speedsub.contains(mx, my) && player.speed > 5)
-    {
-      player.speed -= 1;
-      statpoints += 1;
-    } else if (statpoints > 0)
-    {
-      if (screen ==1 && healthadd.contains(mx, my))
-      {
-        player.health += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && attackadd.contains(mx, my))
-      {
-        player.attack += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && defenceadd.contains(mx, my))
-      {
-        player.defence += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && speedadd.contains(mx, my))
-      {
-        player.speed += 1;
-        statpoints -= 1;
-      }
-    }
-  }
-} 
+     if (screen == 0 && start.contains(mx, my))
+     {
+     screen = 1;
+     }
+     if (screen == 0 && help.contains(mx, my))
+     screen = 2;
+     if (screen == 0 && config.contains(mx, my))
+     screen = 3;
+     if (screen && csstart.contains(mx, my))
+     
+     
+     if (screen == 0 && start.contains(mx, my))
+     screen = 1;
+     else if (screen == 0 && help.contains(mx, my))
+     screen = 2;
+     else if (screen == 0 && config.contains(mx, my))
+     screen = 3;
+     else if (screen == 1 && csstart.contains(mx, my))
+     
+     screen = 10;
+     if (screen == 1 && csback.contains(mx, my))
+     {
+     screen = 0;
+     player.health = 50;
+     player.attack = 5;
+     player.defence = 5;
+     player.speed = 5;
+     
+     }
+     //stat changing
+     if (statpoints <= 20)
+     {
+     if (screen == 1 && healthsub.contains(mx, my) && player.health > 50)
+     {
+     player.health -= 1;
+     statpoints += 1;
+     }
+     if (screen == 1 && attacksub.contains(mx, my) && player.attack > 5)
+     {
+     player.attack -= 1;
+     statpoints +=1;
+     } 
+     if (screen == 1 && defencesub.contains(mx, my) && player.defence > 5)
+     {
+     player.defence -= 1;
+     statpoints +=1;
+     }
+     if (screen == 1 && speedsub.contains(mx, my) && player.speed > 5)
+     {
+     player.speed -= 1;
+     statpoints += 1;
+     } else if (statpoints > 0)
+     {
+     if (screen ==1 && healthadd.contains(mx, my))
+     {
+     player.health += 1;
+     statpoints -= 1;
+     }
+     if (screen == 1 && attackadd.contains(mx, my))
+     {
+     player.attack += 1;
+     statpoints -= 1;
+     }
+     if (screen == 1 && defenceadd.contains(mx, my))
+     {
+     player.defence += 1;
+     statpoints -= 1;
+     }
+     if (screen == 1 && speedadd.contains(mx, my))
+     {
+     player.speed += 1;
+     statpoints -= 1;
+     }
+     }
+     }
+     */
+  } 
