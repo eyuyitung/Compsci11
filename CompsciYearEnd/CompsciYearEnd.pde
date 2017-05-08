@@ -4,17 +4,12 @@
  */
 
 
-int pw = 40; // player width
-int ph = 40; // player height
-int s = 27; // player speed
 boolean up, down, left, right, enter, back;
 int screen = 0;
-Main world;
-PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
+World world = new World();
 PImage characterS;
 PImage cslayout;
-int fr = 96; //frame rate of main menu, must be multiple of 8
-int frameDelay;
+int fr = 64; //frame rate of main menu, must be multiple of 8
 int mx = -1;
 int my = -1;
 int x1 = 715;
@@ -28,8 +23,7 @@ import java.awt.*;
 int statpoints = 20;
 PFont startFont;
 Entity player = new Entity();
-
-
+Menu main; 
 
 
 //Menu button hitboxes
@@ -51,33 +45,6 @@ int[] csbackx = {35, 105, 105, 35};
 int[] csbacky = {755, 755, 785, 785};
 Polygon csback = new Polygon(csbackx, csbacky, 4);
 
-/*Character selection stats button hitboxes
- int[] healthsubx = {688, 667, 688};
- int[] healthsuby = {272, 292, 311};
- Polygon healthsub = new Polygon(healthsubx, healthsuby, 3);
- int[] healthaddx = {759, 780, 759};
- int[] healthaddy = {272, 292, 311};
- Polygon healthadd = new Polygon(healthaddx, healthaddy, 3);
- int[] attacksubx = {688, 667, 688};
- int[] attacksuby = {401, 421, 440};
- Polygon attacksub = new Polygon(attacksubx, attacksuby, 3);
- int[] attackaddx = {759, 780, 759};
- int[] attackaddy = {401, 421, 440};
- Polygon attackadd = new Polygon(attackaddx, attackaddy, 3);
- int[] defencesubx = {688, 667, 688}; 
- int[] defencesuby = {530, 550, 569};
- Polygon defencesub = new Polygon(defencesubx, defencesuby, 3);
- int[] defenceaddx = {759, 780, 759};
- int[] defenceaddy = {530, 550, 569};
- Polygon defenceadd = new Polygon(defenceaddx, defenceaddy, 3);
- int[] speedsubx = {688, 667, 688};
- int[] speedsuby = {659, 679, 698};
- Polygon speedsub = new Polygon(speedsubx, speedsuby, 3);
- int[] speedaddx = {759, 780, 759};
- int[] speedaddy = {659, 679, 698};
- Polygon speedadd = new Polygon(speedaddx, speedaddy, 3);
- */
-
 //Shorter Character selection stats button htiboxes code
 int[] hpattdefspdsubx = {688, 667, 688};
 int[] hpattdefspdaddx = {759, 780, 759};
@@ -96,212 +63,31 @@ Polygon speedadd = new Polygon(hpattdefspdaddx, speedsubaddy, 3);
 
 void setup() {
   size(1000, 800);
-  pic1 = loadImage("1.gif");
-  pic2 = loadImage("2.gif");
-  pic3 = loadImage("3.gif");
-  pic4 = loadImage("4.gif");
-  pic5 = loadImage("5.gif");
-  pic6 = loadImage("6.gif");
-  pic7 = loadImage("7.gif");
-  pic8 = loadImage("8.gif");
   frameRate(fr);
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
+
+  main = new Menu(0);
 }
 
 void draw() 
-  //Start screen
 {
-  if (screen == 0)
-  {
-    if (frameCount % fr == 0)
-    {
-      image(pic1, 0, 0);
-    }
-    if (frameCount % fr == fr/8)
-    {
-      image(pic2, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*2)
-    {
-      image(pic3, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*3)
-    {
-      image(pic4, 0, 0);
-    }
-    if (frameCount % fr == fr/2)
-    {
-      image(pic5, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*5)
-    {
-      image(pic6, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*6)
-    {
-      image(pic7, 0, 0);
-    }
-    if (frameCount % fr == (fr/8)*7)
-    {
-      image(pic8, 0, 0);
-    } 
-    textFont(startFont);
-    textAlign(TOP, TOP);
-    //fill(0, 102, 153, 51);
-    text("Start Game", 750, 500);
-    strokeWeight(2);
-    stroke(255);
-    line(725, 550, width, 550);
-    text("Help", 725, 600);
-    line(700, 650, width, 650);
-    text("Config", 700, 700);
 
-    line(675, 750, width, 750);
+  //main menu
+  if (screen <= 3)
+    main.display();
+  //in game
+  if (screen == 5)
+    world.display();
 
-    line(675, 750, width, 750);
-
-    // triangle pointer for keyboard controls
-    beginShape();
-    vertex(x1, y1);
-    vertex(x2, y2);
-    vertex(x3, y3);
-    endShape();
-
-    if (selection == 1 && down == true && frameCount > frameDelay)
-    {
-      x1 -= 25;
-      x2 -= 25;
-      x3 -= 25;
-      y1 += 100;
-      y2 += 100;
-      y3 += 100;
-      selection = 2;
-      frameDelay = frameCount + fr/2;
-    } else if (selection == 2 && down == true && frameCount > frameDelay)
-    {
-      x1 -= 25;
-      x2 -= 25;
-      x3 -= 25;
-      y1 += 100;
-      y2 += 100;
-      y3 += 100;
-      selection = 3;
-      frameDelay = frameCount + fr/2;
-    } else if (selection == 3 && up == true && frameCount > frameDelay)
-    {
-      x1 += 25;
-      x2 += 25;
-      x3 += 25;
-      y1 -= 100;
-      y2 -= 100;
-      y3 -= 100;
-      selection = 2;
-      frameDelay = frameCount + fr/2;
-    } else if (selection == 2 && up == true && frameCount > frameDelay)
-    {
-      x1 += 25;
-      x2 += 25;
-      x3 += 25;
-      y1 -= 100;
-      y2 -= 100;
-      y3 -= 100;
-      selection = 1;
-      frameDelay = frameCount + fr/2;
-    }
-  }
-    //allowing menu selecion by keyboard controls
-    if (enter == true) {
-      if (selection == 1)
-        screen = 1;
-      if (selection == 2)
-        screen = 2;
-      if (selection == 3)
-        screen = 3;
-    }
-    if (back == true)
-    {
-      if (screen == 1)
-        screen = 0;
-      if (screen == 2)
-        screen = 0;
-      if (screen == 3)
-        screen = 0;
-    }
-    
-
-
-
-  //Character Selection
-  if (screen == 1)
-  {
-
-    image(characterS, 0, 0);
-    image(cslayout, 0, 0);
-    textFont(startFont);
-    textAlign(TOP, TOP);
-    textSize(30);
-    stroke(255);
-    text("Back", 35, 755);
-    line(0, 790, 125, 790);
-    text("Start", 900, 755);
-    line(875, 790, width, 790);
-
-    textAlign(CENTER, CENTER);
-    text(player.health, 727, 291);
-    text(player.attack, 726, 420);
-    text(player.defence, 726, 549);
-    text(player.speed, 726, 678);
-    textSize(17);
-    text(statpoints, 925, 131);
-  }
-  //Help
-  if (screen == 2)
-  {
-    background(21);
-  }
-  //Config
-  if (screen == 3)
-  {
-    background(81);
-  }
-  //lore + intro
-  if (screen == 4)
-  {
-    background(240);
-  }
-  //traversable world
-  if (screen == 6)
-  {
-    world.Display();
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  //Battle
-  
-  if (screen == 10)
-  {
-    background(105);
-  }
 
   mx = mouseX;
   my = mouseY; 
-  println("x = " + mx + " y = " + my);
+  main.mr = false;
+  println(screen);
 }
+
 
 void keyPressed() {
   if (key == CODED && keyCode == UP || key == 'w') {
@@ -325,10 +111,9 @@ void keyPressed() {
     back = true;
   }
 }
+
+
 void keyReleased() {
-
-
-
   if (key == CODED && keyCode == UP || key == 'w') {
     up = false;
   }
@@ -350,84 +135,9 @@ void keyReleased() {
     back = false;
   }
 }
+
+
 void mouseReleased()
 {
-
-  //Screenswitching
-  if (screen == 0 && start.contains(mx, my))
-  {
-    screen = 1;
-    frameRate(fr);
-  }
-  if (screen == 0 && help.contains(mx, my))
-    screen = 2;
-  if (screen == 0 && config.contains(mx, my))
-    screen = 3;
-  if (screen == 1 && csstart.contains(mx, my))
-
-
-    if (screen == 0 && start.contains(mx, my))
-      screen = 1;
-    else if (screen == 0 && help.contains(mx, my))
-      screen = 2;
-    else if (screen == 0 && config.contains(mx, my))
-      screen = 3;
-    else if (screen == 1 && csstart.contains(mx, my))
-
-      screen = 10;
-  if (screen == 1 && csback.contains(mx, my))
-  {
-    screen = 0;
-    player.health = 50;
-    player.attack = 5;
-    player.defence = 5;
-    player.speed = 5;
-    frameRate(fr);
-  }
-  //stat changing
-  if (statpoints <= 20)
-  {
-    if (screen == 1 && healthsub.contains(mx, my) && player.health > 50)
-    {
-      player.health -= 1;
-      statpoints += 1;
-    }
-    if (screen == 1 && attacksub.contains(mx, my) && player.attack > 5)
-    {
-      player.attack -= 1;
-      statpoints +=1;
-    } 
-    if (screen == 1 && defencesub.contains(mx, my) && player.defence > 5)
-    {
-      player.defence -= 1;
-      statpoints +=1;
-    }
-    if (screen == 1 && speedsub.contains(mx, my) && player.speed > 5)
-    {
-      player.speed -= 1;
-      statpoints += 1;
-    } else if (statpoints > 0)
-    {
-      if (screen ==1 && healthadd.contains(mx, my))
-      {
-        player.health += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && attackadd.contains(mx, my))
-      {
-        player.attack += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && defenceadd.contains(mx, my))
-      {
-        player.defence += 1;
-        statpoints -= 1;
-      }
-      if (screen == 1 && speedadd.contains(mx, my))
-      {
-        player.speed += 1;
-        statpoints -= 1;
-      }
-    }
-  }
+  main.mr = true;
 } 

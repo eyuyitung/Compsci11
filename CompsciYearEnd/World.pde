@@ -1,7 +1,7 @@
 //class for traversable world and main exploratory portion of game
 //includes sidebars and menu pieces on basic game screeen
 
-class Main
+class World
 {
   int xpos;
   int ypos;
@@ -15,6 +15,7 @@ class Main
 
   void display()
   {
+    background(255);
     // display character  
     // display background
     // display world elements
