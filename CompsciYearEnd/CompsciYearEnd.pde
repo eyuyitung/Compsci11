@@ -1,49 +1,94 @@
 /*compsci year end assignment
  group Eric, Brian, Kaizen
  assignement due may 24th
- 
  */
-int x=200, y = 200;
-int pw = 40; // player width
-int ph = 40; // player height
-int s = 27; // player speed
+
+
+boolean up, down, left, right, enter, back;
+int screen = 0;
+World world = new World();
+PImage characterS;
+PImage cslayout;
+int fr = 64; //frame rate of main menu, must be multiple of 8
+int mx = -1;
+int my = -1;
+int x1 = 715;
+int x2 = 715;
+int x3 = 745;
+int y1 = 515;
+int y2 = 535;
+int y3 = 525;
+int selection = 1; //selection on main menu 1= start 0= help -1= config
+import java.awt.*;
+int statpoints = 20;
+PFont startFont;
+Entity player = new Entity();
+Menu main;
 
 
 void setup() {
   size(1000, 800);
+  frameRate(fr);
+  characterS = loadImage("characterS.gif");
+  cslayout = loadImage("RPG layout.png");
+  startFont = createFont("Century Gothic Italic", 38);
+  main = new Menu();
 }
 
-void draw() {
-  background(255);
-  rect(x, y, pw, ph);
-  println(x + " " + y);
+void draw() 
+{
+  //main menu
+  if (screen <= 3)
+    main.display();
+  //in game
+  if (screen == 5)
+    world.display();
+  mx = mouseX;
+  my = mouseY; 
+  main.mr = false;
 }
 
-void keyReleased() {
+  void keyPressed() {
   if (key == CODED && keyCode == UP || key == 'w') {
-    if (y - s <= 0)
-      y = 0;
-    else if (y >= 0) 
-      y-=s;
+    up = true;
   }
   if (key == CODED && keyCode == DOWN || key == 's') {
-    if (y + s >= height - ph)
-      y= height - ph;
-    else if (y <= height)
-      y+=s;
+    down = true;
   }
-
   if (key == CODED && keyCode == LEFT || key == 'a') {
-    if (x-s <=0)
-      x=0;
-    else if (x >= 0)
-      x-=s;
+    left = true;
   }
-
   if (key == CODED && keyCode == RIGHT || key == 'd') {
-    if (x + s >=width-pw)
-      x = width - pw;
-    else if (x <= width - pw)
-      x+=s;
+    right = true;
+  }
+  if (key == ENTER || key == RETURN) {
+    enter = true;
+  }
+  if (key == BACKSPACE) {
+    back = true;
   }
 }
+void keyReleased() {
+  if (key == CODED && keyCode == UP || key == 'w') {
+    up = false;
+  }
+  if (key == CODED && keyCode == DOWN || key == 's') {
+    down = false;
+  }
+  if (key == CODED && keyCode == LEFT || key == 'a') {
+    left = false;
+  }
+  if (key == CODED && keyCode == RIGHT || key == 'd') {
+    right = false;
+  }
+  if (key  == ENTER || key == RETURN) {
+    enter = false;
+  }
+  if (key == BACKSPACE) {
+    back = false;
+  }
+}
+void mouseReleased()
+{
+  main.mr = true;
+} 
