@@ -1,20 +1,47 @@
-// moving all menu elements into this class to streamline main code
-// will do all logic in here and output to a display method within the class
-
-
-
-//class of all menu elements in game. character builder works into entity class of player
-
-
-
-
 class Menu
 {
-  
+
   boolean mr; 
   int frameDelay = 0;
   PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
   PImage [] frames = new PImage [9];
+  
+  //Menu button hitboxes
+  int[] startx = {750, 950, 950, 750};
+  int[] starty = {500, 500, 550, 550};
+  Polygon start = new Polygon(startx, starty, 4);
+  int[] helpx = {725, 815, 815, 725};
+  int[] helpy = {600, 600, 650, 650};
+  Polygon help = new Polygon(helpx, helpy, 4);
+  int[] configx = {700, 820, 820, 700};
+  int[] configy = {700, 700, 750, 750};
+  Polygon config = new Polygon(configx, configy, 4);
+
+  //Character selection button hitboxes
+  int[] csstartx = {900, 965, 965, 900};
+  int[] csstarty = {760, 760, 790, 790};
+  Polygon csstart = new Polygon(csstartx, csstarty, 4);
+  int[] csbackx = {35, 105, 105, 35};
+  int[] csbacky = {755, 755, 785, 785};
+  Polygon csback = new Polygon(csbackx, csbacky, 4);
+
+  //Shorter Character selection stats button htiboxes code
+  int[] hpattdefspdsubx = {688, 667, 688};
+  int[] hpattdefspdaddx = {759, 780, 759};
+  int[] healthsubaddy = {272, 292, 311};
+  int[] attacksubaddy = {401, 421, 440};
+  int[] defencesubaddy = {530, 550, 569};
+  int[] speedsubaddy = {659, 679, 698};
+  Polygon healthsub = new Polygon(hpattdefspdsubx, healthsubaddy, 3);
+  Polygon healthadd = new Polygon(hpattdefspdaddx, healthsubaddy, 3);
+  Polygon attacksub = new Polygon(hpattdefspdsubx, attacksubaddy, 3);
+  Polygon attackadd = new Polygon(hpattdefspdaddx, attacksubaddy, 3);
+  Polygon defencesub = new Polygon(hpattdefspdsubx, defencesubaddy, 3);
+  Polygon defenceadd = new Polygon(hpattdefspdaddx, defencesubaddy, 3);
+  Polygon speedsub = new Polygon(hpattdefspdsubx, speedsubaddy, 3);
+  Polygon speedadd = new Polygon(hpattdefspdaddx, speedsubaddy, 3);
+
+
   void loadPictures()
   {
     frames [1] = loadImage("1.gif");
@@ -28,8 +55,7 @@ class Menu
   }
 
 
-  Menu (int s) {
-    screen = s;
+  Menu () {
     loadPictures();
   }
 
@@ -46,15 +72,12 @@ class Menu
     {
       top();
       keyControl();
-    } 
-    else if (screen == 1) {
+    } else if (screen == 1) {
       stats();
-    } 
-    else if (screen == 2) {
+    } else if (screen == 2) {
       help();
-    }
-    else if (screen == 3) {
-      config();      
+    } else if (screen == 3) {
+      config();
     }
   }
 
@@ -253,10 +276,10 @@ class Menu
   }
   void help()
   {
-     background(21);
+    background(21);
   }
   void config()
   {
-     background(81); 
+    background(81);
   }
 }
