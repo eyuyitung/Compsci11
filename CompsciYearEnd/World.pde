@@ -6,27 +6,29 @@ class World
   int xpos = 400;
   int ypos = 400;
   boolean moving = false;
-  int speed = 20;
+  boolean kp;
+  int speed = 25;
   int frameDelay = 0;
   PImage[] pFrames = new PImage [13];
   int frame = 2;
   int f = 1;
-
+  int dir = 0;
   void loadFrames () {
-    pFrames [1] = loadImage("dleft.png");
-    pFrames [2] = loadImage("dstat.png");
+    pFrames [1] = loadImage("dleft.png"); //1-3 down
+    pFrames [2] = loadImage("dstat.png"); 
     pFrames [3] = loadImage("dright.png");
-    /*
-    pFrames [4] = loadImage("");
-     pFrames [5] = loadImage("");
-     pFrames [6] = loadImage("");
-     pFrames [7] = loadImage("");
-     pFrames [8] = loadImage(""); 
-     pFrames [9] = loadImage("");
-     pFrames [10] = loadImage("");
-     pFrames [11] = loadImage("");
-     pFrames [12] = loadImage("");
-     */
+
+    pFrames [4] = loadImage("rleft.png"); //4-6 right
+    pFrames [5] = loadImage("rstat.png");
+    pFrames [6] = loadImage("rright.png");
+
+    pFrames [7] = loadImage("lleft.png"); //7-9 left
+    pFrames [8] = loadImage("lstat.png"); 
+    pFrames [9] = loadImage("lright.png");
+
+    pFrames [10] = loadImage(""); //10-12 up
+    pFrames [11] = loadImage("");
+    pFrames [12] = loadImage("");
   }
 
   World()
@@ -52,33 +54,65 @@ class World
 
   void player(int x, int y)
   {
-
+    int b; //frame buffer
     if (moving == true) {
-      if (down == true) {
-        frame += f;
-        if (frame >= 3)
-          f = -1;
-        else if (frame <= 1)
-          f = 1;
-      }
-      println(xpos+ " " + ypos + " " + frame + " " + f);
-    } 
+      frame += f;
+      if (frame >= 3)
+        f = -1;
+      else if (frame <= 1)
+        f = 1;
+      else 
+      frame = 2;
+    }
+    switch (dir)
+    {
+    case 2 : 
+      b = 0;
+      break;
+    case 1 : 
+      b = 3;
+      break;
+    case -1 : 
+      b = 6;
+      break;
+    case -2 : 
+      b = 9;
+    default : 
+      b = 0; 
+      frame = 2;
+    }
 
-    image(pFrames[frame], x, y);
-    pFrames[frame].resize(80, 80);
+    pFrames[b + frame].resize(80, 80);
+    image(pFrames[b + frame], x, y);
+    println(xpos+ " " + ypos + " " + frame +" "+ b + " " + moving);
   }
+
+
+
+
+
   void move () {
-    if (frameCount >= frameDelay) { 
-      if (right) //right
-        xpos += speed;
-      if (left) // left
-        xpos -= speed;
-      if (down) //down
-        ypos += speed;
-      if (up)
-        ypos -= speed;
-      moving = true;
-      frameDelay = frameCount + 10;
+    if (kp) {
+      if (frameCount >= frameDelay) { 
+        if (right) { //right 1
+          xpos += speed;
+          dir = 1;
+        }
+        if (left) { // left -1
+          xpos -= speed;
+          dir = -1;
+        }
+        if (down) { //down 2
+          ypos += speed;
+          dir = 2;
+        }
+        if (up) {// up -2
+          ypos -= speed;
+          dir = -2;
+        }
+        moving = true;
+        frameDelay = frameCount + 10;
+      }
     }
   }
 }

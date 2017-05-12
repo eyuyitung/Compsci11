@@ -5,7 +5,7 @@
 
 
 boolean up, down, left, right, enter, back;
-int screen = 0;
+int screen = 5;
 World world;
 PImage characterS;
 PImage cslayout;
@@ -50,6 +50,7 @@ void draw()
 }
 
 void keyPressed() {
+  world.kp = true;
   if (key == CODED && keyCode == UP || key == 'w') {
     up = true;
   }
@@ -70,6 +71,7 @@ void keyPressed() {
   }
 }
 void keyReleased() {
+  world.kp = false;
   if (key == CODED && keyCode == UP || key == 'w') {
     up = false;
   }
