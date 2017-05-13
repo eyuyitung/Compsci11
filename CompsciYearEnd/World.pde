@@ -3,44 +3,118 @@
 
 class World
 {
-  int xpos;
-  int ypos;
+  int xpos = 400;
+  int ypos = 400;
   boolean moving = false;
-  int speed;
+  boolean kp;
+  int speed = 25;
+  int frameDelay = 0;
+  PImage[] pFrames = new PImage [13];
+  int frame = 2;
+  int f = 1;
+  int dir = 0;
+  void loadFrames () {
+    pFrames [1] = loadImage("dleft.png"); //1-3 down
+    pFrames [2] = loadImage("dstat.png"); 
+    pFrames [3] = loadImage("dright.png");
 
+    pFrames [4] = loadImage("rleft.png"); //4-6 right
+    pFrames [5] = loadImage("rstat.png");
+    pFrames [6] = loadImage("rright.png");
 
+    pFrames [7] = loadImage("lleft.png"); //7-9 left
+    pFrames [8] = loadImage("lstat.png"); 
+    pFrames [9] = loadImage("lright.png");
 
+    pFrames [10] = loadImage(""); //10-12 up
+    pFrames [11] = loadImage("");
+    pFrames [12] = loadImage("");
+  }
 
+  World()
+  {
+    loadFrames();
+  }
 
 
   void display()
   {
     background(255);
-    // display character  
+
     // display background
     // display world elements
+    // display character  
     // display menu button
     // display health and exp
     // display
+    move();
+    player(xpos, ypos);
+    moving = false;
   }
 
   void player(int x, int y)
   {
+    int b; //frame buffer
     if (moving == true) {
+      frame += f;
+      if (frame >= 3)
+        f = -1;
+      else if (frame <= 1)
+        f = 1;
+      else 
+      frame = 2;
     }
-    // draw player gif at x,y
+    switch (dir)
+    {
+    case 2 : 
+      b = 0;
+      break;
+    case 1 : 
+      b = 3;
+      break;
+    case -1 : 
+      b = 6;
+      break;
+    case -2 : 
+      b = 9;
+    default : 
+      b = 0; 
+      frame = 2;
+    }
+
+    pFrames[b + frame].resize(80, 80);
+    image(pFrames[b + frame], x, y);
+    println(xpos+ " " + ypos + " " + frame +" "+ b + " " + moving);
   }
-  void move (int dir) {
-    if (dir != 0) {
-      if (dir == 1) //right
-        xpos += speed;
-      if (dir == -1) // left
-        xpos -= speed;
-      if (dir == 2) //down
-        ypos += speed;
-      if (dir == -2)
-        ypos -= speed;
-      moving = true;
+
+
+
+
+
+  void move () {
+    if (kp) {
+      if (frameCount >= frameDelay) { 
+        if (right) { //right 1
+          while (xpos <= xpos + speed){
+            xpos++;
+        }
+          dir = 1;
+        }
+        if (left) { // left -1
+          xpos -= speed;
+          dir = -1;
+        }
+        if (down) { //down 2
+          ypos += speed;
+          dir = 2;
+        }
+        if (up) {// up -2
+          ypos -= speed;
+          dir = -2;
+        }
+        moving = true;
+        frameDelay = frameCount + 10;
+      }
     }
   }
 }

@@ -5,8 +5,8 @@
 
 
 boolean up, down, left, right, enter, back;
-int screen = 0;
-World world = new World();
+int screen = 5;
+World world;
 PImage characterS;
 PImage cslayout;
 int fr = 64; //frame rate of main menu, must be multiple of 8
@@ -33,6 +33,7 @@ void setup() {
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
   main = new Menu();
+  world = new World();
 }
 
 void draw() 
@@ -48,7 +49,8 @@ void draw()
   main.mr = false;
 }
 
-  void keyPressed() {
+void keyPressed() {
+  world.kp = true;
   if (key == CODED && keyCode == UP || key == 'w') {
     up = true;
   }
@@ -69,6 +71,7 @@ void draw()
   }
 }
 void keyReleased() {
+  world.kp = false;
   if (key == CODED && keyCode == UP || key == 'w') {
     up = false;
   }
