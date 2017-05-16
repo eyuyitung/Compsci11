@@ -93,23 +93,31 @@ class World
 
   void move () {
     if (kp) {
+      int x = xpos;
+      int y = ypos;
       if (frameCount >= frameDelay) { 
         if (right) { //right 1
-          while (xpos <= xpos + speed){
+          while (xpos <= x + speed){
             xpos++;
         }
           dir = 1;
         }
-        if (left) { // left -1
-          xpos -= speed;
+        else if (left) { // left -1
+          while (xpos  >= x - speed){
+            xpos--;
+        }
           dir = -1;
         }
-        if (down) { //down 2
-          ypos += speed;
+        else if (down) { //down 2
+          while (ypos <= y + speed){
+            ypos++;
+        }
           dir = 2;
         }
-        if (up) {// up -2
-          ypos -= speed;
+        else if (up) {// up -2
+         while (ypos >= y - speed){
+            ypos--;
+        }
           dir = -2;
         }
         moving = true;
