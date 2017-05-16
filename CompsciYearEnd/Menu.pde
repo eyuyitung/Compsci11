@@ -90,7 +90,7 @@ class Menu
       if (screen == 0 && start.contains(mx, my))
         screen = 1;
       if (screen == 0 && help.contains(mx, my))
-        screen = 2;
+        screen = 2;      
       if (screen == 0 && config.contains(mx, my))
         screen = 3;
       if (screen == 1 && csstart.contains(mx, my))
@@ -98,11 +98,11 @@ class Menu
       if (screen == 1 && csback.contains(mx, my))
       {
         screen = 0;
-        statpoints = 20;
-        player.health = 50;
-        player.attack = 5;
-        player.defence = 5;
-        player.speed = 5;
+        maxstat = 30;
+        statpoints = 30;;        player[0].health = 50;
+        player[0].attack = 5;
+        player[0].defence = 5;
+        player[0].speed = 5;
       }
     }
     //allowing menu selecion by keyboard controls
@@ -217,58 +217,58 @@ class Menu
     line(875, 790, width, 790);
 
     textAlign(CENTER, CENTER);
-    text(player.health, 727, 291);
-    text(player.attack, 726, 420);
-    text(player.defence, 726, 549);
-    text(player.speed, 726, 678);
+    text(player[0].health, 727, 291);
+    text(player[0].attack, 726, 420);
+    text(player[0].defence, 726, 549);
+    text(player[0].speed, 726, 678);
     textSize(17);
     text(statpoints, 925, 131);
 
     if (this.mr == true)
     {
       //stat changing
-      if (statpoints <= 20)
+      if (statpoints <= maxstat)
       {
-        if (screen == 1 && healthsub.contains(mx, my) && player.health > 50)
+        if (screen == 1 && healthsub.contains(mx, my) && player[0].health > 50)
         {
-          player.health -= 1;
+          player[0].health -= 1;
           statpoints += 1;
         }
-        if (screen == 1 && attacksub.contains(mx, my) && player.attack > 5)
+        if (screen == 1 && attacksub.contains(mx, my) && player[0].attack > 5)
         {
-          player.attack -= 1;
+          player[0].attack -= 1;
           statpoints +=1;
         } 
-        if (screen == 1 && defencesub.contains(mx, my) && player.defence > 5)
+        if (screen == 1 && defencesub.contains(mx, my) && player[0].defence > 5)
         {
-          player.defence -= 1;
+          player[0].defence -= 1;
           statpoints +=1;
         }
-        if (screen == 1 && speedsub.contains(mx, my) && player.speed > 5)
+        if (screen == 1 && speedsub.contains(mx, my) && player[0].speed > 5)
         {
-          player.speed -= 1;
+          player[0].speed -= 1;
           statpoints += 1;
         } else if (statpoints > 0)
         {
           if (screen ==1 && healthadd.contains(mx, my))
           {
-            player.health += 1;
+            player[0].health += 1;
             statpoints -= 1;
           }
           if (screen == 1 && attackadd.contains(mx, my))
           {
-            player.attack += 1;
-            statpoints -= 1;
+            player[0].attack += 1;
+            statpoints-= 1;
           }
           if (screen == 1 && defenceadd.contains(mx, my))
           {
-            player.defence += 1;
-            statpoints -= 1;
+            player[0].defence += 1;
+            statpoints-= 1;
           }
           if (screen == 1 && speedadd.contains(mx, my))
           {
-            player.speed += 1;
-            statpoints -= 1;
+            player[0].speed += 1;
+            statpoints-= 1;
           }
         }
       }

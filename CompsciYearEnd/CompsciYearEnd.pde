@@ -3,9 +3,9 @@
  assignement due may 24th
  */
 
-
+boolean encounter = false;
 boolean up, down, left, right, enter, back;
-int screen = 0;
+int screen = 10;
 World world = new World();
 PImage characterS;
 PImage cslayout;
@@ -20,20 +20,31 @@ int y2 = 535;
 int y3 = 525;
 int selection = 1; //selection on main menu 1= start 0= help -1= config
 import java.awt.*;
-int statpoints = 20;
+int statpoints = 30;
+int maxstat = 30;
 PFont startFont;
-Entity player = new Entity();
+Entity[] player = new Entity[2];
+Entity[] enemy = new Entity[1];
+
 Menu main;
 
+Battle battlephase;
 
 void setup() {
   size(1000, 800);
   frameRate(fr);
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
+ 
   startFont = createFont("Century Gothic Italic", 38);
+  player[0] = new Entity();
+  player[1] = new Entity();
+  enemy[0] = new Entity();
   main = new Menu();
+  battlephase = new Battle();
+  playerEncounter();
 }
+
 
 void draw() 
 {
@@ -43,12 +54,18 @@ void draw()
   //in game
   if (screen == 5)
     world.display();
+  if (/*screen == 5 &&*/ encounter == true)
+
+    battlephase.display();
+
   mx = mouseX;
   my = mouseY; 
   main.mr = false;
+  battlephase.mr = false;
+  println("Screen is " + screen + " + "+ battlephase.screen);
 }
 
-  void keyPressed() {
+void keyPressed() {
   if (key == CODED && keyCode == UP || key == 'w') {
     up = true;
   }
@@ -80,7 +97,7 @@ void keyReleased() {
   }
   if (key == CODED && keyCode == RIGHT || key == 'd') {
     right = false;
-  }
+  } 
   if (key  == ENTER || key == RETURN) {
     enter = false;
   }
@@ -91,4 +108,5 @@ void keyReleased() {
 void mouseReleased()
 {
   main.mr = true;
+  battlephase.mr = true;
 } 
