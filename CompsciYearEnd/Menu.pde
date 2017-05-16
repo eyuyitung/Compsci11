@@ -109,9 +109,9 @@ class Menu
     if (enter == true) {
       if (selection == 1)
         screen = 1;
-      if (selection == 2)
+      else if (selection == 2)
         screen = 2;
-      if (selection == 3)
+      else if (selection == 3)
         screen = 3;
     }
     if (back == true)
@@ -167,7 +167,7 @@ class Menu
       y2 += 100;
       y3 += 100;
       selection = 2;
-      frameDelay = frameCount + fr/2;
+      frameDelay = frameCount + fr/4;
     } else if (selection == 2 && down == true && frameCount > frameDelay)
     {
       x1 -= 25;
@@ -177,7 +177,7 @@ class Menu
       y2 += 100;
       y3 += 100;
       selection = 3;
-      frameDelay = frameCount + fr/2;
+      frameDelay = frameCount + fr/4;
     } else if (selection == 3 && up == true && frameCount > frameDelay)
     {
       x1 += 25;
@@ -187,7 +187,7 @@ class Menu
       y2 -= 100;
       y3 -= 100;
       selection = 2;
-      frameDelay = frameCount + fr/2;
+      frameDelay = frameCount + fr/4;
     } else if (selection == 2 && up == true && frameCount > frameDelay)
     {
       x1 += 25;
@@ -197,7 +197,7 @@ class Menu
       y2 -= 100;
       y3 -= 100;
       selection = 1;
-      frameDelay = frameCount + fr/2;
+      frameDelay = frameCount + fr/4;
     }
   }
 
