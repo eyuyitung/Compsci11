@@ -5,7 +5,7 @@
 
 
 boolean up, down, left, right, enter, back;
-int screen = 5;
+int screen = 0;
 World world;
 PImage characterS;
 PImage cslayout;

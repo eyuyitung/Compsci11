@@ -7,7 +7,7 @@ class World
   int ypos = 400;
   boolean moving = false;
   boolean kp;
-  int speed = 25;
+  int speed = 10;
   int frameDelay = 0;
   PImage[] pFrames = new PImage [13];
   int frame = 2;
@@ -25,10 +25,10 @@ class World
     pFrames [7] = loadImage("lleft.png"); //7-9 left
     pFrames [8] = loadImage("lstat.png"); 
     pFrames [9] = loadImage("lright.png");
+    pFrames [10] = loadImage("uleft.png"); //10-12 up
+    pFrames [11] = loadImage("ustat.png");
+    pFrames [12] = loadImage("uright.png");
 
-    pFrames [10] = loadImage(""); //10-12 up
-    pFrames [11] = loadImage("");
-    pFrames [12] = loadImage("");
   }
 
   World()
@@ -40,6 +40,7 @@ class World
   void display()
   {
     background(255);
+    grid();
 
     // display background
     // display world elements
@@ -77,6 +78,7 @@ class World
       break;
     case -2 : 
       b = 9;
+      break;
     default : 
       b = 0; 
       frame = 2;
@@ -84,7 +86,17 @@ class World
 
     pFrames[b + frame].resize(80, 80);
     image(pFrames[b + frame], x, y);
-    println(xpos+ " " + ypos + " " + frame +" "+ b + " " + moving);
+    println(xpos+ " " + ypos + " " + frame +" "+ b + " " + dir);
+  }
+  void grid(){
+    for (int i = 0; i <= width; i += 40){
+      line(i,0,i,height); 
+    }
+    for (int i = 0; i <= height; i += 40){
+      line(0,i,width,i); 
+    }
+    
+
   }
 
 
@@ -97,31 +109,36 @@ class World
       int y = ypos;
       if (frameCount >= frameDelay) { 
         if (right) { //right 1
-          while (xpos <= x + speed){
+          if (x + speed >= width - 80)
+            x = width - 80;
+          while (xpos <= x + speed) {
             xpos++;
-        }
+          }
           dir = 1;
-        }
-        else if (left) { // left -1
-          while (xpos  >= x - speed){
+        } else if (left) {// left -1
+          if (x - speed <= 0) 
+            x = 0;
+          while (xpos >= x - speed) {
             xpos--;
-        }
+          }
           dir = -1;
-        }
-        else if (down) { //down 2
-          while (ypos <= y + speed){
+        } else if (down) { //down 2
+          if (y + speed >= height - 80)
+            y = height - 100;
+          while (ypos <= y + speed) {
             ypos++;
-        }
+          }
           dir = 2;
-        }
-        else if (up) {// up -2
-         while (ypos >= y - speed){
+        } else if (up) {// up -2
+          if (y - speed < 0)
+            y = 20;
+          while (ypos >= y - speed) {
             ypos--;
-        }
+          }
           dir = -2;
         }
         moving = true;
-        frameDelay = frameCount + 10;
+        frameDelay = frameCount + 5;
       }
     }
   }
