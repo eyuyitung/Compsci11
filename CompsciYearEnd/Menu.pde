@@ -5,6 +5,7 @@ class Menu
   int frameDelay = 0;
   PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
   PImage [] frames = new PImage [9];
+  int count = 0;
   
   //Menu button hitboxes
   int[] startx = {750, 950, 950, 750};
@@ -40,6 +41,14 @@ class Menu
   Polygon defenceadd = new Polygon(hpattdefspdaddx, defencesubaddy, 3);
   Polygon speedsub = new Polygon(hpattdefspdsubx, speedsubaddy, 3);
   Polygon speedadd = new Polygon(hpattdefspdaddx, speedsubaddy, 3);
+  int[]weaponsSelx = {223, 223, 202};
+  int[]weaponsSely = {365, 404, 385};
+  Polygon weaponSel = new Polygon(weaponsSelx, weaponsSely, 3);
+  int[]weaponsSelx2 = {325,325,346};
+  int[]weaponsSely2 = {365,404,385};
+  Polygon weaponSel2 = new Polygon(weaponsSelx2, weaponsSely2, 3);
+
+
 
 
   void loadPictures()
@@ -67,6 +76,12 @@ class Menu
   void display()
   {
     mouseKey();
+    
+    if(count >= 4)
+    {
+      count = 0;
+      
+    }
 
     if (screen == 0) 
     {
@@ -272,6 +287,23 @@ class Menu
           }
         }
       }
+      if(screen == 1 && weaponSel.contains(mx, my))
+      {
+        textAlign(TOP,TOP);
+        text(weaponSelection[count].name, 230, 367);
+        count++;
+        
+      }
+      else if(screen == 1 && weaponSel2.contains(mx, my))
+      {
+        textAlign(TOP,TOP);
+        text(weaponSelection[count].name, 230, 367);
+       
+      }
+      
+      
+      
+      
     }
   }
   void help()

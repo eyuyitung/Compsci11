@@ -6,33 +6,37 @@ class Entity
   int defence;
   int speed;
   int health;
+  int stamina;
   int attackmove;
   int enemyTarget;
   int entityNumber;
+  boolean playerSelect;
 
-  Entity (int a, int d, int s, int h, String n, int am, int et, int en)
+  Entity (int a, int d, int s, int h, int sta, String n, int am, int et, int en, boolean ps)
   {
     attack=a;
     defence=d;
     speed=s;
     health=h;
+    stamina = sta;
     name = n;
     attackmove = am;
     enemyTarget = et;
     entityNumber = en;
+    playerSelect = ps;
   }
   
   
 
 
-  Entity (int l)
+  Entity (int l,int en)
   {
-    this(l*5, l*5, l*5, l*50, "Goblin", 0, 0, 0);
+    this(l*5, l*5, l*5, l*1, 0, "Goblin", 0, 0, en, true);
   }
 
   Entity () //enemy/player
   {  
-    this(5, 5, 5, 50, "", 0, 0, 0);
+    this(5, 5, 5, 50, 0, "", 0, 1, 0, false);
   }
 
 

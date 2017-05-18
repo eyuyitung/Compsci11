@@ -1,15 +1,12 @@
- void playerEncounter() //<>//
-{
-  encounter = true;
-}
+ //<>//
 
 class Battle
 {
+  int count = 0;
   boolean mr;
-  boolean player1Select;
-  boolean player2Select;
   PImage bpback, bp1, bp2, bp3, bp4;
   int screen = 10;
+  int enhancedAtt;
   int [] attackx = {121, 206, 206, 121};
   int [] attacky = {568, 568, 586, 586};
   Polygon attackTab = new Polygon(attackx, attacky, 4);
@@ -19,12 +16,20 @@ class Battle
   int [] lightAttackx = {270, 421, 421, 270};
   int [] lightAttacky = {345, 345, 368, 368};
   Polygon lightAtab = new Polygon(lightAttackx, lightAttacky, 4);
-  
+  int[] heavyAttackx = {261, 430, 430, 261};
+  int[] heavyAttacky = {428, 428, 451, 451};
+  Polygon heavyAtab = new Polygon(heavyAttackx, heavyAttacky, 4);
+  int[] enemy1x = {860, 925, 925, 860};
+  int[] enemy1y = {660, 660, 680, 680};
+  Polygon enemy1 = new Polygon(enemy1x, enemy1y, 4);
+  int[] enemy2x = {760, 825, 825, 760};
+  int[] enemy2y = {660, 660, 680, 680};
+  Polygon enemy2 = new Polygon(enemy2x, enemy2y, 4);
+
+
   Battle()
   {
-   loadPics(); 
-    
-    
+    loadPics();
   }
 
 
@@ -36,8 +41,14 @@ class Battle
     bp4 = loadImage("Battlephase3.png");
     bpback = loadImage("battlebackground.png");
   }
+  
+  void defeatScreen()
+  {
+    
+    
+  }
 
-//Action tab
+  //Action tab
   void battleP1()
   {
     image(bp1, 0, 0);
@@ -49,52 +60,105 @@ class Battle
     textAlign(TOP, TOP);
     textSize(20);
     text(player[0].health, 560, 560);
+    text(player[0].name, 860, 560);
+    text(player[1].health, 560, 685);
+    text(player[1].name, 860, 685);
   }
-//Enemy selection UI
+  //Enemy selection UI
   void battleP3()
   {
     image(bp4, 0, 0);
+    text(enemy[0].name, 860, 660);
+    text(enemy[1].name, 760, 660);
   }
   //Battlephase background
   void bpbackground()
   {
     image(bpback, 0, 0);
   }
-//Different attack UI
+  //Different attack UI
   void battleAttack()
   {
     image(bp3, 0, 0);
   }
-//Checks if both the characters have selected an attack if so, animate the attacks
+  //Checks if both the characters have selected an attack if so, animate the attacks
   void attackSelected()
   {
-    if(player1Select == true && player2Select == true)
-      {
-        //add if player[i].enemyTarget = enemy[i].entityNumber
-        battleAnimations();
-      }
+    if (player[0].playerSelect == true && player[1].playerSelect == true)
+    {
+      battleAnimations();
+    }
   }
-  
-  void enemySelection()
+
+  void entityDeath()
   {
-    //if mouse or key activate the hitboxes on the enemy selection UI screen
-    //then player[i].enemyTarget will be that of the selected enemy entity code
-    //then make that character's player[number]Select == true
-    
-    
+    if (player[0].health == 0 && player[1].health == 0)
+    {
+      screen = 6;
+    }
+   
+
+    for (int i = 0, j = 0; i < enemy.length; i++)
+    {
+      if (enemy[i].health <= 0)
+      {
+        j++;
+      }
+       if (j == enemy.length)
+    {
+      screen = 5;
+    }
+    }
   }
-  
+
+
   void battleAnimations()
   {
-    
-    
+    for (int j = 0; j < player.length; j++)
+    {
+      for (int i = 0; i < player.length; i++)
+      {
+        if (player[j].enemyTarget == enemy[i].entityNumber)
+        {
+          if (player[i].attackmove == 1)
+          {
+            enemy[i].health = enemy[i].health - player[i].attack;
+          } else if (player[i].attackmove == 2)
+          {
+            enhancedAtt = (player[i].attack + round(player[i].attack * 0.5));
+            enemy[i].health = (enemy[i].health - enhancedAtt);
+          }
+        }
+      }
+    }
   }
 
 
 
   void display()
   {
-    mouseKey();
+    screenSwitch();
+    attackHitbox();
+    entityDeath();
+    println("enemy1hp = " + enemy[0].health);
+    println("enemy2hp = " + enemy[1].health);
+    println(count);
+    println(player[0].playerSelect);
+    if (count == 2)
+    {
+      count = 0;
+      player[0].playerSelect = false;
+      player[1].playerSelect = false;
+    }
+    if (screen == 6)
+    {
+      bpbackground();
+      battleP1();
+      battleP2();
+      defeatScreen();
+    }
+
+
 
 
     if (screen == 10)
@@ -108,7 +172,6 @@ class Battle
       battleP1();
       battleP2();
       battleAttack();
-      rect(270, 345, 151, 23);
     } else if (screen == 12)
     {
       bpbackground();
@@ -118,7 +181,7 @@ class Battle
   }
 
 
-  void mouseKey()
+  void screenSwitch()
   {
     if (this.mr == true)
     {
@@ -128,11 +191,39 @@ class Battle
       } else if (screen == 11 && oattackTab.contains(mx, my) == false)
       {
         screen = 10;
-      } else if (screen == 11 && lightAtab.contains(mx, my));
+      }
+    }
+  }
+
+  void attackHitbox()
+  {
+
+    if (this.mr == true)
+    {
+
+      if (screen == 11 && lightAtab.contains(mx, my))
       {
-        player[0].attackmove = 1;
+        player[count].attackmove = 1;
         screen = 12;
-        enemySelection();
+      } else if (screen == 11 && heavyAtab.contains(mx, my))
+
+      {
+        player[count].attackmove = 2; 
+        screen = 12;
+      } else if (screen == 12 && enemy1.contains(mx, my))
+      {
+        player[count].enemyTarget = enemy[0].entityNumber;
+        player[count].playerSelect = true;
+        screen = 10;
+        count++;
+        attackSelected();
+      } else if (screen == 12 && enemy2.contains(mx, my))
+      {
+        player[count].enemyTarget = enemy[1].entityNumber;
+        player[count].playerSelect = true;
+        screen = 10;
+        count++;
+        attackSelected();
       }
     }
   }
