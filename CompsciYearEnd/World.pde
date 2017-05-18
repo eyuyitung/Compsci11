@@ -7,9 +7,11 @@ class World
   int ypos = 400;
   boolean moving = false;
   boolean kp;
+  boolean mKey; // movement key currently pressed
   int speed = 10;
   int frameDelay = 0;
   PImage[] pFrames = new PImage [13];
+  PImage[] rImages = new PImage [15];
   int frame = 2;
   int f = 1;
   int dir = 0;
@@ -28,19 +30,22 @@ class World
     pFrames [10] = loadImage("uleft.png"); //10-12 up
     pFrames [11] = loadImage("ustat.png");
     pFrames [12] = loadImage("uright.png");
-
+  }
+  void loadRoom() {
+    rImages[1] = loadImage("StockRoom.png");
   }
 
   World()
   {
     loadFrames();
+    loadRoom();
   }
 
 
   void display()
   {
-    background(255);
-    grid();
+    backDrop();
+    //grid();
 
     // display background
     // display world elements
@@ -88,15 +93,15 @@ class World
     image(pFrames[b + frame], x, y);
     println(xpos+ " " + ypos + " " + frame +" "+ b + " " + dir);
   }
-  void grid(){
-    for (int i = 0; i <= width; i += 40){
-      line(i,0,i,height); 
-    }
-    for (int i = 0; i <= height; i += 40){
-      line(0,i,width,i); 
-    }
+  void grid() {
+    stroke(0);
     
-
+    for (int i = 0; i <= width; i += 40) {
+      line(i, 0, i, height);
+    }
+    for (int i = 0; i <= height; i += 40) {
+      line(0, i, width, i);
+    }
   }
 
 
@@ -107,39 +112,50 @@ class World
     if (kp) {
       int x = xpos;
       int y = ypos;
-      if (frameCount >= frameDelay) { 
-        if (right) { //right 1
-          if (x + speed >= width - 80)
-            x = width - 80;
-          while (xpos <= x + speed) {
-            xpos++;
+      if (frameCount >= frameDelay) {       
+        if (shift)
+          speed = 15;
+        else 
+        speed = 10;
+        if (mKey) {
+          if (right) { //right 1
+            if (x + speed >= width - 100)
+              xpos = width - (100 + speed);
+            xpos += speed;
+            dir = 1;
+          } else if (left) { // left -1
+            if (x - speed <= 20) 
+              xpos = 20 + speed; 
+            xpos -= speed;  
+            dir = -1;
+          } else if (down) { //down 2
+            if (y + speed >= height - 130)
+              ypos = height - (130 + speed);
+            ypos += speed;
+            dir = 2;
+          } else if (up) { // up -2
+            if (y - speed < 120)
+              ypos = 120 + speed;
+            ypos -= speed;
+            dir = -2;
           }
-          dir = 1;
-        } else if (left) {// left -1
-          if (x - speed <= 0) 
-            x = 0;
-          while (xpos >= x - speed) {
-            xpos--;
-          }
-          dir = -1;
-        } else if (down) { //down 2
-          if (y + speed >= height - 80)
-            y = height - 100;
-          while (ypos <= y + speed) {
-            ypos++;
-          }
-          dir = 2;
-        } else if (up) {// up -2
-          if (y - speed < 0)
-            y = 20;
-          while (ypos >= y - speed) {
-            ypos--;
-          }
-          dir = -2;
+          moving = true;
+          frameDelay = frameCount + 5;
         }
-        moving = true;
-        frameDelay = frameCount + 5;
       }
     }
+  }
+  void backDrop() {
+    rImages[1].resize(1000, 700);
+    image(rImages[1], 0, 100);
+    fill(50);
+    rect(0,0,width,100);
+    fill (255);
+    textSize(16);
+    text("Player Health  : ____________________________",200,20);
+    for (int i = 1; i <= 3; i++)
+      text("Party " + i + " Health :___________________________",200,20 + 20*i);
+    text("EXP : ===============================================================",25,96);
+    text("Keys : " + items.keys,25,60);
   }
 }
