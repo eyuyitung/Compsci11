@@ -5,7 +5,7 @@ class Menu
   int frameDelay = 0;
   PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
   PImage [] frames = new PImage [9];
-  
+
   //Menu button hitboxes
   int[] startx = {750, 950, 950, 750};
   int[] starty = {500, 500, 550, 550};
@@ -107,12 +107,19 @@ class Menu
     }
     //allowing menu selecion by keyboard controls
     if (enter == true) {
-      if (selection == 1)
-        screen = 1;
-      else if (selection == 2)
-        screen = 2;
-      else if (selection == 3)
-        screen = 3;
+      if (screen == 0) 
+      {
+        if (selection == 1)
+          screen = 1;
+        else if (selection == 2)
+          screen = 2;
+        else if (selection == 3)
+          screen = 3;
+      }
+      else if (screen == 1 && statpoints == 0)
+      {
+        screen = 5;         
+      }
     }
     if (back == true)
     {
