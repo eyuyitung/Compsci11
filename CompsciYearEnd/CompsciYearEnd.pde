@@ -4,7 +4,7 @@
  */
 
 
-boolean up, down, left, right, shift, enter, back;
+boolean up, down, left, right, shift, enter, back, esc;
 int screen = 5;
 World world;
 PImage characterS;
@@ -77,6 +77,9 @@ void keyPressed() {
   }
   if (key == BACKSPACE) {
     back = true;
+  }
+  if (key == ESC) {
+    esc = true;
   }
 }
 void keyReleased() {
