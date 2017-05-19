@@ -5,7 +5,7 @@ class Menu
   int frameDelay = 0;
   PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
   PImage [] frames = new PImage [9];
-  int count = 0;
+  int count = 1;
   
   //Menu button hitboxes
   int[] startx = {750, 950, 950, 750};
@@ -77,9 +77,14 @@ class Menu
   {
     mouseKey();
     
-    if(count >= 4)
+    if(count > 4)
     {
       count = 0;
+      
+    }
+    else if(count < 0)
+    {
+     count = 4; 
       
     }
 
@@ -118,6 +123,15 @@ class Menu
         player[0].attack = 5;
         player[0].defence = 5;
         player[0].speed = 5;
+      }
+      if(screen == 1 && weaponSel.contains(mx, my))
+      {
+        count--;
+        
+      }
+      else if(screen == 1 && weaponSel2.contains(mx, my))
+      {
+        count++;
       }
     }
     //allowing menu selecion by keyboard controls
@@ -224,6 +238,8 @@ class Menu
     image(cslayout, 0, 0);
     textFont(startFont);
     textAlign(TOP, TOP);
+    textSize(15);
+    text(weaponSelection[count].name, 234, 370);
     textSize(30);
     stroke(255);
     text("Back", 35, 755);
@@ -287,19 +303,7 @@ class Menu
           }
         }
       }
-      if(screen == 1 && weaponSel.contains(mx, my))
-      {
-        textAlign(TOP,TOP);
-        text(weaponSelection[count].name, 230, 367);
-        count++;
-        
-      }
-      else if(screen == 1 && weaponSel2.contains(mx, my))
-      {
-        textAlign(TOP,TOP);
-        text(weaponSelection[count].name, 230, 367);
-       
-      }
+      
       
       
       
