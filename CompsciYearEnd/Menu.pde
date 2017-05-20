@@ -6,7 +6,7 @@ class Menu
   PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
   PImage [] frames = new PImage [9];
   int count = 1;
-  
+
   //Menu button hitboxes
   int[] startx = {750, 950, 950, 750};
   int[] starty = {500, 500, 550, 550};
@@ -44,8 +44,8 @@ class Menu
   int[]weaponsSelx = {223, 223, 202};
   int[]weaponsSely = {365, 404, 385};
   Polygon weaponSel = new Polygon(weaponsSelx, weaponsSely, 3);
-  int[]weaponsSelx2 = {325,325,346};
-  int[]weaponsSely2 = {365,404,385};
+  int[]weaponsSelx2 = {325, 325, 346};
+  int[]weaponsSely2 = {365, 404, 385};
   Polygon weaponSel2 = new Polygon(weaponsSelx2, weaponsSely2, 3);
 
 
@@ -76,16 +76,13 @@ class Menu
   void display()
   {
     mouseKey();
-    
-    if(count > 4)
+
+    if (count > 4)
     {
       count = 0;
-      
-    }
-    else if(count < 0)
+    } else if (count < 0)
     {
-     count = 4; 
-      
+      count = 4;
     }
 
     if (screen == 0) 
@@ -114,22 +111,31 @@ class Menu
       if (screen == 0 && config.contains(mx, my))
         screen = 3;
       if (screen == 1 && csstart.contains(mx, my))
+      {
+        player[0].attack = (player[0].attack + weapons[count].attack);
+        player[0].speed = (player[0].speed + weapons[count].speed);
+        player[0].stamina = (player[0].stamina = weapons[count].stamina); 
         screen = 5;
+        for (int j = 0; j < player.length; j++)
+        {
+          playerMax[j] = player[j];
+        }
+      }
       if (screen == 1 && csback.contains(mx, my))
       {
         screen = 0;
         maxstat = 30;
-        statpoints = 30;;        player[0].health = 50;
+        statpoints = 30;
+        ;        
+        player[0].health = 50;
         player[0].attack = 5;
         player[0].defence = 5;
         player[0].speed = 5;
       }
-      if(screen == 1 && weaponSel.contains(mx, my))
+      if (screen == 1 && weaponSel.contains(mx, my))
       {
         count--;
-        
-      }
-      else if(screen == 1 && weaponSel2.contains(mx, my))
+      } else if (screen == 1 && weaponSel2.contains(mx, my))
       {
         count++;
       }
@@ -303,11 +309,6 @@ class Menu
           }
         }
       }
-      
-      
-      
-      
-      
     }
   }
   void help()

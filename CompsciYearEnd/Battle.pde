@@ -123,8 +123,14 @@ class Battle
           if (player[i].attackmove == 1)
           {
             enemy[i].health = enemy[i].health - player[i].attack;
+            if(player[i].stamina < 7)
+            {
+              player[i].stamina++;
+              
+            }
           } else if (player[i].attackmove == 2)
           {
+            player[i].stamina -= 2;
             enhancedAtt = (player[i].attack + round(player[i].attack * 0.5));
             enemy[i].health = (enemy[i].health - enhancedAtt);
           }

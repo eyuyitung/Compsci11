@@ -7,7 +7,7 @@ class Weapon
 {
   String name;
   int stamina;
-  int damage; // flat value with rng
+  int attack; 
   int accuracy; // percentage rng
   int speed; // priority 
   float critMultiplyer; //
@@ -20,7 +20,7 @@ class Weapon
   {
     name = na;
     stamina = sta;
-    damage = dm;
+    attack = dm;
     accuracy = ac;
     speed = s;
     critMultiplyer = cM;
@@ -33,7 +33,7 @@ class Weapon
   {
     name = na;
     stamina = sta;
-    damage = dm;
+    attack = dm;
     accuracy = ac;
     speed = s;
     critMultiplyer = cM;

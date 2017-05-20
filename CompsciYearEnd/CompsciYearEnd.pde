@@ -24,6 +24,7 @@ int statpoints = 30;
 int maxstat = 30;
 PFont startFont;
 Entity[] player = new Entity[2];
+Entity[] playerMax = new Entity[2];
 Entity[] enemy = new Entity[2];
 Weapon[] weapons = new Weapon[5];
 Weapon[] weaponSelection = new Weapon[5];
@@ -50,7 +51,6 @@ void setup() {
   {
     weaponSelection[i] = weapons[i];
   }
-  
   
   
   main = new Menu();
@@ -83,6 +83,7 @@ void draw()
   main.mr = false;
   battlephase.mr = false;
   //println("Screen is " + screen + " + "+ battlephase.screen);
+  
 }
 
 void keyPressed() {
