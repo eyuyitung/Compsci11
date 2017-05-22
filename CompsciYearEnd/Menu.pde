@@ -192,6 +192,7 @@ class Menu
     text("Config", 700, 700);
     line(675, 750, width, 750);
     line(675, 750, width, 750);
+    strokeWeight(1);
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -260,11 +261,12 @@ class Menu
     text(weaponSelection[count].name, 234, 370);
     textSize(30);
     stroke(255);
+    strokeWeight(2);
     text("Back", 35, 755);
     line(0, 790, 125, 790);
     text("Start", 900, 755);
     line(875, 790, width, 790);
-
+    strokeWeight(1);
     textAlign(CENTER, CENTER);
     text(player[0].health, 727, 291);
     text(player[0].attack, 726, 420);

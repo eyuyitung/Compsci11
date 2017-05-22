@@ -4,8 +4,9 @@
 class World
 {
   boolean gracePeriod;
+  int encounterPer;
+  int encounterVal = (int)random(1, 20);
   int steps = 0;
-
   int xpos = 480;
   int ypos = 440;
   boolean moving = false;
@@ -21,7 +22,6 @@ class World
   int room = 45; // room numbers are row / column ex. 45 = row 4, col 5 (see drawings for map) 
   int speed = 10;
   int sprint = 20;
-  int mDist = 40;
   int frameDelay = 0;
   PImage[] pFrames = new PImage [13];
   PImage[] rImages = new PImage [15];
@@ -37,7 +37,7 @@ class World
   int[] mIvtryx = {810, 945, 945, 810};
   int[] mIvtryy = {135, 135, 160, 160};
   Polygon mInventory = new Polygon(mIvtryx, mIvtryy, 4);
-  int[] menux = {890, 930, 930, 890};
+  int[] menux = {890, 970, 970, 890};
   int[] menuy = {10, 10, 50, 50};
   Polygon menu = new Polygon(menux, menuy, 4);
 
@@ -82,29 +82,6 @@ class World
     loadRoom();
     //initFont();
   }
-  void playerEncounter()
-  {
-
-    if (steps % 40 == 0)
-    {
-      world.gracePeriod = false;
-    }
-
-    if (encounter == false && world.mKey == true)
-    {
-      encounterPer = random(0, 100);
-      steps++;
-    }
-
-    if ((int)encounterPer % 120 == 0 && world.mKey == true && world.gracePeriod == false && encounter == false)
-    {
-      encounter = true; 
-      for (int i = 0; i < enemy.length; i++)
-      {
-        enemy[i] = new Entity(1, i);
-      }
-    }
-  }
 
   void display()
   {
@@ -123,6 +100,24 @@ class World
     // display character
     moving = false;
     mr = false;
+  }
+
+  void playerEncounter()
+  {
+    if (steps < 50)
+      gracePeriod = true;
+    else 
+    gracePeriod = false;
+    if (encounterPer == encounterVal && encounter == false)
+    {
+      encounter = true; 
+      steps = 0;
+      aDelay = frameCount + 2*fr;
+      for (int i = 0; i < enemy.length; i++)
+      {
+        enemy[i] = new Entity(1, i);
+      }
+    }
   }
 
   void player(int x, int y)
@@ -158,7 +153,7 @@ class World
 
     pFrames[b + frame].resize(40, 60);
     image(pFrames[b + frame], x, y);
-    println(xpos+ " " + ypos +  " " + room  +" "+ inGameMenu/* + " " + dir*/);
+    println(xpos+ " " + ypos +  " " + encounterPer + " " + encounterVal  + " " + encounter + " " + gracePeriod);
   }
   void grid() {
     stroke(0);
@@ -209,6 +204,9 @@ class World
         }
         moving = true;
         frameDelay = frameCount + 6;
+        steps++;
+        if (gracePeriod == false) 
+          encounterPer = (int)random(1, 20);
       }
     }
   }

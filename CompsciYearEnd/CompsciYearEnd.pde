@@ -7,10 +7,10 @@
 
 
 boolean encounter = false;
-boolean up, down, left, right, shift, enter, back,esc;
+boolean up, down, left, right, shift, enter, back, esc;
 int screen = 0;
 World world;
-float encounterPer;
+
 
 PImage characterS;
 PImage cslayout;
@@ -28,6 +28,7 @@ int selection = 1; //selection on main menu 1= start 0= help -1= config
 import java.awt.*;
 int statpoints = 30;
 int maxstat = 30;
+
 PFont startFont;
 Entity[] player = new Entity[2];
 Entity[] playerMax = new Entity[2];
@@ -46,12 +47,13 @@ void setup() {
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
-  player[0] = new Entity(10);
+  playerMax [0] = player[0] = new Entity(10);
   player[0].name = "Adam";
-  player[1] = new Entity(11);
+  playerMax [1] = player[1] = new Entity(11);
   player[1].name = "Someguy";
+
   weapons[0] = new Weapon("Dagger", 9, 2, 90, 50, 2.5, 80);
-  weapons[1] = new Weapon("Longsword", 6, 5, 80, 25, 1.5,25);
+  weapons[1] = new Weapon("Longsword", 6, 5, 80, 25, 1.5, 25);
   weapons[2] = new Weapon("Rapier", 6, 3, 90, 40, 2.0, 50);
   weapons[3] = new Weapon("Mace", 4, 10, 75, 15, 1.2, 20);
   weapons[4] = new Weapon("Greatsword", 4, 15, 70, 20, 1.1, 10);
@@ -78,21 +80,20 @@ void draw()
   //in game
   if (screen == 5)
     world.display();
-  if (screen == 5 && encounter == true)
+  if (screen == 5 && encounter == true) {
     battlephase.display();
+  }
   mx = mouseX;
   my = mouseY; 
-  main.mr = false;
-
-  battlephase.mr = false;
+  main.mr = battlephase.mr = false;
 
 
   //println("Screen is " + screen + " + "+ battlephase.screen);
-   println(mx +" "+ my);
+  println(mx +" "+ my);
 }
 
 
- 
+
 
 void keyPressed() {
   world.kp = true;
@@ -126,7 +127,7 @@ void keyPressed() {
     key =  0;
   }
   if (key == 0) {
-   esc = true;
+    esc = true;
   }
 }
 void keyReleased() {
@@ -145,6 +146,7 @@ void keyReleased() {
   }
   if (key == CODED && keyCode == RIGHT || key == 'd') {
     right = false;
+    world.mKey = false;
   }
   if (key == CODED && keyCode == SHIFT) {
     shift = false;
@@ -159,7 +161,7 @@ void keyReleased() {
     key =  0;
   }
   if (key == 0) {
-   esc = false;
+    esc = false;
   }
 }
 void mouseReleased()
