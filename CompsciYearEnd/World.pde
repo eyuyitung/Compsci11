@@ -3,6 +3,9 @@
 
 class World
 {
+  boolean gracePeriod;
+  int steps = 0;
+
   int xpos = 480;
   int ypos = 440;
   boolean moving = false;
@@ -29,15 +32,14 @@ class World
   int [] c = {480, 110, 960, 430, 480, 750, 0, 430}; // door image coordinates Clockwise order beginning at top
   boolean [] dp = new boolean[4]; //door position array 0 = top 1 = right 2 = bottom 3 = left 
 
-
   //menu hitboxes
 
   int[] mIvtryx = {810, 945, 945, 810};
   int[] mIvtryy = {135, 135, 160, 160};
   Polygon mInventory = new Polygon(mIvtryx, mIvtryy, 4);
-  int[] menux = {890,930,930,890};
-  int[] menuy = {10,10,50,50};
-  Polygon menu = new Polygon(menux,menuy,4);
+  int[] menux = {890, 930, 930, 890};
+  int[] menuy = {10, 10, 50, 50};
+  Polygon menu = new Polygon(menux, menuy, 4);
 
   void loadFrames () {
     pFrames [1] = loadImage("dleft.png"); //1-3 down
@@ -71,9 +73,8 @@ class World
 
 
 
-  void initFont() {
-    igFonts[0] = loadFont("Lucidasans-12.vlw");
-  }
+
+
 
   World()
   {
@@ -81,10 +82,35 @@ class World
     loadRoom();
     //initFont();
   }
+  void playerEncounter()
+  {
 
+    if (steps % 40 == 0)
+    {
+      world.gracePeriod = false;
+    }
+
+    if (encounter == false && world.mKey == true)
+    {
+      encounterPer = random(0, 100);
+      steps++;
+    }
+
+    if ((int)encounterPer % 120 == 0 && world.mKey == true && world.gracePeriod == false && encounter == false)
+    {
+      encounter = true; 
+      for (int i = 0; i < enemy.length; i++)
+      {
+        enemy[i] = new Entity(1, i);
+      }
+    }
+  }
 
   void display()
   {
+
+    playerEncounter();
+    println(steps);
     backDrop(); // display background
     info(); // display health and exp
     grid();
@@ -136,7 +162,6 @@ class World
   }
   void grid() {
     stroke(0);
-
     for (int i = 40; i <= width - 40; i += 40) {
       line(i, 150, i, height-50);
     }
@@ -195,7 +220,7 @@ class World
       spacing [j] = i;
       j++;
     }
-    if (esc || mr && menu.contains(mx,my))
+    if (esc || mr && menu.contains(mx, my))
       inGameMenu = true;
     if (inGameMenu) {
 
@@ -278,26 +303,26 @@ class World
 
 
   void info() {
-    
-    
+
+
     fill(200);
-    rect(890,10,80,40); // menu button box
+    rect(890, 10, 80, 40); // menu button box
     textAlign(LEFT);
     textSize(25);
     fill(0);
-    text("Menu",895,45);
+    text("Menu", 895, 45);
     noStroke();
     fill(255);
     textAlign(RIGHT);
     textSize(16);
     text("Player Health  :", 200, 20);
     rect(215, 7, 400, 15);
-    fill(255,0,0);
+    fill(255, 0, 0);
     //rect(215, 7, 400 * (player[0].health / 400),15);
     fill(255);
     text("Ally Health :", 200, 45);
     rect(215, 32, 400, 15);
-    fill(255,0,0);
+    fill(255, 0, 0);
     //rect(215, 7, 400 * (player[1].health / 400),15);
     fill(255);
     text("XP :", 200, 96);
@@ -452,3 +477,18 @@ class World
     }
   }
 }
+
+/*
+void backDrop() {
+ rImages[1].resize(1000, 700);
+ image(rImages[1], 0, 100);
+ fill(50);
+ rect(0, 0, width, 100);
+ fill (255);
+ textSize(16);
+ text("Player Health  : ____________________________", 200, 20);
+ for (int i = 1; i <= 2; i++)
+ text("Party " + i + " Health :___________________________", 200, 20 + 25*i);
+ text("EXP : ===============================================================", 25, 96);
+ text("Keys : " + items.keys, 25, 60);
+ }*/
