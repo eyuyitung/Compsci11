@@ -6,6 +6,7 @@ class Entity
   int defence;
   int speed;
   int health;
+  int currentHealth;
 
   // used to set the base stats of the player
   
