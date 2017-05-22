@@ -4,15 +4,14 @@
  */
 
 
-/*boolean up, down, left, right, enter, back;
- int screen = 0;
- World world = new World();*/
 
-boolean encounter;
-boolean up, down, left, right, shift, enter, back;
+
+boolean encounter = false;
+boolean up, down, left, right, shift, enter, back,esc;
 int screen = 0;
 World world;
 float encounterPer;
+
 PImage characterS;
 PImage cslayout;
 int j;
@@ -61,20 +60,18 @@ void setup() {
     weaponSelection[i] = weapons[i];
     weaponSelection2[i] = weapons[i];
   }
-
-
   main = new Menu();
-
   battlephase = new Battle();
   world = new World();
+
+
+  for (int i = 0; i < enemy.length; i++)
+  {
+    enemy[i] = new Entity(1, i);
+  }
 }
-
-
-
 void draw() 
 {
-  
-  
   //main menu
   if (screen <= 3)
     main.display();
@@ -86,13 +83,16 @@ void draw()
   mx = mouseX;
   my = mouseY; 
   main.mr = false;
+
   battlephase.mr = false;
 
 
   //println("Screen is " + screen + " + "+ battlephase.screen);
+   println(mx +" "+ my);
 }
 
 
+ 
 
 void keyPressed() {
   world.kp = true;
@@ -122,6 +122,12 @@ void keyPressed() {
   if (key == BACKSPACE) {
     back = true;
   }
+  if (key == ESC) {
+    key =  0;
+  }
+  if (key == 0) {
+   esc = true;
+  }
 }
 void keyReleased() {
   world.kp = false;
@@ -140,21 +146,23 @@ void keyReleased() {
   if (key == CODED && keyCode == RIGHT || key == 'd') {
     right = false;
   }
-  world.mKey = false;
-  /*}
-   
-   shift = false;
-     }*/
-
+  if (key == CODED && keyCode == SHIFT) {
+    shift = false;
+  }
   if (key  == ENTER || key == RETURN) {
     enter = false;
   }
   if (key == BACKSPACE) {
     back = false;
   }
+  if (key == ESC) {
+    key =  0;
+  }
+  if (key == 0) {
+   esc = false;
+  }
 }
 void mouseReleased()
 {
-  main.mr = true;
-  battlephase.mr = true;
+  main.mr = world.mr = battlephase.mr = true;
 } 

@@ -5,9 +5,7 @@ class Menu
   int frameDelay = 0;
   PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
   PImage [] frames = new PImage [9];
-
-  int count = 0;
-
+  int count = 1;
 
 
   //Menu button hitboxes

@@ -16,7 +16,6 @@ class Entity
   int accuracy;
   int blockChance;
 
-  int currentHealth;
 
 
   Entity (int a, int d, int s, int h, int sta, int acc, int bC, String n, int cc, float cm, int am, int et, int en, boolean ps)
