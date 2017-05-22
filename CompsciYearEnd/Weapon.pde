@@ -5,22 +5,18 @@
  */
 class Weapon
 {
-  String name;
-  int stamina;
-  int attack; 
+  int damage; // flat value with rng
   int accuracy; // percentage rng
   int speed; // priority 
-  float critMultiplyer; //
-  float critChance;
+  int critMultiplyer; //
+  int critChance;
   int blockChance;
   int defence;  
 
   // base level constructor for weapon objects
-  Weapon (String na, int sta, int dm, int ac, int s, float cM, float cC, int bC, int df)
+  Weapon (int dm, int ac, int s, int cM, int cC, int bC, int df)
   {
-    name = na;
-    stamina = sta;
-    attack = dm;
+    damage = dm;
     accuracy = ac;
     speed = s;
     critMultiplyer = cM;
@@ -29,32 +25,27 @@ class Weapon
     defence = df;
   }
 
-  Weapon (String na, int sta, int dm, int ac, int s, float cM, float cC)
+  // more concise constructor for normal weapons (excluding shield)
+  Weapon (int dm, int ac, int s, int cM, int cC)
   {
-    name = na;
-    stamina = sta;
-    attack = dm;
-    accuracy = ac;
-    speed = s;
-    critMultiplyer = cM;
-    critChance = cC;
+    this (dm, ac, s, cM, cC, 0, 0);
   }
-  
-  
-  
-    
-  
-  
 
-  /*void attack (Entity target) 
-   {
-   int attack = damage;
-   int j = (int)random(100);
-   int num = (int)random(100);
-   for (int i = 1; i >= critChance || j == num; i++)
-   j = (int)random(100);
-   if (j==num)         
-   attack = attack * critMultiplyer;  
-   target.health -= attack;
-   }*/
+  // concise contructor for shields
+  Weapon (int bC, int df)
+  {
+    this (0, 0, 0, 0, 0, bC, df);
+  }
+
+  void attack (Entity target) 
+  {
+    int attack = damage;
+    int j = (int)random(100);
+    int num = (int)random(100);
+    for (int i = 1; i >= critChance || j == num; i++)
+      j = (int)random(100);
+    if (j==num)         
+      attack = attack * critMultiplyer;  
+    target.health -= attack;
+  }
 }

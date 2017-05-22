@@ -4,11 +4,10 @@
  */
 
 
-boolean encounter = false;
 boolean up, down, left, right, shift, enter, back, esc;
-int screen = 0;
-World world = new World();
-
+boolean mr;
+int screen = 5;
+World world;
 PImage characterS;
 PImage cslayout;
 int fr = 64; //frame rate of main menu, must be multiple of 8
@@ -22,18 +21,12 @@ int y2 = 535;
 int y3 = 525;
 int selection = 1; //selection on main menu 1= start 0= help -1= config
 import java.awt.*;
-int statpoints = 30;
-int maxstat = 30;
+int statpoints = 20;
 PFont startFont;
-Entity[] player = new Entity[2];
-Entity[] playerMax = new Entity[2];
-Entity[] enemy = new Entity[2];
-Weapon[] weapons = new Weapon[5];
-Weapon[] weaponSelection = new Weapon[5];
+Entity player = new Entity();
 Menu main;
 Items items = new Items();
 
-Battle battlephase;
 
 void setup() {
   size(1000, 800);
@@ -41,36 +34,9 @@ void setup() {
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
-  player[0] = new Entity();
-  player[0].name = "Adam";
-  player[1] = new Entity();
-  player[1].name = "Someguy";
-  weapons[0] = new Weapon("Dagger", 9, 2, 90, 50, 2.5, 80);
-  weapons[1] = new Weapon("Longsword", 6, 5, 80, 25, 1.5, 30);
-  weapons[2] = new Weapon("Rapier", 6, 3, 90, 40, 2.0, 75);
-  weapons[3] = new Weapon("Mace", 4, 10, 75, 15, 1.2, 20);
-  weapons[4] = new Weapon("Greatsword", 4, 15, 65, 20, 1.1, 15);
-  for(int i = 0; i < weaponSelection.length; i++)
-  {
-    weaponSelection[i] = weapons[i];
-  }
-  
-  
   main = new Menu();
-
-  battlephase = new Battle();
-  playerEncounter();
+  world = new World();
 }
-
-void playerEncounter()
-{
-  encounter = true;
-
-  for (int i = 0; i < enemy.length; i++)
-  {
-    enemy[i] = new Entity(1, i);
-  }
-
 
 void draw() 
 {
@@ -80,19 +46,11 @@ void draw()
   //in game
   if (screen == 5)
     world.display();
-  if (screen == 5 && encounter == true)
-    battlephase.display();
   mx = mouseX;
   my = mouseY; 
   main.mr = false;
-
-  battlephase.mr = false;
-  //println("Screen is " + screen + " + "+ battlephase.screen);
-   println(mx +" "+ my);
+  println(mx +" "+ my);
 }
-
-
- 
 
 void keyPressed() {
   world.kp = true;
@@ -144,13 +102,11 @@ void keyReleased() {
   }
   if (key == CODED && keyCode == RIGHT || key == 'd') {
     right = false;
-  }
     world.mKey = false;
   }
   if (key == CODED && keyCode == SHIFT) {
     shift = false;
   }
-
   if (key  == ENTER || key == RETURN) {
     enter = false;
   }
@@ -166,5 +122,5 @@ void keyReleased() {
 }
 void mouseReleased()
 {
-  main.mr = world.mr = battlephase.mr = true;
+  main.mr = world.mr = true;
 } 
