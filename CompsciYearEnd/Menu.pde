@@ -5,7 +5,10 @@ class Menu
   int frameDelay = 0;
   PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
   PImage [] frames = new PImage [9];
-  int count = 1;
+
+  int count = 0;
+  int count2 = 0;
+
 
 
   //Menu button hitboxes
@@ -43,12 +46,17 @@ class Menu
   Polygon speedsub = new Polygon(hpattdefspdsubx, speedsubaddy, 3);
   Polygon speedadd = new Polygon(hpattdefspdaddx, speedsubaddy, 3);
   int[]weaponsSelx = {223, 223, 202};
-  int[]weaponsSely = {365, 404, 385};
+  int[]weaponsSely = {157, 196, 177};
   Polygon weaponSel = new Polygon(weaponsSelx, weaponsSely, 3);
   int[]weaponsSelx2 = {325, 325, 346};
-  int[]weaponsSely2 = {365, 404, 385};
+  int[]weaponsSely2 = {157, 196, 177};
   Polygon weaponSel2 = new Polygon(weaponsSelx2, weaponsSely2, 3);
-
+  int[]armorSelx = {223, 223, 202};
+  int[]armorSely = {235, 274, 255};
+  Polygon armorSel = new Polygon(armorSelx, armorSely, 3);
+  int[]armorSel2x = {325, 325, 346};
+  int[]armorSel2y = {235, 274, 255};
+  Polygon armorSel2 = new Polygon(armorSel2x, armorSel2y, 3);
 
 
 
@@ -85,6 +93,15 @@ class Menu
     {
       count = 4;
     }
+    
+    if (count2 > 2)
+    {
+      count2 = 0;
+    }
+    else if (count2 < 0)
+    {
+      count2 = 2;
+    }
 
     if (screen == 0) 
     {
@@ -113,13 +130,34 @@ class Menu
         screen = 3;
       if (screen == 1 && csstart.contains(mx, my))
       {
-        player[0].attack = (player[0].attack + weaponSelection[count].attack);
-        player[0].speed = (player[0].speed + weaponSelection[count].speed);
+        player[0].attack += weaponSelection[count].attack;
+        player[0].speed +=  weaponSelection[count].speed + armorSet[count2].speed;
         player[0].stamina = weaponSelection[count].stamina; 
         player[0].critChance = weaponSelection[count].critChance;
         player[0].critMult = weaponSelection[count].critMultiplyer;
-        player[0].accuracy = weaponSelection[count].accuracy;
+        player[0].accuracy = weaponSelection[count].accuracy + armorSet[count2].accuracy;
         player[0].blockChance = weaponSelection[count].blockChance;
+        player[0].health += armorSet[count2].health;
+        
+        if(count >= 0 && count <= 2)
+        {
+          player[0].defence += shield[0].defence;
+          player[0].blockChance += shield[0].blockChance;
+        }
+        
+        if(armorSet[count2].setNumber == 0)
+        {
+          player[0].runChance += 10;
+        }
+        else if(armorSet[count2].setNumber == 1)
+        {
+          player[0].attack = round(player[0].attack * 1.15); 
+        }
+        else if(armorSet[count2].setNumber == 2)
+        {
+          player[0].defence = round(player[0].defence * 1.5);
+        }
+        
         screen = 5;
         for (int j = 0; j < player.length; j++)
         {
@@ -143,6 +181,14 @@ class Menu
       } else if (screen == 1 && weaponSel2.contains(mx, my))
       {
         count++;
+      }
+      if(screen == 1 && armorSel.contains(mx, my))
+      {
+        count2--;
+      }
+      else if(screen == 1 && armorSel2.contains(mx, my))
+      {
+        count2++;
       }
     }
     //allowing menu selecion by keyboard controls
@@ -192,7 +238,6 @@ class Menu
     text("Config", 700, 700);
     line(675, 750, width, 750);
     line(675, 750, width, 750);
-    strokeWeight(1);
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -258,15 +303,15 @@ class Menu
     textFont(startFont);
     textAlign(TOP, TOP);
     textSize(15);
-    text(weaponSelection[count].name, 234, 370);
+    text(weaponSelection[count].name, 234, 168);
+    text(armorSet[count2].name, 234, 245);
     textSize(30);
     stroke(255);
-    strokeWeight(2);
     text("Back", 35, 755);
     line(0, 790, 125, 790);
     text("Start", 900, 755);
     line(875, 790, width, 790);
-    strokeWeight(1);
+
     textAlign(CENTER, CENTER);
     text(player[0].health, 727, 291);
     text(player[0].attack, 726, 420);
