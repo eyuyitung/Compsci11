@@ -281,6 +281,7 @@ class World
 
       strokeWeight(1);
       stroke(0);
+      textSize(16);
     }
     if (back)
       inGameMenu = false;
@@ -503,9 +504,30 @@ class World
 
   void inventory() {
 
-
+    fill(170);
     rect(180, 120, 400, 400);
-    if (mInventory.contains(mx, my) && mr && frameCount > mDelay)
+    textAlign(CENTER, TOP);
+    textSize(30);
+    fill(255);
+    text("Inventory", 380, 140);
+    // 0 = attack pot, 1 = defence pot, 2 = speed pot, 3 = health pot, 4 = keys, 5 = boss key
+    String [] mItems = new String [6];
+    mItems [0] = ("Strength Potion : " + items.inv[0]);
+    mItems [1] = ("Resistance Potion : " + items.inv[1]);
+    mItems [2] = ("Swiftness Potion : " + items.inv[2]);
+    mItems [3] = ("Health Potion : "+ items.inv[3]);
+    mItems [4] = ("Keys : " + items.inv[4]); 
+    mItems [5] = ("Boss Key : " + items.inv[5]);
+    textAlign(LEFT);
+    textSize(20);
+    strokeWeight(2);
+    for (int i = 0; i < mItems.length; i++) {
+      text(mItems[i], 220, 225 + 46*i);
+      line (220, 230 + 46*i, 220 + textWidth(mItems[i]), 230 + 46*i);
+    }
+    textSize(16);
+    strokeWeight(1);
+    if (esc || mInventory.contains(mx, my) && mr && frameCount > mDelay)
       inventory = false;
   }
 
@@ -524,11 +546,35 @@ class World
 
   void mainMenu()
   {
-    fill(0, 255, 0);
-    rect(180, 120, 400, 400);
+    int [] yesx = {405, 480, 480, 405};
+    int [] yesy = {370, 370, 445, 445};
+    Polygon mYes = new Polygon(yesx, yesy, 4);
+    int [] nox = {520, 595, 595, 520};
+    int [] noy = {370, 370, 445, 445};
+    Polygon mNo = new Polygon(nox, noy, 4);
+
+    fill(234, 88, 88);
+    rect(375, 300, 250, 140);
     fill(255);
-    if (mExit.contains(mx, my) && mr && frameCount > mDelay)
-    exit = false;
+    rect(405, 370, 75, 50);  
+    rect(520, 370, 75, 50);
+
+    textAlign(CENTER);
+    textSize(30);
+    text("Are You Sure?", 500, 350);
+    fill(0);
+    text("Yes", 443, 410);
+    text("No", 557, 410);
+    if (mr && (mExit.contains(mx, my) || mNo.contains(mx, my)) && frameCount > mDelay) 
+      exit = false;
+    if (mr && mYes.contains(mx, my)) {
+      screen = 0;
+      exit = false;
+      inGameMenu = false;
+    }
+  
+    stroke(255);
+    fill(255);
   }
 }
 
