@@ -1,6 +1,3 @@
-//class for traversable world and main exploratory portion of game
-//includes sidebars and menu pieces on basic game screeen
-
 class World
 {
   boolean gracePeriod;
@@ -290,6 +287,7 @@ class World
   //////////////////////////////////////////////////////////////////////////////////
 
   void backDrop() {
+    strokeWeight(1);
     rImages[4].resize(1000, 700);
     image(rImages[4], 0, 100);
     fill(50);
@@ -572,23 +570,7 @@ class World
       exit = false;
       inGameMenu = false;
     }
-  
     stroke(255);
     fill(255);
   }
 }
-
-/*
-void backDrop() {
- rImages[1].resize(1000, 700);
- image(rImages[1], 0, 100);
- fill(50);
- rect(0, 0, width, 100);
- fill (255);
- textSize(16);
- text("Player Health  : ____________________________", 200, 20);
- for (int i = 1; i <= 2; i++)
- text("Party " + i + " Health :___________________________", 200, 20 + 25*i);
- text("EXP : ===============================================================", 25, 96);
- text("Keys : " + items.keys, 25, 60);
- }*/

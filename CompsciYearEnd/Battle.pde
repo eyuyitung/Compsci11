@@ -10,10 +10,14 @@ class Battle
   int critCount = (int)random(0, 100);
   int accCount = (int)random(0, 100);
   int blockCount = (int)random(0, 100);
+  int runCount = (int)random(0, 100);
   boolean critTrigger;
   boolean willHit;
-  boolean willBlock;
+  boolean willBlock = false;
+  boolean willRun = false;
   int critPer;
+  int playerTotalspeed;
+  int enemyTotalspeed;
   int [] attackx = {121, 206, 206, 121};
   int [] attacky = {568, 568, 586, 586};
   Polygon attackTab = new Polygon(attackx, attacky, 4);
@@ -29,6 +33,9 @@ class Battle
   int[] blockTabx = {131, 195, 195, 131};
   int[] blockTaby = {670, 670, 688, 688};
   Polygon blockTab = new Polygon(blockTabx, blockTaby, 4);
+  int[] runTabx = {141, 183, 183, 141};
+  int[] runTaby = {720, 720, 739, 739};
+  Polygon runTab = new Polygon(runTabx, runTaby, 4);
   int[] enemy1x = {860, 925, 925, 860};
   int[] enemy1y = {660, 660, 680, 680};
   Polygon enemy1 = new Polygon(enemy1x, enemy1y, 4);
@@ -96,7 +103,7 @@ class Battle
   {
     if (player[0].playerSelect == true && player[1].playerSelect == true)
     {
-      battleAnimations();
+      speedPriority();
     }
   }
 
@@ -147,6 +154,14 @@ class Battle
     }
   }
 
+  void isRun()
+  {
+    if (runCount < player[0].runChance)
+    {
+      willRun = true;
+    }
+  }
+
   void switchTarget()
   {
     for (int i = 0; i <player.length; i++)
@@ -154,10 +169,9 @@ class Battle
       if (player[0].health < 0)
       {
         enemy[i].enemyTarget = player[1].entityNumber;
-      }
-      else if(player[1].health <0)
+      } else if (player[1].health <0)
       {
-       enemy[i].enemyTarget = player[0].entityNumber; 
+        enemy[i].enemyTarget = player[0].entityNumber;
       }
     }
   }
@@ -181,11 +195,24 @@ class Battle
         {
           if (enemy[j].attackmove == 1)
           {
-            player[i].health = (player[i].health - enemy[j].attack);
+            if (willBlock == true)
+            {
+              willBlock = false;
+            } else
+            {
+              player[i].health = (player[i].health - (enemy[j].attack - player[i].defence));
+            }
           }
+
           if (enemy[j].attackmove == 2)
           {
-            player[i].health = (player[i].health - round(enemy[j].attack * 1.5));
+            if (willBlock == true)
+            {
+              willBlock = false;
+            } else
+            {
+              player[i].health = (player[i].health - (round(enemy[j].attack * 1.5) - player[i].defence));
+            }
           }
         }
       }
@@ -204,29 +231,29 @@ class Battle
         {
           isCrit();
           accHit();
-          isBlock();
+
           if (willHit == true)
           {
             if (player[j].attackmove == 1 && critTrigger == false)
             {
-              enemy[i].health = (enemy[i].health - player[j].attack);
+              enemy[i].health = (enemy[i].health - (player[j].attack - enemy[i].defence));
               willHit = false;
             } else if (player[j].attackmove == 1 && critTrigger == true)
             {
-              enemy[i].health = enemy[i].health - round(player[j].attack * player[j].critMult);
+              enemy[i].health = (enemy[i].health - (round(player[j].attack * player[j].critMult) - enemy[i].defence));
               critTrigger = false;
               willHit = false;
             } else if (player[j].attackmove == 2 && critTrigger == false)
             {
               player[j].stamina -= 2;
               enhancedAtt = (round(player[j].attack * 1.5));
-              enemy[i].health = (enemy[i].health - enhancedAtt);
+              enemy[i].health = (enemy[i].health - (enhancedAtt - enemy[i].defence));
               willHit = false;
             } else if (player[j].attackmove == 2 && critTrigger == true)
             {
               player[j].stamina -=2;
               enhancedAtt = (round((player[j].attack * 1.5)*player[j].critMult));
-              enemy[i].health = (enemy[i].health - enhancedAtt);
+              enemy[i].health = (enemy[i].health - (enhancedAtt - enemy[i].defence));
               critTrigger = false;
               willHit = false;
             }
@@ -234,8 +261,9 @@ class Battle
           {
             //missed text
           }
-          if (player[j].attackmove == 3 && willBlock == true)
+          if (player[j].attackmove == 3)
           {
+            isBlock();
           }
         }
       }
@@ -251,7 +279,30 @@ class Battle
         player[i].stamina += 2;
       }
     }
-    enemyAttack();
+  }
+
+  void speedPriority()
+  {
+    for (int i = 0; i < player.length; i++)
+    {
+      playerTotalspeed += player[i].speed;
+    }
+    for (int i = 0; i < enemy.length; i++)
+    {
+      enemyTotalspeed += enemy[i].speed;
+    }
+
+    if (playerTotalspeed > enemyTotalspeed)
+    {
+      battleAnimations();
+      delay(1000);
+      enemyAttack();
+    } else
+    {
+      enemyAttack();
+      delay(1000);
+      battleAnimations();
+    }
   }
 
 
@@ -265,8 +316,6 @@ class Battle
     println("enemy2hp = " + enemy[1].health);
     println(enemy[0].enemyTarget);
     println(enemy[1].enemyTarget);
-    println(enemy[0].attackmove);
-    println(enemy[1].attackmove);
 
 
     if (count == 2)
@@ -313,6 +362,25 @@ class Battle
       if (screen == 10 && attackTab.contains(mx, my))
       {
         screen = 11;
+      } else if (screen == 10 && blockTab.contains(mx, my))
+      {
+        player[count].attackmove = 3;
+        player[count].playerSelect = true;
+        count++;
+        attackSelected();
+      } else if (screen == 10 && runTab.contains(mx, my))
+      {
+        isRun();
+        if (willRun == true)
+        {
+          screen = 5;
+          willRun = false;
+        } else
+        {
+          player[count].playerSelect = true;
+          count++;
+          attackSelected();
+        }
       } else if (screen == 11 && oattackTab.contains(mx, my) == false)
       {
         screen = 10;
@@ -335,12 +403,6 @@ class Battle
       {
         player[count].attackmove = 2; 
         screen = 12;
-      } else if (screen == 10 && blockTab.contains(mx, my))
-      {
-        player[count].attackmove = 3;
-        player[count].playerSelect = true;
-        count++;
-        attackSelected();
       } else if (screen == 11 && heavyAtab.contains(mx, my) && player[count].stamina < 2)
       {
         //make a popout saying that the current character doesnt have enough stamina

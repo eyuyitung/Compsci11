@@ -4,16 +4,14 @@
  */
 
 
-
-
-boolean encounter = false;
+boolean encounter;
 boolean up, down, left, right, shift, enter, back, esc;
 int screen = 0;
 World world;
-
-
+float encounterPer;
 PImage characterS;
 PImage cslayout;
+
 int j;
 int fr = 64; //frame rate of main menu, must be multiple of 8
 int mx = -1;
@@ -35,10 +33,10 @@ Entity[] playerMax = new Entity[2];
 Entity[] enemy = new Entity[2];
 Weapon[] weapons = new Weapon[5];
 Weapon[] weaponSelection = new Weapon[5];
-Weapon[] weaponSelection2 = new Weapon[5];
+Weapon[] shield = new Weapon[1];
+Armor[] armorSet = new Armor[3];
 Menu main;
 Items items = new Items();
-
 Battle battlephase;
 
 void setup() {
@@ -47,52 +45,58 @@ void setup() {
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
-  playerMax [0] = player[0] = new Entity(10);
+  player[0] = new Entity(10);
   player[0].name = "Adam";
-  playerMax [1] = player[1] = new Entity(11);
+  player[1] = new Entity(11);
   player[1].name = "Someguy";
-
+  
+  //Name, stamina, attack, accuracy, speed, critMult, crit%
   weapons[0] = new Weapon("Dagger", 9, 2, 90, 50, 2.5, 80);
   weapons[1] = new Weapon("Longsword", 6, 5, 80, 25, 1.5, 25);
   weapons[2] = new Weapon("Rapier", 6, 3, 90, 40, 2.0, 50);
   weapons[3] = new Weapon("Mace", 4, 10, 75, 15, 1.2, 20);
   weapons[4] = new Weapon("Greatsword", 4, 15, 70, 20, 1.1, 10);
+  shield[0] = new Weapon("Shield", 0, 0, 0, 0, 0, 0, 20, 10);
+  //Name, health, speed, accuracy, setNumber
+  armorSet[0] = new Armor("Leather", 10, 20, 5, 0);
+  armorSet[1] = new Armor("Chainmail", 20, 10, 0, 1);
+  armorSet[2] = new Armor("Steel", 35, 0, 0, 2);
+
   for (int i = 0; i < weaponSelection.length; i++)
   {
     weaponSelection[i] = weapons[i];
-    weaponSelection2[i] = weapons[i];
   }
+
+
+
+
   main = new Menu();
+
   battlephase = new Battle();
   world = new World();
-
-
-  for (int i = 0; i < enemy.length; i++)
-  {
-    enemy[i] = new Entity(1, i);
-  }
 }
+
+
+
 void draw() 
 {
+
+
   //main menu
   if (screen <= 3)
     main.display();
   //in game
   if (screen == 5)
     world.display();
-  if (screen == 5 && encounter == true) {
+  if (screen == 5 && encounter == true)
     battlephase.display();
-  }
   mx = mouseX;
   my = mouseY; 
   main.mr = battlephase.mr = false;
 
 
   //println("Screen is " + screen + " + "+ battlephase.screen);
-  println(mx +" "+ my);
 }
-
-
 
 
 void keyPressed() {

@@ -9,6 +9,7 @@ class Items
 
 
 
+
   void use(int potion, int n) { // 1st is potion type, 2nd is entity it will be used on 0 = player 1 = ally
     if (potion == 0)
       player[n].attack *= 1.25;
