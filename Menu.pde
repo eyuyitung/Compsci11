@@ -120,6 +120,8 @@ class Menu
         player[0].stamina = weaponSelection[count].stamina; 
         player[0].critChance = weaponSelection[count].critChance;
         player[0].critMult = weaponSelection[count].critMultiplyer;
+        player[0].accuracy = weaponSelection[count].accuracy;
+        player[0].blockChance = weaponSelection[count].blockChance;
         screen = 5;
         for (int j = 0; j < player.length; j++)
         {

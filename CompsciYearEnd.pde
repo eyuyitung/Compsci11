@@ -15,6 +15,7 @@ World world;
 float encounterPer;
 PImage characterS;
 PImage cslayout;
+int j;
 int fr = 64; //frame rate of main menu, must be multiple of 8
 int mx = -1;
 int my = -1;
@@ -46,15 +47,15 @@ void setup() {
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
-  player[0] = new Entity();
+  player[0] = new Entity(10);
   player[0].name = "Adam";
-  player[1] = new Entity();
+  player[1] = new Entity(11);
   player[1].name = "Someguy";
   weapons[0] = new Weapon("Dagger", 9, 2, 90, 50, 2.5, 80);
   weapons[1] = new Weapon("Longsword", 6, 5, 80, 25, 1.5,25);
   weapons[2] = new Weapon("Rapier", 6, 3, 90, 40, 2.0, 50);
   weapons[3] = new Weapon("Mace", 4, 10, 75, 15, 1.2, 20);
-  weapons[4] = new Weapon("Greatsword", 4, 15, 65, 20, 1.1, 10);
+  weapons[4] = new Weapon("Greatsword", 4, 15, 70, 20, 1.1, 10);
   for (int i = 0; i < weaponSelection.length; i++)
   {
     weaponSelection[i] = weapons[i];
