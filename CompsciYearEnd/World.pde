@@ -23,6 +23,7 @@ class World
   int speed = 10;
   int sprint = 20;
   int frameDelay = 0;
+  int mDelay = 0;
   PImage[] pFrames = new PImage [13];
   PImage[] rImages = new PImage [15];
   PFont [] igFonts = new PFont [5];
@@ -40,6 +41,18 @@ class World
   int[] menux = {890, 970, 970, 890};
   int[] menuy = {10, 10, 50, 50};
   Polygon menu = new Polygon(menux, menuy, 4);
+  int [] statsx = {810, 880, 880, 810};
+  int [] statsy = {260, 260, 295, 295};
+  Polygon mStats = new Polygon(statsx, statsy, 4);
+  int [] optionsx = {810, 910, 910, 810};
+  int [] optionsy = {390, 390, 420, 420};
+  Polygon mOptions = new Polygon(optionsx, optionsy, 4);
+  int [] exitx = {810, 860, 860, 810};
+  int [] exity = {520, 520, 550, 550};
+  Polygon mExit = new Polygon(exitx, exity, 4);
+
+
+  //////////////////////////////////////////////////////////////////////////////////
 
   void loadFrames () {
     pFrames [1] = loadImage("dleft.png"); //1-3 down
@@ -53,6 +66,7 @@ class World
     pFrames [7] = loadImage("lleft.png"); //7-9 left
     pFrames [8] = loadImage("lstat.png"); 
     pFrames [9] = loadImage("lright.png");
+
     pFrames [10] = loadImage("uleft.png"); //10-12 up
     pFrames [11] = loadImage("ustat.png");
     pFrames [12] = loadImage("uright.png");
@@ -70,22 +84,18 @@ class World
     rImages[5] = loadImage("wall.jpg"); //
   }
 
-
-
-
-
-
+  //////////////////////////////////////////////////////////////////////////////////
 
   World()
   {
     loadFrames();
     loadRoom();
-    //initFont();
   }
+
+  //////////////////////////////////////////////////////////////////////////////////
 
   void display()
   {
-
     playerEncounter();
     println(steps);
     backDrop(); // display background
@@ -94,13 +104,15 @@ class World
     room(); // display world elements
     if (inGameMenu == false)
       move();
-    player(xpos, ypos);
+    player(xpos, ypos); // display character
+    igMenu(); // in game menu
 
-    igMenu();
-    // display character
+
     moving = false;
     mr = false;
   }
+
+  //////////////////////////////////////////////////////////////////////////////////
 
   void playerEncounter()
   {
@@ -112,13 +124,14 @@ class World
     {
       encounter = true; 
       steps = 0;
-      aDelay = frameCount + 2*fr;
       for (int i = 0; i < enemy.length; i++)
       {
         enemy[i] = new Entity(1, i);
       }
     }
   }
+
+  //////////////////////////////////////////////////////////////////////////////////
 
   void player(int x, int y)
   {
@@ -150,11 +163,13 @@ class World
       b = 0; 
       frame = 2;
     }
-
     pFrames[b + frame].resize(40, 60);
     image(pFrames[b + frame], x, y);
     println(xpos+ " " + ypos +  " " + encounterPer + " " + encounterVal  + " " + encounter + " " + gracePeriod);
   }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
   void grid() {
     stroke(0);
     for (int i = 40; i <= width - 40; i += 40) {
@@ -166,9 +181,7 @@ class World
     ellipse(xpos, ypos, 10, 10);
   }
 
-
-
-
+  //////////////////////////////////////////////////////////////////////////////////
 
   void move () {
     if (frameCount >= frameDelay) {       
@@ -211,6 +224,8 @@ class World
     }
   }
 
+  //////////////////////////////////////////////////////////////////////////////////  
+
   void igMenu() {
     int [] spacing = new int [5];
     int j = 0;  
@@ -221,60 +236,64 @@ class World
     if (esc || mr && menu.contains(mx, my))
       inGameMenu = true;
     if (inGameMenu) {
-
       fill(100);
       stroke(0);
       rect(800, 120, 200, 660, 5);
       fill(255);
       textAlign(LEFT);
       textSize(30);
-      text("Inventory", 810, spacing[0]);
+
       strokeWeight(3);
       stroke(255);
+
+      //all elements and mouse hitboxes
+      text("Inventory", 810, spacing[0]);
       line(810, spacing[0] + 5, 810 + textWidth("Inventory"), spacing [0] +5);
-      if (mr) {
-        if (mInventory.contains(mx, my))
-          inventory = true; //inventory screen
-      }
       text("Stats", 810, spacing[1]);
-      line(810, spacing[1] + 5, 810 + textWidth("Stats"), spacing [1] +5);
-      if (mr) {
-        //if (mStats.contains(mx, my))
-        stats = true; //inventory screen
-      }
+      line(810, spacing[1] + 5, 810 + textWidth("Stats"), spacing [1] +5);  
       text("Options", 810, spacing[2]);
-      line(810, spacing[2] + 5, 810 + textWidth("Options"), spacing [2] +5);
-      if (mr) {
-        // if (mOptions.contains(mx, my))
-        options = true; //inventory screen
-      }
+      line(810, spacing[2] + 5, 810 + textWidth("Options"), spacing [2] +5);   
       text("Exit", 810, spacing[3]);
       line(810, spacing[3] + 5, 810 + textWidth("Exit"), spacing [3] +5);
-      if (mr) {
-        // if (mExit.contains(mx, my))
-        exit = true; //inventory screen
+      if (mr)
+      {
+        if (inventory == false && stats == false && options == false && exit == false)
+          mDelay = frameCount + fr/2;
+        if (mInventory.contains(mx, my))
+          inventory = true; //inventory screen
+        else if (mStats.contains(mx, my))
+          stats = true; //stats screen
+        else if (mOptions.contains(mx, my))
+          options = true; //options screen
+        else if (mExit.contains(mx, my))
+          exit = true; //are you sure screen
       }
 
-
-
+      if (inventory)
+        inventory();
+      else if (stats)
+        stats = false;// stats shit
+      else if (options)
+        options();
+      else if (exit)
+        mainMenu();
 
 
       strokeWeight(1);
       stroke(0);
-      //all elements and mouse hitboxes
     }
     if (back)
       inGameMenu = false;
   }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
   void backDrop() {
     rImages[4].resize(1000, 700);
     image(rImages[4], 0, 100);
     fill(50);
     rect(0, 0, width, 100);
     fill (255);
-
-
-
 
     //displaying of basic doors
     if (dp [0])
@@ -299,13 +318,15 @@ class World
     }
   }
 
+  //////////////////////////////////////////////////////////////////////////////////
 
   void info() {
-
-
     fill(200);
     rect(890, 10, 80, 40); // menu button box
     textAlign(LEFT);
+    textSize(16);
+    text(player[0].health + "/" + playerMax[0].health + " hp", 630, 20);
+    text(player[1].health + "/" + playerMax[1].health + " hp", 630, 45);
     textSize(25);
     fill(0);
     text("Menu", 895, 45);
@@ -316,21 +337,24 @@ class World
     text("Player Health  :", 200, 20);
     rect(215, 7, 400, 15);
     fill(255, 0, 0);
-    //rect(215, 7, 400 * (player[0].health / 400),15);
+    rect(215, 7, 400 * (player[0].health/playerMax[0].health), 15);
     fill(255);
     text("Ally Health :", 200, 45);
     rect(215, 32, 400, 15);
     fill(255, 0, 0);
-    //rect(215, 7, 400 * (player[1].health / 400),15);
+    rect(215, 7, 400 * (player[1].health/playerMax[1].health), 15);
     fill(255);
     text("XP :", 200, 96);
 
     rect (215, 82, 600, 15);
     text("Keys :", 200, 70);
-    text(items.keys, 215, 70); 
+    text(items.inv[4], 215, 70); 
     stroke(0);
     fill(255);
   }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
   void room() { // room # system working like coordinates 24 = row 2 column 4
     checkDoor();
     dp [0] = dp [1] = dp [2] = dp [3] = false;
@@ -438,8 +462,8 @@ class World
       }
     }
   }
-  void inventory() {
-  }
+
+  //////////////////////////////////////////////////////////////////////////////////
 
   void checkDoor() {
     if (room > 10 && room < 50)
@@ -473,6 +497,38 @@ class World
         }
       }
     }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
+  void inventory() {
+
+
+    rect(180, 120, 400, 400);
+    if (mInventory.contains(mx, my) && mr && frameCount > mDelay)
+      inventory = false;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
+  void options() 
+  {
+    fill(255, 0, 0);
+    rect(180, 120, 400, 400);
+    fill(255);
+    if (mOptions.contains(mx, my) && mr && frameCount > mDelay)
+      options = false;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
+  void mainMenu()
+  {
+    fill(0, 255, 0);
+    rect(180, 120, 400, 400);
+    fill(255);
+    if (mExit.contains(mx, my) && mr && frameCount > mDelay)
+    exit = false;
   }
 }
 

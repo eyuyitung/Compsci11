@@ -4,31 +4,21 @@
 
 class Items
 {
-  int keys;
   int potion; //0 = attack, 1 = defence, 2 = speed, 3 = health
-  
+  int[] inv = new int [6]; // 0 = attack pot, 1 = defence pot, 2 = speed pot, 3 = health pot, 4 = keys, 5 = boss key
 
-  /*
-  
-  void effect(){
+
+
+  void use(int potion, int n) { // 1st is potion type, 2nd is entity it will be used on 0 = player 1 = ally
     if (potion == 0)
-    player.attack *= 1.25;
+      player[n].attack *= 1.25;
     else if (potion == 1)
-      player.defence *= 1.25;
+      player[n].defence *= 1.25;
     else if (potion == 2)
-      player.speed *= 1.25;
+      player[n].speed *= 1.25;
     else if (potion == 3)
-      player.currentHealth += player.health * 0.5;
-    
-    
+      player[n].health += playerMax[n].health * 0.5;
+      
+      
   }
-  */
-
- 
-
-
-
-
-
-
 } 
