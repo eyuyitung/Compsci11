@@ -6,11 +6,13 @@ class Entity
   int defence;
   int speed;
   int health;
+
   int stamina;
   int attackmove;
   int enemyTarget;
   int entityNumber;
   boolean playerSelect;
+
 
   Entity (int a, int d, int s, int h, int sta, String n, int am, int et, int en, boolean ps)
   {
