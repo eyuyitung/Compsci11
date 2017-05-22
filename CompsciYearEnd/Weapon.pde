@@ -11,12 +11,12 @@ class Weapon
   int accuracy; // percentage rng
   int speed; // priority 
   float critMultiplyer; //
-  float critChance;
+  int critChance;
   int blockChance;
   int defence;  
 
   // base level constructor for weapon objects
-  Weapon (String na, int sta, int dm, int ac, int s, float cM, float cC, int bC, int df)
+  Weapon (String na, int sta, int dm, int ac, int s, float cM, int cC, int bC, int df)
   {
     name = na;
     stamina = sta;
@@ -29,7 +29,7 @@ class Weapon
     defence = df;
   }
 
-  Weapon (String na, int sta, int dm, int ac, int s, float cM, float cC)
+  Weapon (String na, int sta, int dm, int ac, int s, float cM, int cC)
   {
     name = na;
     stamina = sta;
