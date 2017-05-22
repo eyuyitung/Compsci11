@@ -5,6 +5,7 @@
 
 
 boolean up, down, left, right, shift, enter, back, esc;
+boolean mr;
 int screen = 5;
 World world;
 PImage characterS;
@@ -79,7 +80,10 @@ void keyPressed() {
     back = true;
   }
   if (key == ESC) {
-    esc = true;
+    key =  0;
+  }
+  if (key == 0) {
+   esc = true;
   }
 }
 void keyReleased() {
@@ -109,8 +113,14 @@ void keyReleased() {
   if (key == BACKSPACE) {
     back = false;
   }
+  if (key == ESC) {
+    key =  0;
+  }
+  if (key == 0) {
+   esc = false;
+  }
 }
 void mouseReleased()
 {
-  main.mr = true;
+  main.mr = world.mr = true;
 } 
