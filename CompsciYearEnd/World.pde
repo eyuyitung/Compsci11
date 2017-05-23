@@ -21,6 +21,7 @@ class World
   int sprint = 20;
   int frameDelay = 0;
   int mDelay = 0;
+  int bDelay = 0;
   PImage[] pFrames = new PImage [13];
   PImage[] rImages = new PImage [15];
   PFont [] igFonts = new PFont [5];
@@ -117,18 +118,21 @@ class World
       gracePeriod = true;
     else 
     gracePeriod = false;
-    
-    
-    
+
+
+
     if (encounterPer == encounterVal && encounter == false)
     {
       encounter = true; 
       steps = 0;
-      for (int i = 0; i < enemy.length; i++)
+      bDelay = frameCount + fr/4;
+      if (frameCount < bDelay)
       {
-        index = int(random(mobName.length));
-        enemy[i] = new Entity(mobName[index], 1, i, index);
-        
+        for (int i = 0; i < enemy.length; i++)
+        {
+          index = int(random(mobName.length));
+          enemy[i] = new Entity(mobName[index], 1, i, index);
+        }
       }
     }
   }

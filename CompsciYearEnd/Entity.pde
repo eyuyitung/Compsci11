@@ -57,6 +57,30 @@ class Entity
   }
 
 
+  void copyInto (Entity n){
+    attack= n.attack;
+    defence= n.defence;
+    speed= n.speed;
+    health=n.health;
+    stamina = n.stamina;
+    accuracy = n.accuracy;
+    blockChance = n.blockChance;
+    runChance = n.runChance;
+    name = n.name;
+    critChance = n.critChance;
+    critMult = n.critMult;
+    attackmove = n.attackmove;
+    enemyTarget = n.enemyTarget;
+    entityNumber = n.entityNumber;
+    playerSelect = n.playerSelect;
+    mobNumber = n.mobNumber;
+    exper = n.exper;
+    
+    
+    
+    
+    
+  }
   /*
  // used to correspond the stats with the stats of the player
    Entity (Entity[] player, float acc)
