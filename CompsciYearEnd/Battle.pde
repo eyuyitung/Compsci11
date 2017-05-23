@@ -156,6 +156,7 @@ class Battle
 
   void isRun()
   {
+    runCount = (int)random(0, 100);
     if (runCount < player[0].runChance)
     {
       willRun = true;
@@ -312,10 +313,10 @@ class Battle
     screenSwitch();
     attackHitbox();
     entityDeath();
-    println("enemy1hp = " + enemy[0].health);
-    println("enemy2hp = " + enemy[1].health);
-    println(enemy[0].enemyTarget);
-    println(enemy[1].enemyTarget);
+    //println("enemy1hp = " + enemy[0].health);
+    //println("enemy2hp = " + enemy[1].health);
+    //println(enemy[0].enemyTarget);
+    //println(enemy[1].enemyTarget);
 
 
     if (count == 2)
@@ -375,6 +376,8 @@ class Battle
         {
           screen = 5;
           willRun = false;
+          encounter = false;
+          world.gracePeriod = false;
         } else
         {
           player[count].playerSelect = true;

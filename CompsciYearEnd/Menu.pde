@@ -159,9 +159,11 @@ class Menu
         }
         
         screen = 5;
+        
         for (int j = 0; j < player.length; j++)
         {
           playerMax[j] = player[j];
+          println("APPLES");
         }
       }
       if (screen == 1 && csback.contains(mx, my))
@@ -169,7 +171,7 @@ class Menu
         screen = 0;
         maxstat = 30;
         statpoints = 30;
-        ;        
+               
         player[0].health = 50;
         player[0].attack = 5;
         player[0].defence = 5;

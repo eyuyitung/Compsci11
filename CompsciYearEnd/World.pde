@@ -99,7 +99,7 @@ class World
     info(); // display health and exp
     grid();
     room(); // display world elements
-    if (inGameMenu == false)
+    if (inGameMenu == false && encounter == false)
       move();
     player(xpos, ypos); // display character
     igMenu(); // in game menu
@@ -181,42 +181,44 @@ class World
   //////////////////////////////////////////////////////////////////////////////////
 
   void move () {
-    if (frameCount >= frameDelay) {       
-      if (shift)
-        speed = sprint;
-      else 
-      speed = 10;
-      if (mKey) {
-        int x = xpos;
-        int y = ypos;
-        if (right) { //right 1
-          if (frameCount >= frameDelay) {
-            if (x + speed >= width - 80)
-              xpos = width - (80 + speed);
-            xpos += speed;
-            dir = 1;
+    if (screen == 5) {
+      if (frameCount >= frameDelay) {       
+        if (shift)
+          speed = sprint;
+        else 
+        speed = 10;
+        if (mKey) {
+          int x = xpos;
+          int y = ypos;
+          if (right) { //right 1
+            if (frameCount >= frameDelay) {
+              if (x + speed >= width - 80)
+                xpos = width - (80 + speed);
+              xpos += speed;
+              dir = 1;
+            }
+          } else if (left) { // left -1
+            if (x - speed <= 40) 
+              xpos = 40 + speed; 
+            xpos -= speed;  
+            dir = -1;
+          } else if (down) { //down 2
+            if (y + speed >= height - 110)
+              ypos = height - (110 + speed);
+            ypos += speed;
+            dir = 2;
+          } else if (up) { // up -2
+            if (y - speed < 120)
+              ypos = 120 + speed;
+            ypos -= speed;
+            dir = -2;
           }
-        } else if (left) { // left -1
-          if (x - speed <= 40) 
-            xpos = 40 + speed; 
-          xpos -= speed;  
-          dir = -1;
-        } else if (down) { //down 2
-          if (y + speed >= height - 110)
-            ypos = height - (110 + speed);
-          ypos += speed;
-          dir = 2;
-        } else if (up) { // up -2
-          if (y - speed < 120)
-            ypos = 120 + speed;
-          ypos -= speed;
-          dir = -2;
+          moving = true;
+          frameDelay = frameCount + 6;
+          steps++;
+          if (gracePeriod == false) 
+            encounterPer = (int)random(1, 20);
         }
-        moving = true;
-        frameDelay = frameCount + 6;
-        steps++;
-        if (gracePeriod == false) 
-          encounterPer = (int)random(1, 20);
       }
     }
   }
