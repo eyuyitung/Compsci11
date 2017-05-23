@@ -11,7 +11,9 @@ World world;
 float encounterPer;
 PImage characterS;
 PImage cslayout;
-
+int weaponCount = 0;
+String[] mobName = {"Goblin", "Hellhound", "Skeleton"};
+int index;
 int j;
 int fr = 64; //frame rate of main menu, must be multiple of 8
 int mx = -1;
@@ -30,7 +32,7 @@ int maxstat = 30;
 PFont startFont;
 Entity[] player = new Entity[2];
 Entity[] playerMax = new Entity[2];
-Entity[] enemy = new Entity[2];
+Entity[] enemy = new Entity[4];
 Weapon[] weapons = new Weapon[5];
 Weapon[] weaponSelection = new Weapon[5];
 Weapon[] shield = new Weapon[1];
@@ -49,7 +51,7 @@ void setup() {
   player[0].name = "Adam";
   player[1] = new Entity(11);
   player[1].name = "Someguy";
-  
+
   //Name, stamina, attack, accuracy, speed, critMult, crit%
   weapons[0] = new Weapon("Dagger", 9, 2, 90, 50, 2.5, 80);
   weapons[1] = new Weapon("Longsword", 6, 5, 80, 25, 1.5, 25);
