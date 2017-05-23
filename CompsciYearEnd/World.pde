@@ -94,7 +94,7 @@ class World
   void display()
   {
     playerEncounter();
-    println(steps);
+    //println(steps);
     backDrop(); // display background
     info(); // display health and exp
     grid();
@@ -113,17 +113,22 @@ class World
 
   void playerEncounter()
   {
-    if (steps < 50)
+    if (steps < 10)
       gracePeriod = true;
     else 
     gracePeriod = false;
+    
+    
+    
     if (encounterPer == encounterVal && encounter == false)
     {
       encounter = true; 
       steps = 0;
       for (int i = 0; i < enemy.length; i++)
       {
-        enemy[i] = new Entity(1, i);
+        index = int(random(mobName.length));
+        enemy[i] = new Entity(mobName[index], 1, i, index);
+        
       }
     }
   }

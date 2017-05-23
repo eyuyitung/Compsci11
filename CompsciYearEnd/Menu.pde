@@ -6,7 +6,7 @@ class Menu
   PImage pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8;
   PImage [] frames = new PImage [9];
 
-  int count = 0;
+  
   int count2 = 0;
 
 
@@ -86,12 +86,12 @@ class Menu
   {
     mouseKey();
 
-    if (count > 4)
+    if (weaponCount > 4)
     {
-      count = 0;
-    } else if (count < 0)
+      weaponCount = 0;
+    } else if (weaponCount < 0)
     {
-      count = 4;
+      weaponCount = 4;
     }
     
     if (count2 > 2)
@@ -130,16 +130,16 @@ class Menu
         screen = 3;
       if (screen == 1 && csstart.contains(mx, my))
       {
-        player[0].attack += weaponSelection[count].attack;
-        player[0].speed +=  weaponSelection[count].speed + armorSet[count2].speed;
-        player[0].stamina = weaponSelection[count].stamina; 
-        player[0].critChance = weaponSelection[count].critChance;
-        player[0].critMult = weaponSelection[count].critMultiplyer;
-        player[0].accuracy = weaponSelection[count].accuracy + armorSet[count2].accuracy;
-        player[0].blockChance = weaponSelection[count].blockChance;
+        player[0].attack += weaponSelection[weaponCount].attack;
+        player[0].speed +=  weaponSelection[weaponCount].speed + armorSet[count2].speed;
+        player[0].stamina = weaponSelection[weaponCount].stamina; 
+        player[0].critChance = weaponSelection[weaponCount].critChance;
+        player[0].critMult = weaponSelection[weaponCount].critMultiplyer;
+        player[0].accuracy = weaponSelection[weaponCount].accuracy + armorSet[count2].accuracy;
+        player[0].blockChance = weaponSelection[weaponCount].blockChance;
         player[0].health += armorSet[count2].health;
         
-        if(count >= 0 && count <= 2)
+        if(weaponCount >= 0 && weaponCount <= 2)
         {
           player[0].defence += shield[0].defence;
           player[0].blockChance += shield[0].blockChance;
@@ -158,18 +158,20 @@ class Menu
           player[0].defence = round(player[0].defence * 1.5);
         }
         
-        screen = 5;
         for (int j = 0; j < player.length; j++)
         {
           playerMax[j] = player[j];
         }
+        
+        screen = 5;
+        
       }
       if (screen == 1 && csback.contains(mx, my))
       {
         screen = 0;
         maxstat = 30;
         statpoints = 30;
-        ;        
+                
         player[0].health = 50;
         player[0].attack = 5;
         player[0].defence = 5;
@@ -177,10 +179,10 @@ class Menu
       }
       if (screen == 1 && weaponSel.contains(mx, my))
       {
-        count--;
+        weaponCount--;
       } else if (screen == 1 && weaponSel2.contains(mx, my))
       {
-        count++;
+        weaponCount++;
       }
       if(screen == 1 && armorSel.contains(mx, my))
       {
@@ -303,7 +305,7 @@ class Menu
     textFont(startFont);
     textAlign(TOP, TOP);
     textSize(15);
-    text(weaponSelection[count].name, 234, 168);
+    text(weaponSelection[weaponCount].name, 234, 168);
     text(armorSet[count2].name, 234, 245);
     textSize(30);
     stroke(255);
@@ -330,7 +332,7 @@ class Menu
           player[0].health -= 1;
           statpoints += 1;
         }
-        if (screen == 1 && attacksub.contains(mx, my) && player[0].attack > 5)
+        if (screen == 1 && attacksub.contains(mx, my) && player[0].attack > 10)
         {
           player[0].attack -= 1;
           statpoints +=1;

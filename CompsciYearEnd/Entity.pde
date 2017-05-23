@@ -16,11 +16,12 @@ class Entity
   int accuracy;
   int runChance;
   int blockChance;
+  int mobNumber;
+  int exper;
 
-  int currentHealth;
 
 
-  Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps)
+  Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps, int mn, int exp)
   {
     attack=a;
     defence=d;
@@ -37,19 +38,22 @@ class Entity
     enemyTarget = et;
     entityNumber = en;
     playerSelect = ps;
+    mobNumber = mn;
+    exper = exp;
   }
 
 
 
 
-  Entity (int l, int en)
+  Entity (String na, int l, int en, int mn)
   {
-    this(l*15, l*5, l*100, l*50, 0, 100, 0, 0, "Goblin", 0, 1.5, 0, 0, en, true);
+    this(l*15, l*5, l*50, l*50, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*25);
   }
 
-  Entity (int en) //enemy/player
+
+  Entity (int l, int en) //player
   {  
-    this(10, 5, 5, 60, 5, 100, 15, 50,"", 0, 1.0, 0, 0, en, false);
+    this(l*10, l*5, l*5, l*60, 5, 100, 15, 50, "", 0, 1.0, 0, 0, en, false, 0, 0);
   }
 
 
