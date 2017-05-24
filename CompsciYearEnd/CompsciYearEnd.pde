@@ -12,8 +12,10 @@ float encounterPer;
 PImage characterS;
 PImage cslayout;
 int weaponCount = 0;
+int enemyCount;
 String[] mobName = {"Goblin", "Hellhound", "Skeleton"};
 int index;
+int level = 1;
 int j;
 int fr = 64; //frame rate of main menu, must be multiple of 8
 int mx = -1;
@@ -47,9 +49,9 @@ void setup() {
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
-  player[0] = new Entity(10);
+  player[0] = new Entity(level, 10);
   player[0].name = "Adam";
-  player[1] = new Entity(11);
+  player[1] = new Entity(level, 11);
   player[1].name = "Someguy";
 
   //Name, stamina, attack, accuracy, speed, critMult, crit%

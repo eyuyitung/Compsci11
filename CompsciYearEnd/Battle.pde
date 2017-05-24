@@ -4,9 +4,10 @@ class Battle
 {
   int count = 0;
   int j = 0;
+
   boolean mr;
   PImage bpback;
-  PImage [] bp = new PImage [10];
+  PImage [] bp = new PImage [15];
   PImage[] mobPic = new PImage [4];
   int screen = 10;
   int enhancedAtt;
@@ -70,6 +71,8 @@ class Battle
     bp[3] = loadImage("BattlephaseAttack.png");
     bp[4] = loadImage("Battlephase3.png");
     bp[5] = loadImage("BattlephaseItems.png");
+    bp[6] = loadImage("swing.png");
+    bp[7] = loadImage("swing 2.png");
     bpback = loadImage("battlebackground.png");
     mobPic[0] = loadImage("goblin.png");
     mobPic[1] = loadImage("hellhound.png");
@@ -124,6 +127,8 @@ class Battle
   {
     image(bp[5], 0, 0);
   }
+
+
   //Checks if both the characters have selected an attack if so, animate the attacks
   void attackSelected()
   {
@@ -160,11 +165,20 @@ class Battle
 
   void spawn()
   {
+    for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
+    {
+      if (enemy[enemyCount].alive == true)
+      {
+        image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
+      }
+    }
+  }
 
-    image(mobPic[enemy[0].mobNumber], 690, 235);
-    image(mobPic[enemy[2].mobNumber], 690, 350);
-    image(mobPic[enemy[1].mobNumber], 570, 235);
-    image(mobPic[enemy[3].mobNumber], 570, 350);
+  void despawn()
+  {
+    if (enemy[enemyCount].alive == false)
+    {
+    }
   }
 
   void isCrit()
@@ -207,10 +221,10 @@ class Battle
   {
     for (int i = 0; i <player.length; i++)
     {
-      if (player[0].health < 0)
+      if (player[0].health <= 0)
       {
         enemy[i].enemyTarget = player[1].entityNumber;
-      } else if (player[1].health <0)
+      } else if (player[1].health <= 0)
       {
         enemy[i].enemyTarget = player[0].entityNumber;
       }
@@ -276,9 +290,9 @@ class Battle
   {
     for (j = 0; j < player.length; j++)
     {
-      for (int i = 0; i < enemy.length; i++)
+      for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
       {
-        if (player[j].enemyTarget == enemy[i].entityNumber)
+        if (player[j].enemyTarget == enemy[enemyCount].entityNumber)
         {
           isCrit();
           accHit();
@@ -290,7 +304,7 @@ class Battle
               isPoisoned = true;
             } else if (weaponCount == 1)
             {
-              enemy[i].health -= player[j].attack * 5;
+              enemy[enemyCount].health -= player[j].attack * 5;
             } else if (weaponCount == 2)
             {
               player[0].critChance += 10;
@@ -314,26 +328,36 @@ class Battle
           {
             if (player[j].attackmove == 1 && critTrigger == false)
             {
-              enemy[i].health = (enemy[i].health - (player[j].attack - enemy[i].defence)); 
-                willHit = false;
+              enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
+              willHit = false;
+              screen = 14;
+              delay(100);
+              screen = 15;
+              delay(100);
+              screen = 10;
             } else if (player[j].attackmove == 1 && critTrigger == true)
             {
-              enemy[i].health = (enemy[i].health - (round(player[j].attack * player[j].critMult) - enemy[i].defence)); 
-                critTrigger = false; 
-                willHit = false;
+              enemy[enemyCount].health = (enemy[enemyCount].health - (round(player[j].attack * player[j].critMult) - enemy[enemyCount].defence)); 
+              critTrigger = false; 
+              willHit = false;
+              screen = 14;
+              delay(200);
+              screen = 15;
+              delay(200);
+              screen = 10;
             } else if (player[j].attackmove == 2 && critTrigger == false)
             {
               player[j].stamina -= 2; 
-                enhancedAtt = (round(player[j].attack * 1.5)); 
-                enemy[i].health = (enemy[i].health - (enhancedAtt - enemy[i].defence)); 
-                willHit = false;
+              enhancedAtt = (round(player[j].attack * 1.5)); 
+              enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
+              willHit = false;
             } else if (player[j].attackmove == 2 && critTrigger == true)
             {
               player[j].stamina -=2; 
-                enhancedAtt = (round((player[j].attack * 1.5)*player[j].critMult)); 
-                enemy[i].health = (enemy[i].health - (enhancedAtt - enemy[i].defence)); 
-                critTrigger = false; 
-                willHit = false;
+              enhancedAtt = (round((player[j].attack * 1.5)*player[j].critMult)); 
+              enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
+              critTrigger = false; 
+              willHit = false;
             }
           } else
           {
@@ -373,13 +397,13 @@ class Battle
     if (playerTotalspeed > enemyTotalspeed)
     {
       battleAnimations(); 
-        delay(1000); 
-        enemyAttack();
+      delay(1000); 
+      enemyAttack();
     } else
     {
       enemyAttack(); 
-        delay(1000); 
-        battleAnimations();
+      delay(1000); 
+      battleAnimations();
     }
   }
 
@@ -389,24 +413,26 @@ class Battle
   {
 
     screenSwitch(); 
-      attackHitbox(); 
-      entityDeath(); 
-      println("enemy1hp = " + enemy[0].health); 
-      println("enemy2hp = " + enemy[1].health); 
-      println(critCount); 
+    attackHitbox(); 
+    entityDeath(); 
+    println("enemy1hp = " + enemy[0].health); 
+    println("enemy2hp = " + enemy[1].health); 
+    println(enemyCount); 
 
 
 
-      if (count == 2)
+
+
+    if (count == 2)
     {
       count = 0; 
-        player[0].playerSelect = false; 
-        player[1].playerSelect = false;
+      player[0].playerSelect = false; 
+      player[1].playerSelect = false;
     }
     if (screen == 6)
     {
       bpbackground(); 
-        defeatScreen();
+      defeatScreen();
     }
 
 
@@ -417,32 +443,46 @@ class Battle
 
 
       bpbackground(); 
-        battleP1(); 
-        battleP2(); 
-        spawn();
+      battleP1(); 
+      battleP2(); 
+      spawn();
     } else if (screen == 11)
     {
 
       bpbackground(); 
-        battleP1(); 
-        battleP2(); 
-        battleAttack(); 
-        spawn();
+      battleP1(); 
+      battleP2(); 
+      battleAttack(); 
+      spawn();
     } else if (screen == 12)
     {
 
       bpbackground(); 
-        battleP1(); 
-        battleP3(); 
-        spawn();
+      battleP1(); 
+      battleP3(); 
+      spawn();
     } else if (screen == 13)
     { 
 
       bpbackground(); 
-        battleP1(); 
-        battleP2(); 
-        battleItems(); 
-        spawn();
+      battleP1(); 
+      battleP2(); 
+      battleItems(); 
+      spawn();
+    } else if (screen == 14)
+    {
+      bpbackground();
+      battleP1();
+      battleP2();
+      spawn();
+      image(bp[6], enemy[enemyCount].x, enemy[enemyCount].y);
+    } else if (screen == 15)
+    {
+      bpbackground();
+      battleP1();
+      battleP2();
+      spawn();
+      image(bp[7], enemy[enemyCount].x, enemy[enemyCount].y);
     }
   }
 
@@ -460,27 +500,25 @@ class Battle
       } else if (screen == 10 && blockTab.contains(mx, my))
       {
         player[count].attackmove = 3; 
-          player[count].playerSelect = true; 
-          count++; 
-          attackSelected();
+        player[count].playerSelect = true; 
+        count++; 
+        attackSelected();
       } else if (screen == 10 && runTab.contains(mx, my))
       {
         isRun(); 
-          if (willRun == true)
+        if (willRun == true)
         {
 
           screen = 5;
           willRun = false;
           encounter = false;
           world.gracePeriod = false;
-
-        
         } else if (willRun == false)
 
         {
           player[count].playerSelect = true; 
-            count++; 
-            attackSelected();
+          count++; 
+          attackSelected();
         }
       } else if (screen == 11 && oattackTab.contains(mx, my) == false)
       {
@@ -501,36 +539,36 @@ class Battle
       if (screen == 11 && lightAtab.contains(mx, my))
       {
         player[count].attackmove = 1; 
-          screen = 12;
+        screen = 12;
       } else if (screen == 11 && heavyAtab.contains(mx, my) && player[count].stamina > 2)
 
       {
         player[count].attackmove = 2; 
-          screen = 12;
+        screen = 12;
       } else if (screen == 11 && heavyAtab.contains(mx, my) && player[count].stamina < 2)
       {
         //make a popout saying that the current character doesnt have enough stamina
       } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina == playerMax[count].stamina)
       {
         player[count].attackmove = 3; 
-          screen = 12;
+        screen = 12;
       } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina < playerMax[count].stamina)
       {
         // make a popout saying that the current character doesnt have enough stamina
       } else if (screen == 12 && enemy1.contains(mx, my))
       {
         player[count].enemyTarget = enemy[0].entityNumber; 
-          player[count].playerSelect = true; 
-          screen = 10; 
-          count++; 
-          attackSelected();
+        player[count].playerSelect = true; 
+        screen = 10; 
+        count++; 
+        attackSelected();
       } else if (screen == 12 && enemy2.contains(mx, my))
       {
         player[count].enemyTarget = enemy[1].entityNumber; 
-          player[count].playerSelect = true; 
-          screen = 10; 
-          count++; 
-          attackSelected();
+        player[count].playerSelect = true; 
+        screen = 10; 
+        count++; 
+        attackSelected();
       }
     }
   }

@@ -94,6 +94,7 @@ class World
   void display()
   {
     playerEncounter();
+    expLevelup();
     //println(steps);
     backDrop(); // display background
     info(); // display health and exp
@@ -117,9 +118,9 @@ class World
       gracePeriod = true;
     else 
     gracePeriod = false;
-    
-    
-    
+
+
+
     if (encounterPer == encounterVal && encounter == false)
     {
       encounter = true; 
@@ -127,9 +128,31 @@ class World
       for (int i = 0; i < enemy.length; i++)
       {
         index = int(random(mobName.length));
-        enemy[i] = new Entity(mobName[index], 1, i, index);
-        
+        enemy[i] = new Entity(mobName[index], level, i, index,0,0, true);
       }
+      enemy[0].x = 690;
+      enemy[0].y = 235;
+      
+      enemy[1].x = 570;
+      enemy[1].y = 235;
+      
+      enemy[2].x = 690;
+      enemy[2].y = 350;
+      
+      enemy[3].x = 570;
+      enemy[3].y = 350;
+    }
+  }
+  
+  void expLevelup()
+  {
+    for(int i = 1; i <= 10; i++)
+    {
+      if(player[0].exper > (50 + i * 50) && level == i)
+      {
+        level = i + 1;
+        player[0].exper = 0;
+      } 
     }
   }
 

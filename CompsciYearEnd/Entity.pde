@@ -1,4 +1,5 @@
 
+
 class Entity
 {
   String name;
@@ -18,6 +19,9 @@ class Entity
   int blockChance;
   int mobNumber;
   int exper;
+  int x;
+  int y;
+  boolean alive;
 
 
 
@@ -41,13 +45,37 @@ class Entity
     mobNumber = mn;
     exper = exp;
   }
-
-
-
-
-  Entity (String na, int l, int en, int mn)
+  
+   Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps, int mn, int exp, int x1 , int y1, boolean live)
   {
-    this(l*15, l*5, l*50, l*50, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*25);
+    attack=a;
+    defence=d;
+    speed=s;
+    health=h;
+    stamina = sta;
+    accuracy = acc;
+    blockChance = bC;
+    runChance = rC;
+    name = n;
+    critChance = cc;
+    critMult = cm;
+    attackmove = am;
+    enemyTarget = et;
+    entityNumber = en;
+    playerSelect = ps;
+    mobNumber = mn;
+    exper = exp;
+    x = x1;
+    y = y1;
+    alive = live;
+  }
+
+
+
+
+  Entity (String na, int l, int en, int mn, int x, int y, boolean live)
+  {
+    this(l*15, l*5, l*50, l*50, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*20,x ,y, live);
   }
 
 
@@ -55,6 +83,7 @@ class Entity
   {  
     this(l*10, l*5, l*5, l*60, 5, 100, 15, 50, "", 0, 1.0, 0, 0, en, false, 0, 0);
   }
+
 
 
   /*
