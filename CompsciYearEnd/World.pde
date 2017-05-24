@@ -21,6 +21,7 @@ class World
   int sprint = 20;
   int frameDelay = 0;
   int mDelay = 0;
+  int bDelay = 0;
   PImage[] pFrames = new PImage [13];
   PImage[] rImages = new PImage [15];
   PFont [] igFonts = new PFont [5];
@@ -94,11 +95,15 @@ class World
   void display()
   {
     playerEncounter();
+<<<<<<< HEAD
     expLevelup();
     //println(steps);
+=======
+
+>>>>>>> origin/elements
     backDrop(); // display background
     info(); // display health and exp
-    grid();
+    //  grid();
     room(); // display world elements
     if (inGameMenu == false && encounter == false)
       move();
@@ -121,14 +126,24 @@ class World
 
 
 
+<<<<<<< HEAD
     if (encounterPer == encounterVal && encounter == false)
+=======
+    if (encounter == false && encounterPer == encounterVal )
+>>>>>>> origin/elements
     {
       encounter = true; 
       steps = 0;
+      bDelay = frameCount + fr/4;
       for (int i = 0; i < enemy.length; i++)
       {
         index = int(random(mobName.length));
+<<<<<<< HEAD
         enemy[i] = new Entity(mobName[index], level, i, index,0,0, true);
+=======
+        enemy[i] = new Entity(mobName[index], 1, i, index);
+        println("swap");
+>>>>>>> origin/elements
       }
       enemy[0].x = 690;
       enemy[0].y = 235;
@@ -190,7 +205,7 @@ class World
     }
     pFrames[b + frame].resize(40, 60);
     image(pFrames[b + frame], x, y);
-    println(xpos+ " " + ypos +  " " + encounterPer + " " + encounterVal  + " " + encounter + " " + gracePeriod);
+    println(xpos+ " " + ypos +  " " + player[0].health + " " + playerMax[0].health  + " " + encounter + " " + gracePeriod);
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -366,15 +381,16 @@ class World
     text("Player Health  :", 200, 20);
     rect(215, 7, 400, 15);
     fill(255, 0, 0);
-    rect(215, 7, 400 * (player[0].health/playerMax[0].health), 15);
+    if (player[0].health >=0)
+      rect(215, 7, 400 * (1.0*player[0].health/playerMax[0].health), 15);
     fill(255);
     text("Ally Health :", 200, 45);
     rect(215, 32, 400, 15);
     fill(255, 0, 0);
-    rect(215, 7, 400 * (player[1].health/playerMax[1].health), 15);
+    if (player[1].health >=0)
+      rect(215, 32, 400 * (1.0*player[1].health/playerMax[1].health), 15);
     fill(255);
     text("XP :", 200, 96);
-
     rect (215, 82, 600, 15);
     text("Keys :", 200, 70);
     text(items.inv[4], 215, 70); 

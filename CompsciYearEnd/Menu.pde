@@ -124,11 +124,11 @@ class Menu
     {
       if (screen == 0 && start.contains(mx, my))
         screen = 1;
-      if (screen == 0 && help.contains(mx, my))
+      else if (screen == 0 && help.contains(mx, my))
         screen = 2;      
-      if (screen == 0 && config.contains(mx, my))
+      else if (screen == 0 && config.contains(mx, my))
         screen = 3;
-      if (screen == 1 && csstart.contains(mx, my))
+      else if (screen == 1 && csstart.contains(mx, my))
       {
         player[0].attack += weaponSelection[weaponCount].attack;
         player[0].speed +=  weaponSelection[weaponCount].speed + armorSet[count2].speed;
@@ -138,6 +138,11 @@ class Menu
         player[0].accuracy = weaponSelection[weaponCount].accuracy + armorSet[count2].accuracy;
         player[0].blockChance = weaponSelection[weaponCount].blockChance;
         player[0].health += armorSet[count2].health;
+        
+        for (int j = 0; j < player.length; j++)
+        {          
+          playerMax[j].copyInto(player[j]);
+        }
         
         if(weaponCount >= 0 && weaponCount <= 2)
         {
@@ -157,17 +162,8 @@ class Menu
         {
           player[0].defence = round(player[0].defence * 1.5);
         }
-        
-
         screen = 5;
-
-        for (int j = 0; j < player.length; j++)
-        {
-          playerMax[j] = player[j];
-         
-        }
         
-        screen = 5;
         
       }
       if (screen == 1 && csback.contains(mx, my))

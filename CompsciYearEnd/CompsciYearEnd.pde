@@ -49,11 +49,19 @@ void setup() {
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
+<<<<<<< HEAD
   player[0] = new Entity(level, 10);
   player[0].name = "Adam";
   player[1] = new Entity(level, 11);
+=======
+  player[0] = new Entity(level,10);
+  player[0].name = "Adam";
+  player[1] = new Entity(level,11);
+>>>>>>> origin/elements
   player[1].name = "Someguy";
-
+  playerMax[0] = new Entity();
+  playerMax[1] = new Entity();
+  
   //Name, stamina, attack, accuracy, speed, critMult, crit%
   weapons[0] = new Weapon("Dagger", 9, 2, 90, 50, 2.5, 80);
   weapons[1] = new Weapon("Longsword", 6, 5, 80, 25, 1.5, 25);
@@ -92,12 +100,13 @@ void draw()
   //in game
   if (screen == 5)
     world.display();
-  if (screen == 5 && encounter == true)
+  if (encounter == true) 
     battlephase.display();
+  
   mx = mouseX;
   my = mouseY; 
   main.mr = battlephase.mr = false;
-
+  println(mx +" " + my);
 
   //println("Screen is " + screen + " + "+ battlephase.screen);
 }

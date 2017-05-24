@@ -84,8 +84,39 @@ class Entity
     this(l*10, l*5, l*5, l*60, 5, 100, 15, 50, "", 0, 1.0, 0, 0, en, false, 0, 0);
   }
 
+  Entity () //player
+  {  
+    this(0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, false, 0, 0);
+  }
 
+<<<<<<< HEAD
 
+=======
+  void copyInto (Entity n){
+    attack= n.attack;
+    defence= n.defence;
+    speed= n.speed;
+    health=n.health;
+    stamina = n.stamina;
+    accuracy = n.accuracy;
+    blockChance = n.blockChance;
+    runChance = n.runChance;
+    name = n.name;
+    critChance = n.critChance;
+    critMult = n.critMult;
+    attackmove = n.attackmove;
+    enemyTarget = n.enemyTarget;
+    entityNumber = n.entityNumber;
+    playerSelect = n.playerSelect;
+    mobNumber = n.mobNumber;
+    exper = n.exper;
+    
+    
+    
+    
+    
+  }
+>>>>>>> origin/elements
   /*
  // used to correspond the stats with the stats of the player
    Entity (Entity[] player, float acc)
