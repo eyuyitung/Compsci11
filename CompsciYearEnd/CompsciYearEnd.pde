@@ -1,7 +1,17 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
 /*compsci year end assignment
  group Eric, Brian, Kaizen
  assignement due may 24th
  */
+
+Minim minim, minim2, minim3;
+AudioPlayer Player, Player2, Player3;
 
 
 boolean encounter;
@@ -45,6 +55,22 @@ Battle battlephase;
 
 void setup() {
   size(1000, 800);
+  if (screen <= 3)
+  {
+   minim = new Minim(this);
+   Player = minim.loadFile("lavender.mp3");
+   Player.play();
+   Player.loop();
+  }
+  
+  if (encounter == true)
+  {
+   Player.pause();
+   minim2 = new Minim(this);
+   Player2 = minim2.loadFile("battle.mp3.mp3");
+   Player2.loop();
+  }
+  
   frameRate(fr);
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
