@@ -17,7 +17,7 @@ String[] mobName = {"Goblin", "Hellhound", "Skeleton"};
 int index;
 int level = 1;
 int j;
-int fr = 64; //frame rate of main menu, must be multiple of 8
+int fr = 32; //frame rate of main menu, must be multiple of 8
 int mx = -1;
 int my = -1;
 int x1 = 715;
@@ -179,13 +179,13 @@ void keyReleased() {
     esc = false;
   }
 }
-
+/*
 void mouseClicked()
 {
  if (screen > 3)
   println(mx +" " + my); 
 }
-
+*/
 void mouseReleased()
 {
   main.mr = world.mr = battlephase.mr = true;

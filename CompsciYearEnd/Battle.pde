@@ -9,13 +9,14 @@ class Battle
   PImage bpback;
   PImage [] bp = new PImage [15];
   PImage[] mobPic = new PImage [4];
-  
+
   int screen = 10;
   int enhancedAtt;
   int critCount;
   int accCount;
   int blockCount;
   int runCount;
+  int kills;
   boolean critTrigger;
   boolean willHit;
   boolean willBlock = false;
@@ -24,6 +25,7 @@ class Battle
   int critPer;
   int playerTotalspeed;
   int enemyTotalspeed;
+  String troubleShoot;
   int [] attackx = {121, 206, 206, 121};
   int [] attacky = {568, 568, 586, 586};
   Polygon attackTab = new Polygon(attackx, attacky, 4);
@@ -152,27 +154,14 @@ class Battle
     {
       screen = 6;
     }
-
-    //xp distribution
-    for (int i = 0; i < enemy.length; i++)
-    {
-      
-      if (enemy[i].health < 0)
-      {
-        
-        j++;
-        
-        player[0].exper += enemy[i].exper;
-      }
-    }
-    if (j == enemy.length)
+    
+    if (true && enemy[0].dead && enemy[1].dead && enemy[2].dead && enemy[3].dead)
     {
       screen = 10;
       world.gracePeriod = true;
       encounter = false;
-      j = 0;
-      
-      
+      for (int j = 0; j < enemy.length; j ++)
+        player[0].exper += enemy[j].exper;
     }
   }
 
@@ -180,23 +169,16 @@ class Battle
   {
     for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
     {
-      if (enemy[enemyCount].alive == true)
+      if (enemy[enemyCount].dead == false)
       {
         image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
       }
     }
   }
 
-  void despawn()
-  {
-    if (enemy[enemyCount].alive == false)
-    {
-    }
-  }
-
   void isCrit()
   {
-    critCount = (int)random(0, 100);
+    critCount = (int)random(0, 100); 
     if (critCount < player[j].critChance)
     {
       critTrigger = true;
@@ -205,7 +187,7 @@ class Battle
 
   void accHit()
   {
-    accCount = (int)random(0, 100);
+    accCount = (int)random(0, 100); 
     if (accCount < player[j].accuracy)
     {
       willHit = true;
@@ -214,7 +196,7 @@ class Battle
 
   void isBlock()
   {
-    blockCount = (int)random(0, 100);
+    blockCount = (int)random(0, 100); 
     if (blockCount < player[j].blockChance)
     {
       willBlock = true;
@@ -223,7 +205,7 @@ class Battle
 
   void isRun()
   {
-    runCount = (int)random(0, 100);
+    runCount = (int)random(0, 100); 
     if (runCount < player[0].runChance)
     {
       willRun = true;
@@ -248,9 +230,9 @@ class Battle
   {
     if (isPoisoned == true)
     {
-      enemy[0].health -= (round(player[0].attack * 0.25));
-      enemy[1].health -= (round(player[0].attack * 0.25));
-      enemy[2].health -= (round(player[0].attack * 0.25));
+      enemy[0].health -= (round(player[0].attack * 0.25)); 
+      enemy[1].health -= (round(player[0].attack * 0.25)); 
+      enemy[2].health -= (round(player[0].attack * 0.25)); 
       enemy[3].health -= (round(player[0].attack * 0.25));
     }
   }
@@ -259,9 +241,9 @@ class Battle
   {
     for (int i = 0; i < enemy.length; i++)
     {
-      int ran1 = (int)random(2)+10;
-      int ran2 = (int)random(2)+1;
-      enemy[i].attackmove = ran2;
+      int ran1 = (int)random(2)+10; 
+      int ran2 = (int)random(2)+1; 
+      enemy[i].attackmove = ran2; 
       enemy[i].enemyTarget = ran1;
     }
 
@@ -269,7 +251,7 @@ class Battle
     {
       for (int i = 0; i < player.length; i++)
       {
-        switchTarget();
+        switchTarget(); 
         if (enemy[j].enemyTarget == player[i].entityNumber)
         {
           if (enemy[j].attackmove == 1)
@@ -307,9 +289,9 @@ class Battle
       {
         if (player[j].enemyTarget == enemy[enemyCount].entityNumber)
         {
-          isCrit();
-          accHit();
-          daggerSpecial();
+          isCrit(); 
+          accHit(); 
+          daggerSpecial(); 
           if (player[0].attackmove == 3)
           {
             if (weaponCount == 0)
@@ -320,7 +302,7 @@ class Battle
               enemy[enemyCount].health -= player[j].attack * 5;
             } else if (weaponCount == 2)
             {
-              player[0].critChance += 10;
+              player[0].critChance += 10; 
               player[1].critChance += 10;
             } else if (weaponCount == 3)
             {
@@ -343,23 +325,22 @@ class Battle
             {
 
               enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
-              willHit = false;
-              screen = 14;
-              delay(100);
-              screen = 15;
-              delay(100);
+              willHit = false; 
+              screen = 14; 
+              delay(100); 
+              screen = 15; 
+              delay(100); 
               screen = 10;
             } else if (player[j].attackmove == 1 && critTrigger == true)
             {
               enemy[enemyCount].health = (enemy[enemyCount].health - (round(player[j].attack * player[j].critMult) - enemy[enemyCount].defence)); 
               critTrigger = false; 
-              willHit = false;
-              screen = 14;
-              delay(200);
-              screen = 15;
-              delay(200);
+              willHit = false; 
+              screen = 14; 
+              delay(200); 
+              screen = 15; 
+              delay(200); 
               screen = 10;
-
             } else if (player[j].attackmove == 2 && critTrigger == false)
             {
               player[j].stamina -= 2; 
@@ -431,15 +412,16 @@ class Battle
   void display()
   {
     if (frameCount < world.bDelay)
-      screen = 10;
-      
+      screen = 10; 
+
+    ellipse(mx, my, 10, 10); 
     screenSwitch(); 
     attackHitbox(); 
     entityDeath(); 
 
-    println("enemy1hp = " + enemy[0].health); 
-    println("enemy2hp = " + enemy[1].health); 
-    println(enemyCount); 
+    //  println("enemy1hp = " + enemy[0].health); 
+    // println("enemy2hp = " + enemy[1].health); 
+    // println(enemyCount); 
 
 
 
@@ -489,22 +471,24 @@ class Battle
       battleP2(); 
       battleItems(); 
       spawn();
-
     } else if (screen == 14)
     {
-      bpbackground();
-      battleP1();
-      battleP2();
-      spawn();
+      bpbackground(); 
+      battleP1(); 
+      battleP2(); 
+      spawn(); 
       image(bp[6], enemy[enemyCount].x, enemy[enemyCount].y);
     } else if (screen == 15)
     {
-      bpbackground();
-      battleP1();
-      battleP2();
-      spawn();
+      bpbackground(); 
+      battleP1(); 
+      battleP2(); 
+      spawn(); 
       image(bp[7], enemy[enemyCount].x, enemy[enemyCount].y);
-
+    }
+    for (int i = 0; i < enemy.length; i++) {
+      if (enemy[i].health <= 0)
+        enemy[i].dead = true;
     }
   }
 
@@ -532,10 +516,10 @@ class Battle
         if (willRun)
 
         {
-          screen = 5;
-          willRun = false;
-          encounter = false;
-          world.gracePeriod = false;
+          screen = 5; 
+          willRun = false; 
+          encounter = false; 
+          world.gracePeriod = false; 
           world.encounterPer = 100;
         } else if (willRun == false)
         {

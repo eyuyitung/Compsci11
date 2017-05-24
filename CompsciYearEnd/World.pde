@@ -16,6 +16,7 @@ class World
   boolean options;
   boolean exit; // will exit to main menu
   boolean closed = true;
+  boolean empty = false;
   int floor = 1; 
   int room = 45; // room numbers are row / column ex. 45 = row 4, col 5 (see drawings for map) 
   int speed = 10;
@@ -135,32 +136,31 @@ class World
       {
         index = int(random(mobName.length));
 
-        enemy[i] = new Entity(mobName[index], level, i, index,0,0, true);
-         
+        enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
       }
       enemy[0].x = 690;
       enemy[0].y = 235;
-      
+
       enemy[1].x = 570;
       enemy[1].y = 235;
-      
+
       enemy[2].x = 690;
       enemy[2].y = 350;
-      
+
       enemy[3].x = 570;
       enemy[3].y = 350;
     }
   }
-  
+
   void expLevelup()
   {
-    for(int i = 1; i <= 10; i++)
+    for (int i = 1; i <= 10; i++)
     {
-      if(player[0].exper > (50 + i * 50) && level == i)
+      if (player[0].exper > (50 + i * 50) && level == i)
       {
         level = i + 1;
         player[0].exper = 0;
-      } 
+      }
     }
   }
 
@@ -446,7 +446,7 @@ class World
         break;
       case 45 : // starting room
         dp [3] = true;
-        
+
         break;
       default :
         background(255);
@@ -540,38 +540,40 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-  
+
   void chest()
   {
-    int amount;
-    int item;
+    int amount = (int)random(6);
+    int item; 
     int state;
-    
-    if (xpos >= 360 && xpos <= 440 && ypos >= 440 && ypos <= 520) {
-      println("in Bounds");
-      if (enter)
-        state = 7;
-        
+    // if (items.inv[4] > 0) {
+    if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
+      if (enter) 
+        closed = false;
     }
-    
-     
     if (closed)
       state = 6;
-    else 
+    else {
       state = 7;
-    rImages[state].resize(50,40);
-    image(rImages[state],475,430);
-    
-    
-    
-    
-    
+      if (empty == false) {
+        for (int i = 1; i <= amount; i++) {
+          item = (int)random(5);
+          items.inv[item] += 1;
+          empty = true;
+        }
+      }
+    }
+
+
+    //  }
+    rImages[state].resize(50, 40);
+    image(rImages[state], 475, 430);
   }
-  
-  
-  
-  
-  
+
+
+
+
+
   //////////////////////////////////////////////////////////////////////////////////
 
   void inventory() {
@@ -640,12 +642,12 @@ class World
     if (mr && (mExit.contains(mx, my) || mNo.contains(mx, my)) && frameCount > mDelay) 
       exit = false;
     if (mr && mYes.contains(mx, my)) {
-      screen = 0;
-      exit = false;
-      inGameMenu = false;
+      //screen = 0;
+      //exit = false;
+      //inGameMenu = false;
+      exit();
     }
     stroke(255);
     fill(255);
-    
   }
 }
