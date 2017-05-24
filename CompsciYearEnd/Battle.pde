@@ -1,4 +1,4 @@
-//<>// //<>// //<>// //<>//
+//<>// //<>// //<>// //<>// //<>//
 
 class Battle
 {
@@ -335,7 +335,7 @@ class Battle
           {
             if (player[j].attackmove == 1 && critTrigger == false)
             {
-<<<<<<< HEAD
+
               enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
               willHit = false;
               screen = 14;
@@ -353,34 +353,28 @@ class Battle
               screen = 15;
               delay(200);
               screen = 10;
-=======
-              enemy[i].health = (enemy[i].health - (player[j].attack - enemy[i].defence)); 
+
+              //enemy[i].health = (enemy[i].health - (player[j].attack - enemy[i].defence)); 
               willHit = false;
-            } else if (player[j].attackmove == 1 && critTrigger == true)
-            {
-              enemy[i].health = (enemy[i].health - (round(player[j].attack * player[j].critMult) - enemy[i].defence)); 
-              critTrigger = false; 
-              willHit = false;
->>>>>>> origin/elements
-            } else if (player[j].attackmove == 2 && critTrigger == false)
+            }  else if (player[j].attackmove == 2 && critTrigger == false)
             {
               player[j].stamina -= 2; 
               enhancedAtt = (round(player[j].attack * 1.5)); 
-<<<<<<< HEAD
+
               enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
-=======
-              enemy[i].health = (enemy[i].health - (enhancedAtt - enemy[i].defence)); 
->>>>>>> origin/elements
+
+            
+
               willHit = false;
             } else if (player[j].attackmove == 2 && critTrigger == true)
             {
               player[j].stamina -=2; 
               enhancedAtt = (round((player[j].attack * 1.5)*player[j].critMult)); 
-<<<<<<< HEAD
+
               enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
-=======
-              enemy[i].health = (enemy[i].health - (enhancedAtt - enemy[i].defence)); 
->>>>>>> origin/elements
+
+
+
               critTrigger = false; 
               willHit = false;
             }
@@ -438,11 +432,11 @@ class Battle
   {
     if (frameCount < world.bDelay)
       screen = 10;
-      
+
     screenSwitch(); 
     attackHitbox(); 
     entityDeath(); 
-<<<<<<< HEAD
+
     println("enemy1hp = " + enemy[0].health); 
     println("enemy2hp = " + enemy[1].health); 
     println(enemyCount); 
@@ -451,14 +445,14 @@ class Battle
 
 
 
-=======
+
     //println("enemy1hp = " + enemy[0].health); 
     //println("enemy2hp = " + enemy[1].health); 
     //println(critCount); 
 
 
 
->>>>>>> origin/elements
+
     if (count == 2)
     {
       count = 0; 
@@ -505,7 +499,6 @@ class Battle
       battleP2(); 
       battleItems(); 
       spawn();
-<<<<<<< HEAD
     } else if (screen == 14)
     {
       bpbackground();
@@ -520,8 +513,6 @@ class Battle
       battleP2();
       spawn();
       image(bp[7], enemy[enemyCount].x, enemy[enemyCount].y);
-=======
->>>>>>> origin/elements
     }
   }
 
@@ -545,26 +536,25 @@ class Battle
       } else if (screen == 10 && runTab.contains(mx, my))
       {
         isRun(); 
-<<<<<<< HEAD
+
         if (willRun == true)
-=======
-        if (willRun)
->>>>>>> origin/elements
-        {
-          screen = 5;
-          willRun = false;
-          encounter = false;
-          world.gracePeriod = false;
-<<<<<<< HEAD
-=======
-          world.encounterPer = 100;
->>>>>>> origin/elements
-        } else if (willRun == false)
-        {
-          player[count].playerSelect = true; 
-          count++; 
-          attackSelected();
-        }
+
+          if (willRun)
+
+          {
+            screen = 5;
+            willRun = false;
+            encounter = false;
+            world.gracePeriod = false;
+
+
+            world.encounterPer = 100;
+          } else if (willRun == false)
+          {
+            player[count].playerSelect = true; 
+            count++; 
+            attackSelected();
+          }
       } else if (screen == 11 && oattackTab.contains(mx, my) == false)
       {
         screen = 10;

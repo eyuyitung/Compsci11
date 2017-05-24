@@ -89,9 +89,9 @@ class Entity
     this(0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, false, 0, 0);
   }
 
-<<<<<<< HEAD
 
-=======
+
+
   void copyInto (Entity n){
     attack= n.attack;
     defence= n.defence;
@@ -116,7 +116,7 @@ class Entity
     
     
   }
->>>>>>> origin/elements
+
   /*
  // used to correspond the stats with the stats of the player
    Entity (Entity[] player, float acc)

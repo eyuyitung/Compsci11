@@ -49,15 +49,15 @@ void setup() {
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
-<<<<<<< HEAD
+
   player[0] = new Entity(level, 10);
   player[0].name = "Adam";
   player[1] = new Entity(level, 11);
-=======
+
   player[0] = new Entity(level,10);
   player[0].name = "Adam";
   player[1] = new Entity(level,11);
->>>>>>> origin/elements
+
   player[1].name = "Someguy";
   playerMax[0] = new Entity();
   playerMax[1] = new Entity();

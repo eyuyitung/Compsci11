@@ -95,12 +95,12 @@ class World
   void display()
   {
     playerEncounter();
-<<<<<<< HEAD
+
     expLevelup();
     //println(steps);
-=======
 
->>>>>>> origin/elements
+
+
     backDrop(); // display background
     info(); // display health and exp
     //  grid();
@@ -126,11 +126,11 @@ class World
 
 
 
-<<<<<<< HEAD
+
     if (encounterPer == encounterVal && encounter == false)
-=======
+
     if (encounter == false && encounterPer == encounterVal )
->>>>>>> origin/elements
+
     {
       encounter = true; 
       steps = 0;
@@ -138,12 +138,12 @@ class World
       for (int i = 0; i < enemy.length; i++)
       {
         index = int(random(mobName.length));
-<<<<<<< HEAD
+
         enemy[i] = new Entity(mobName[index], level, i, index,0,0, true);
-=======
-        enemy[i] = new Entity(mobName[index], 1, i, index);
+
+
         println("swap");
->>>>>>> origin/elements
+
       }
       enemy[0].x = 690;
       enemy[0].y = 235;
