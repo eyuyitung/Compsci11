@@ -154,12 +154,14 @@ class Battle
     {
       screen = 6;
     }
-    
+
     if (true && enemy[0].dead && enemy[1].dead && enemy[2].dead && enemy[3].dead)
     {
       screen = 10;
       world.gracePeriod = true;
       encounter = false;
+      Player2.pause();
+      Player.loop();
       for (int j = 0; j < enemy.length; j ++)
         player[0].exper += enemy[j].exper;
     }
@@ -521,6 +523,8 @@ class Battle
           encounter = false; 
           world.gracePeriod = false; 
           world.encounterPer = 100;
+          Player2.pause();
+          Player.loop();
         } else if (willRun == false)
         {
           player[count].playerSelect = true; 

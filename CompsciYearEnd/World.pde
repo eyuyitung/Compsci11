@@ -136,6 +136,8 @@ class World
       {
         index = int(random(mobName.length));
         enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
+        Player.pause();
+        Player2.loop();
       }
       enemy[0].x = 690;
       enemy[0].y = 235;

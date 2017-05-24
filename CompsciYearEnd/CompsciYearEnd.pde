@@ -5,12 +5,19 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
 /*compsci year end assignment
  group Eric, Brian, Kaizen
  assignement due may 24th
  */
 
-Minim minim, minim2, minim3;
+Minim minim;
 AudioPlayer Player, Player2, Player3;
 
 
@@ -27,7 +34,7 @@ String[] mobName = {"Goblin", "Hellhound", "Skeleton"};
 int index;
 int level = 1;
 int j;
-int fr = 32; //frame rate of main menu, must be multiple of 8
+int fr = 64; //frame rate of main menu, must be multiple of 8
 int mx = -1;
 int my = -1;
 int x1 = 715;
@@ -54,24 +61,14 @@ Items items = new Items();
 Battle battlephase;
 
 void setup() {
-  size(1000, 800);
-  if (screen <= 3)
-  {
-   minim = new Minim(this);
-   Player = minim.loadFile("lavender.mp3");
-   Player.play();
-   Player.loop();
-  }
-  
-  if (encounter == true)
-  {
-   Player.pause();
-   minim2 = new Minim(this);
-   Player2 = minim2.loadFile("battle.mp3.mp3");
-   Player2.loop();
-  }
-  
+  size(1000, 800);  
   frameRate(fr);
+   
+  minim = new Minim(this);
+  Player = minim.loadFile("lavender.mp3");
+  Player2 = minim.loadFile("battle.mp3");
+  Player.play();
+  
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
@@ -115,7 +112,7 @@ void setup() {
 void draw() 
 {
   player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
-
+  
   //main menu
   if (screen <= 3)
     main.display();
@@ -127,13 +124,12 @@ void draw()
 
   mx = mouseX;
   my = mouseY; 
-  
-  
-  main.mr = battlephase.mr = false;
-  
 
-  
+
+  main.mr = battlephase.mr = false;
 }
+
+
 
 
 void keyPressed() {
@@ -207,13 +203,12 @@ void keyReleased() {
 }
 /*
 void mouseClicked()
-{
+ {
  if (screen > 3)
-  println(mx +" " + my); 
-}
-*/
+ println(mx +" " + my); 
+ }
+ */
 void mouseReleased()
 {
   main.mr = world.mr = battlephase.mr = true;
-  
 } 
