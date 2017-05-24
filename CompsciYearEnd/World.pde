@@ -135,7 +135,6 @@ class World
       for (int i = 0; i < enemy.length; i++)
       {
         index = int(random(mobName.length));
-
         enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
       }
       enemy[0].x = 690;
