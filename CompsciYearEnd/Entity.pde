@@ -56,6 +56,10 @@ class Entity
     this(l*10, l*5, l*5, l*60, 5, 100, 15, 50, "", 0, 1.0, 0, 0, en, false, 0, 0);
   }
 
+  Entity () //player
+  {  
+    this(0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, false, 0, 0);
+  }
 
   void copyInto (Entity n){
     attack= n.attack;

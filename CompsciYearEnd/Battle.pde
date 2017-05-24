@@ -1,4 +1,4 @@
-//<>// //<>// //<>//
+//<>// //<>// //<>// //<>//
 
 class Battle
 {
@@ -89,15 +89,22 @@ class Battle
   //HP, Stamina bar
   void battleP2()
   {
+
     image(bp[2], 0, 0);
-    textAlign(TOP, TOP);
-    textSize(20);
-    text(player[0].health, 560, 560);
-    text(playerMax[0].health, 612, 560);
-    text(player[0].name, 860, 560);
-    text(player[1].health, 560, 685);
-    text(playerMax[1].health, 612, 685);
-    text(player[1].name, 860, 685);
+    textAlign(LEFT, BOTTOM);
+    textSize(16);
+    fill(255, 0, 0);
+    if (player[0].health >=0)
+      rect (326, 561, 521 * (1.0*player[0].health/playerMax[0].health), 22);
+    fill(255);
+    text(player[0].health + " / " + playerMax[0].health, 330, 560);
+    text(player[0].name, 860, 585);
+    fill(255, 0, 0);
+    if (player[1].health >=0)
+      rect (326, 686, 521* (1.0*player[1].health/playerMax[1].health), 22);
+    fill(255);
+    text(player[1].health + " / " + playerMax[1].health, 330, 685);
+    text(player[1].name, 860, 710);
   }
   //Enemy selection UI
   void battleP3()
@@ -160,7 +167,7 @@ class Battle
 
   void spawn()
   {
-     
+
     image(mobPic[enemy[0].mobNumber], 690, 235);
     image(mobPic[enemy[2].mobNumber], 690, 350);
     image(mobPic[enemy[1].mobNumber], 570, 235);
@@ -205,7 +212,7 @@ class Battle
 
   void switchTarget()
   {
-    for (int i = 0; i <player.length; i++)
+    for (int i = 0; i < enemy.length; i++)
     {
       if (player[0].health < 0)
       {
@@ -389,6 +396,7 @@ class Battle
   {
     if (frameCount < world.bDelay)
       screen = 10;
+      
     screenSwitch(); 
     attackHitbox(); 
     entityDeath(); 
