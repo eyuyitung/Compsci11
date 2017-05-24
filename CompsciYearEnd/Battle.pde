@@ -8,6 +8,7 @@ class Battle
   PImage bpback;
   PImage [] bp = new PImage [10];
   PImage[] mobPic = new PImage [4];
+  
   int screen = 10;
   int enhancedAtt;
   int critCount;
@@ -147,12 +148,15 @@ class Battle
       screen = 6;
     }
 
-
+    //xp distribution
     for (int i = 0; i < enemy.length; i++)
     {
+      
       if (enemy[i].health < 0)
       {
+        
         j++;
+        
         player[0].exper += enemy[i].exper;
       }
     }
@@ -162,6 +166,8 @@ class Battle
       world.gracePeriod = true;
       encounter = false;
       j = 0;
+      
+      
     }
   }
 

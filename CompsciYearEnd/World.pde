@@ -15,6 +15,7 @@ class World
   boolean stats; 
   boolean options;
   boolean exit; // will exit to main menu
+  boolean closed = true;
   int floor = 1; 
   int room = 45; // room numbers are row / column ex. 45 = row 4, col 5 (see drawings for map) 
   int speed = 10;
@@ -80,6 +81,8 @@ class World
     rImages[3] = loadImage("HoleDoorleft.png"); // left door
     rImages[4] = loadImage("StockRoom.png"); // background
     rImages[5] = loadImage("wall.jpg"); //
+    rImages[6] = loadImage("ClosedChest.png");
+    rImages[7] = loadImage("OpenChest.png");
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +93,7 @@ class World
     loadRoom();
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
+  ////////////////// DISPLAY ////////////////////////////////////////////////////////////////
 
   void display()
   {
@@ -98,7 +101,7 @@ class World
 
     backDrop(); // display background
     info(); // display health and exp
-    //  grid();
+    grid();
     room(); // display world elements
     if (inGameMenu == false && encounter == false)
       move();
@@ -130,7 +133,7 @@ class World
       {
         index = int(random(mobName.length));
         enemy[i] = new Entity(mobName[index], 1, i, index);
-        println("swap");
+        
       }
     }
   }
@@ -169,7 +172,7 @@ class World
     }
     pFrames[b + frame].resize(40, 60);
     image(pFrames[b + frame], x, y);
-    println(xpos+ " " + ypos +  " " + player[0].health + " " + playerMax[0].health  + " " + encounter + " " + gracePeriod);
+    //println(xpos+ " " + ypos +  " "/* +  + " "*/ + encounter + " " + gracePeriod);
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -366,6 +369,7 @@ class World
 
   void room() { // room # system working like coordinates 24 = row 2 column 4
     checkDoor();
+    chest();
     dp [0] = dp [1] = dp [2] = dp [3] = false;
     if (floor == 1)
     {
@@ -416,6 +420,7 @@ class World
         break;
       case 45 : // starting room
         dp [3] = true;
+        
         break;
       default :
         background(255);
@@ -509,6 +514,39 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
+  
+  void chest()
+  {
+    int amount;
+    int item;
+    int state;
+    
+    if (xpos >= 360 && xpos <= 440 && ypos >= 440 && ypos <= 520) {
+      println("in Bounds");
+      if (enter)
+        state = 7;
+        
+    }
+    
+     
+    if (closed)
+      state = 6;
+    else 
+      state = 7;
+    rImages[state].resize(50,40);
+    image(rImages[state],475,430);
+    
+    
+    
+    
+    
+  }
+  
+  
+  
+  
+  
+  //////////////////////////////////////////////////////////////////////////////////
 
   void inventory() {
 
@@ -582,5 +620,6 @@ class World
     }
     stroke(255);
     fill(255);
+    
   }
 }
