@@ -58,13 +58,17 @@ void setup() {
   size(1000, 800);  
   frameRate(fr);
 
-  /*minim = new Minim(this);
+  minim = new Minim(this);
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
+<<<<<<< HEAD
 <<<<<<< HEAD
   Player.loop();
 =======
   Player3 = minim.loadFile("chest.mp3");*/
+=======
+  Player3 = minim.loadFile("chest.mp3");
+>>>>>>> origin/elements
   
 >>>>>>> origin/elements
 

@@ -1,7 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
  //<>// //<>//
 =======
 //<>// //<>//
+>>>>>>> origin/elements
+=======
+//<>// //<>// //<>//
 >>>>>>> origin/elements
 
 class Battle
@@ -216,10 +220,12 @@ class Battle
     {
       if (enemy[enemyCount].dead == false)
       {
+        mobPic[enemy[enemyCount].mobNumber].resize(150,150);
         image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
       }
     }
     for (int i = 0; i < player.length; i++) {
+      bp[10].resize(200,200);
       if (player[i].dead == false)
         image(bp[i+10], 100, 275 + i*75);
     }
@@ -587,7 +593,8 @@ class Battle
           world.gracePeriod = false; 
           world.encounterPer = 100;
 
-          if (muteMusic) {
+
+          if (!muteMusic) {
             Player2.pause();
             Player.loop();
           }
