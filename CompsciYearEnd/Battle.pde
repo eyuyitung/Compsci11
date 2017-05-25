@@ -484,6 +484,7 @@ class Battle
     }
     if (aSelect) {
       for (int j = 0; j < player.length; j++) {
+        bpbackground();
         for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
         {
           int frame = 0;
@@ -493,11 +494,12 @@ class Battle
             aBuffer = 8;
           for (int i = aBuffer; i <= aBuffer + 1; i++) {
             bp[i].resize(300, 300);
-            if (frameCount >= fDelay - fr/2 && frame <= 1)
-              frame++;            
             image(bp[frame + aBuffer], enemy[enemyCount].x - 100, enemy[enemyCount].y + 50);
-            image(mobPic[enemy[enemyCount].mobNumber + 4], enemy[enemyCount].x, enemy[enemyCount].y);
-            
+            if (frameCount >= fDelay - fr/2 && frame <= 1){
+              frame++;            
+              println(frame);
+              image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y);  
+            }   
           }
         }
       }
