@@ -555,13 +555,8 @@ class World
     int state = 6;
     if (items.inv[4] > 0) {
       if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
-        if (enter){ 
+        if (enter) 
           closed = false;
-          Player.pause();
-          Player3.play();
-          Player.rewind();
-          Player.loop();
-        }    
       }
       if (closed)
         state = 6;
