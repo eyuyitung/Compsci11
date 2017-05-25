@@ -1,4 +1,4 @@
-//<>// //<>// //<>// //<>// //<>//
+//<>// //<>// //<>// //<>// //<>// //<>//
 
 class Battle
 {
@@ -88,6 +88,11 @@ class Battle
 
   void defeatScreen()
   {
+    textSize(60);
+    textAlign(CENTER, CENTER)
+      fill(255, 0, 0);
+    println("YOU DIED HAHA", width/2, height/2);
+    fill(255);
   }
 
   //Action tab
@@ -95,10 +100,11 @@ class Battle
   {
     image(bp[1], 0, 0);
   }
+
+
   //HP, Stamina bar
   void battleP2()
   {
-
     image(bp[2], 0, 0);
     textAlign(LEFT, BOTTOM);
     textSize(16);
@@ -115,6 +121,8 @@ class Battle
     text(player[1].health + " / " + playerMax[1].health, 330, 685);
     text(player[1].name, 860, 710);
   }
+
+
   //Enemy selection UI
   void battleP3()
   {
@@ -125,17 +133,23 @@ class Battle
     text(enemy[0].name, 860, 560);
     text(enemy[1].name, 760, 560);
   }
+
+
   //Battlephase background
   void bpbackground()
   {
     image(bpback, 0, 0);
   }
+
+
   //Different attack UI
   void battleAttack()
   {
     image(bp[3], 0, 0);
   }
 
+
+  //items tab
   void battleItems()
   {
     image(bp[5], 0, 0);
@@ -428,60 +442,36 @@ class Battle
     attackHitbox(); 
     entityDeath(); 
 
-    //  println("enemy1hp = " + enemy[0].health); 
-    // println("enemy2hp = " + enemy[1].health); 
-    // println(enemyCount); 
-
-
-
     if (count == 2)
     {
       count = 0; 
       player[0].playerSelect = false; 
       player[1].playerSelect = false;
     }
+    bpbackground();
     if (screen == 6)
     {
-      bpbackground(); 
       defeatScreen();
     }
-
-
-
-
-    if (screen == 10)
-    {
-
-
-      bpbackground(); 
-      battleP1(); 
-      battleP2(); 
+    if (screen >=10 && screen <=13) {
+      battleP1();
       spawn();
-    } else if (screen == 11)
-    {
-
-      bpbackground(); 
-      battleP1(); 
-      battleP2(); 
-      battleAttack(); 
-      spawn();
-    } else if (screen == 12)
-    {
-
-      bpbackground(); 
-      battleP1(); 
-      battleP3(); 
-      spawn();
-    } else if (screen == 13)
-    { 
-
-      bpbackground(); 
-      battleP1(); 
-      battleP2(); 
-      battleItems(); 
-      spawn();
+      if (screen == 10)
+      { 
+        battleP2();
+      } else if (screen == 11)
+      { 
+        battleP2(); 
+        battleAttack();
+      } else if (screen == 12)
+      {
+        battleP3();
+      } else if (screen == 13)
+      { 
+        battleP2(); 
+        battleItems();
+      }
     }
-
     for (int i = 0; i < enemy.length; i++) {
       if (enemy[i].health <= 0)
         enemy[i].dead = true;
@@ -520,8 +510,7 @@ class Battle
           Player2.pause();
           if (muteMusic)
             Player.loop();
-        } 
-        else if (!willRun)
+        } else if (!willRun)
         {
           player[count].playerSelect = true; 
           count++; 
