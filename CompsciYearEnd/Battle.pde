@@ -1,4 +1,8 @@
+<<<<<<< HEAD
  //<>// //<>//
+=======
+//<>// //<>//
+>>>>>>> origin/elements
 
 class Battle
 {
@@ -177,8 +181,10 @@ class Battle
     if (player[0].playerSelect == true && player[1].playerSelect == true)
     {
       speedPriority();
-      aSelect = true;
-      fDelay = frameCount + fr;
+      if (!willRun) {
+        aSelect = true;
+        fDelay = frameCount + fr;
+      }
     }
   }
 
@@ -205,6 +211,7 @@ class Battle
 
   void spawn()
   {
+    enemyCount = 0;
     for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
     {
       if (enemy[enemyCount].dead == false)
@@ -400,18 +407,6 @@ class Battle
                 critTrigger = false;
               }
             }
-            /*
-            if (player[j].attackmove == 1)
-             aBuffer = 6;
-             else if (player[j].attackmove == 2)
-             aBuffer = 8;
-             for (int i = aBuffer; i <= aBuffer + 1; i++) {
-             bp[i].resize(300, 300);
-             image(bp[i], enemy[enemyCount].x - 50, enemy[enemyCount].y + 50);
-             delay(1000);
-             }
-             */
-
             if (player[j].attackmove == 4)           
             {
               isBlock();
@@ -503,11 +498,12 @@ class Battle
     }
     if (aSelect) {
       for (int j = 0; j < player.length; j++) {
-        bpbackground();
-        for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
+        
+        for (int h = 0; h < 4; h++)
         {
           
           int frame = 0;
+<<<<<<< HEAD
           if (player[j].attackmove == 1)
             aBuffer = 6;
           else if (player[j].attackmove == 2)
@@ -519,19 +515,49 @@ class Battle
               frame++;            
               println(frame);
               image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y);
+=======
+          if (player[j].enemyTarget == enemy[h].entityNumber) {            
+            if (player[j].attackmove == 1)
+              aBuffer = 6;
+            else if (player[j].attackmove == 2)
+              aBuffer = 8;
+            for (int i = aBuffer; i <= aBuffer + 1; i++) {
+              bp[i].resize(300, 300);
+              println(enemyCount);
+              bpbackground();
+              
+              image(bp[frame + aBuffer], enemy[h].x - 100, enemy[h].y + 50); // sword swing
+              
+              if (frameCount >= fDelay - fr/2) {
+                frame++;
+              }
+            }
+            spawn();
+            if (enemy[h].dead == false) {
+              if (frameCount >= fDelay - fr/2) 
+                image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
+>>>>>>> origin/elements
             }
           }
         }
+        if (frameCount > fDelay)
+          aSelect = false;
       }
+      for (int i = 0; i < enemy.length; i++) {
+        if (enemy[i].health <= 0)
+          enemy[i].dead = true;
+      }
+<<<<<<< HEAD
       if (frameCount > fDelay)
         aSelect = false;
     }
     for (int i = 0; i < enemy.length; i++) {
       if (enemy[i].health <= 0)
         enemy[i].dead = true;
+=======
+>>>>>>> origin/elements
     }
   }
-
 
   void screenSwitch()
   {
@@ -542,6 +568,7 @@ class Battle
         screen = 11;
       } else if (screen == 10 && itemsTab.contains(mx, my))
       {
+
         screen = 13;
       } else if (screen == 10 && blockTab.contains(mx, my))
       {
@@ -551,9 +578,7 @@ class Battle
         attackSelected();
       } else if (screen == 10 && runTab.contains(mx, my))
       {
-        isRun(); 
-
-
+        isRun();
         if (willRun)
         {
           screen = 5; 
@@ -561,9 +586,11 @@ class Battle
           encounter = false; 
           world.gracePeriod = false; 
           world.encounterPer = 100;
-          Player2.pause();
-          if (muteMusic)
+
+          if (muteMusic) {
+            Player2.pause();
             Player.loop();
+          }
         } else if (!willRun)
         {
           player[count].playerSelect = true; 
