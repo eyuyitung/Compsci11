@@ -71,6 +71,7 @@ void setup() {
   player[0] = new Entity(level, 10);
   player[0].name = "Adam";
   player[1] = new Entity(level, 11);
+
   player[1].name = "Someguy";
   playerMax[0] = new Entity();
   playerMax[1] = new Entity();

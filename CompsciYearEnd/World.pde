@@ -99,7 +99,6 @@ class World
   void display()
   {
     playerEncounter();
-
     expLevelup();
     backDrop(); // display background
     info(); // display health and exp
@@ -127,6 +126,7 @@ class World
 
 
 
+
     if (encounter == false && encounterPer == encounterVal )
     {
       encounter = true; 
@@ -134,7 +134,6 @@ class World
       bDelay = frameCount + fr/4;
       for (int i = 0; i < enemy.length; i++)
       {
-        index = int(random(mobName.length));
         enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
         if (muteMusic == false) {
         Player.pause();

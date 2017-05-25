@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+//<>// //<>// //<>// //<>// //<>//
+=======
 //<>// //<>// //<>// //<>// //<>// //<>//
+>>>>>>> 6ff272ca29f323c749926ee11917657f9eca1738
 
 class Battle
 {
@@ -356,7 +360,7 @@ class Battle
 
           if (willHit == true)
           {
-            if (player[j].attackmove == 1 ) {
+           if (player[j].attackmove == 1 ) {
               if (critTrigger == false)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
@@ -409,6 +413,7 @@ class Battle
             if (player[j].attackmove == 4)           
             {
               isBlock();
+
             }
             willHit = false;
           }
@@ -456,14 +461,15 @@ class Battle
   void display()
   {
     if (frameCount < world.bDelay)
-      screen = 10; 
+     screen = 10; 
     bpbackground(); 
+
 
     screenSwitch(); 
     attackHitbox(); 
     entityDeath(); 
 
-    if (count == 2)
+if (count == 2)
     {
       count = 0; 
       player[0].playerSelect = false; 
@@ -475,6 +481,7 @@ class Battle
       defeatScreen();
     }
     if (screen >=10 && screen <=13) {
+
       battleP1();
       spawn();
       if (screen == 10)
@@ -543,6 +550,8 @@ class Battle
       } else if (screen == 10 && runTab.contains(mx, my))
       {
         isRun(); 
+
+
         if (willRun)
         {
           screen = 5; 
