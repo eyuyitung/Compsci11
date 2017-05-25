@@ -17,7 +17,7 @@ AudioPlayer Player, Player2, Player3;
 boolean encounter;
 boolean up, down, left, right, shift, enter, back, esc;
 boolean muteMusic = true;
-int screen = 0;
+int screen = 5;
 World world;
 float encounterPer;
 PImage characterS;
@@ -58,10 +58,10 @@ void setup() {
   size(1000, 800);  
   frameRate(fr);
 
-  /*minim = new Minim(this);
+  minim = new Minim(this);
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
-  Player3 = minim.loadFile("chest.mp3");*/
+  Player3 = minim.loadFile("chest.mp3");
   
 
   characterS = loadImage("characterS.gif");

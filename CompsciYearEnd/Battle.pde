@@ -1,4 +1,4 @@
- //<>//
+//<>// //<>//
 
 class Battle
 {
@@ -201,14 +201,17 @@ class Battle
 
   void spawn()
   {
+    enemyCount = 0;
     for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
     {
       if (enemy[enemyCount].dead == false)
       {
+        mobPic[enemy[enemyCount].mobNumber].resize(150,150);
         image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
       }
     }
     for (int i = 0; i < player.length; i++) {
+      bp[10].resize(200,200);
       if (player[i].dead == false)
         image(bp[i+10], 100, 275 + i*75);
     }
@@ -487,23 +490,29 @@ class Battle
     }
     if (aSelect) {
       for (int j = 0; j < player.length; j++) {
-        for (enemyCount = 0; enemyCount < 4; enemyCount++)
+        
+        for (int h = 0; h < 4; h++)
         {
+          
           int frame = 0;
-          if (player[j].enemyTarget == enemy[enemyCount].entityNumber) {            
+          if (player[j].enemyTarget == enemy[h].entityNumber) {            
             if (player[j].attackmove == 1)
               aBuffer = 6;
             else if (player[j].attackmove == 2)
               aBuffer = 8;
             for (int i = aBuffer; i <= aBuffer + 1; i++) {
               bp[i].resize(300, 300);
-              image(bp[frame + aBuffer], enemy[enemyCount].x - 100, enemy[enemyCount].y + 50); // sword swing
+              println(enemyCount);
+              bpbackground();
+              
+              image(bp[frame + aBuffer], enemy[h].x - 100, enemy[h].y + 50); // sword swing
+              
               if (frameCount >= fDelay - fr/2) {
-                frame++;            
-                println(frame);
+                frame++;
               }
-            }         
-            if (enemy[enemyCount].dead == false) {
+            }
+            spawn();
+            if (enemy[h].dead == false) {
               if (frameCount >= fDelay - fr/2) 
                 image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
             }
@@ -531,52 +540,41 @@ class Battle
 
         screen = 13;
       } else if (screen == 10 && blockTab.contains(mx, my))
-
-        screen = 5; 
-      willRun = false; 
-      encounter = false; 
-      world.gracePeriod = false; 
-      world.encounterPer = 100;
-      /*Player2.pause();
-       if (muteMusic)
-       Player.loop();*/
-    } else if (!willRun)
-
-    {
-      player[count].attackmove = 4; 
-      player[count].playerSelect = true; 
-      count++; 
-      attackSelected();
-    } else if (screen == 10 && runTab.contains(mx, my))
-    {
-      isRun(); 
-
-
-      if (willRun)
       {
-        screen = 5; 
-        willRun = false; 
-        encounter = false; 
-        world.gracePeriod = false; 
-        world.encounterPer = 100;
-        Player2.pause();
-        if (muteMusic)
-          Player.loop();
-      } else if (!willRun)
-      {
+        player[count].attackmove = 4; 
         player[count].playerSelect = true; 
         count++; 
         attackSelected();
+      } else if (screen == 10 && runTab.contains(mx, my))
+      {
+        isRun();
+        if (willRun)
+        {
+          screen = 5; 
+          willRun = false; 
+          encounter = false; 
+          world.gracePeriod = false; 
+          world.encounterPer = 100;
+
+          if (!muteMusic) {
+            Player2.pause();
+            Player.loop();
+          }
+        } else if (!willRun)
+        {
+          player[count].playerSelect = true; 
+          count++; 
+          attackSelected();
+        }
+      } else if (screen == 11 && oattackTab.contains(mx, my) == false)
+      {
+        screen = 10;
+      } else if (screen == 13 && oitemsTab.contains(mx, my) == false)
+      {
+        screen = 10;
       }
-    } else if (screen == 11 && oattackTab.contains(mx, my) == false)
-    {
-      screen = 10;
-    } else if (screen == 13 && oitemsTab.contains(mx, my) == false)
-    {
-      screen = 10;
     }
   }
-
 
   void attackHitbox()
   {
