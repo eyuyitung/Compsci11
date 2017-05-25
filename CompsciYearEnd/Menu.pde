@@ -163,7 +163,7 @@ class Menu
           player[0].defence = round(player[0].defence * 1.5);
         }
         screen = 5;
-        
+        world.stats = false;
         
       }
       if (screen == 1 && csback.contains(mx, my))

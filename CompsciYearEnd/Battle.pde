@@ -17,6 +17,7 @@ class Battle
   int blockCount;
   int runCount;
   int kills;
+  int fDelay;
   boolean critTrigger;
   boolean willHit;
   boolean willBlock = false;
@@ -76,6 +77,8 @@ class Battle
     bp[5] = loadImage("BattlephaseItems.png");
     bp[6] = loadImage("swing.png");
     bp[7] = loadImage("swing 2.png");
+    bp[8] = loadImage("heavy swing.png");
+    bp[9] = loadImage("heavy swing 2.png");
     bpback = loadImage("battlebackground.png");
     mobPic[0] = loadImage("goblin.png");
     mobPic[1] = loadImage("hellhound.png");
@@ -161,7 +164,9 @@ class Battle
       world.gracePeriod = true;
       encounter = false;
       Player2.pause();
-      Player.loop();
+      Player.rewind();
+      if (muteMusic)
+        Player.loop();
       for (int j = 0; j < enemy.length; j ++)
         player[0].exper += enemy[j].exper;
     }
@@ -323,68 +328,70 @@ class Battle
 
           if (willHit == true)
           {
-            if (player[j].attackmove == 1 && critTrigger == false)
-            {
-
-              enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
-              willHit = false; 
-              screen = 14; 
-              delay(100); 
-              screen = 15; 
-              delay(100); 
-              screen = 10;
-            } else if (player[j].attackmove == 1 && critTrigger == true)
-            {
-              enemy[enemyCount].health = (enemy[enemyCount].health - (round(player[j].attack * player[j].critMult) - enemy[enemyCount].defence)); 
-              critTrigger = false; 
-              willHit = false; 
-              screen = 14; 
-              delay(200); 
-              screen = 15; 
-              delay(200); 
-              screen = 10;
-            } else if (player[j].attackmove == 2 && critTrigger == false)
-            {
-              player[j].stamina -= 2; 
-              enhancedAtt = (round(player[j].attack * 1.5)); 
-
-              enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
-
-              willHit = false;
-            } else if (player[j].attackmove == 2 && critTrigger == true)
-            {
-              player[j].stamina -=2; 
-              enhancedAtt = (round((player[j].attack * 1.5)*player[j].critMult)); 
-
-              enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
-
-              critTrigger = false; 
-              willHit = false;
+            if (player[j].attackmove == 1 ) {
+              if (critTrigger == false)
+              {
+                enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
+                willHit = false; 
+                screen = 14; 
+                delay(100); 
+                screen = 15; 
+                delay(100); 
+                screen = 10;
+              } else if (critTrigger == true)
+              {
+                enemy[enemyCount].health = (enemy[enemyCount].health - (round(player[j].attack * player[j].critMult) - enemy[enemyCount].defence)); 
+                critTrigger = false; 
+                willHit = false; 
+                screen = 14; 
+                delay(200); 
+                screen = 15; 
+                delay(200); 
+                screen = 10;
+              }
+            } else if (player[j].attackmove == 2) {
+              if ( critTrigger == false)
+              {
+                player[j].stamina -= 2; 
+                enhancedAtt = (round(player[j].attack * 1.5)); 
+                enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
+                willHit = false;
+              } else if (critTrigger == true)
+              {
+                player[j].stamina -=2; 
+                enhancedAtt = (round((player[j].attack * 1.5)*player[j].critMult)); 
+                enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
+                critTrigger = false; 
+                willHit = false;
+              }
             }
-          } else
-          {
-            //missed text
-          }
-          if (player[j].attackmove == 3)
-          {
-            isBlock();
+
+            for (int i =6; i <= 7; i++) {
+              bp[i].resize(100, 100);
+              image(bp[i], enemy[enemyCount].x - 10, enemy[enemyCount].y + 50);
+              delay(500);
+            } 
+
+            if (player[j].attackmove == 4)           
+            {
+              isBlock();
+            }
           }
         }
       }
-    }
 
-    for (int i = 0; i < player.length; i++)
-    {
-      if (player[i].stamina < 7 && player[i].attackmove != 3)
+      for (int i = 0; i < player.length; i++)
       {
-        player[i].stamina++;
-      } else if (player[i].attackmove == 3)
-      {
-        player[i].stamina += 2;
+        if (player[i].stamina < 7 && player[i].attackmove != 3)
+        {
+          player[i].stamina++;
+        } else if (player[i].attackmove == 3)
+        {
+          player[i].stamina += 2;
+        }
       }
     }
   }
-
   void speedPriority()
   {
     for (int i = 0; i < player.length; i++)
@@ -473,21 +480,8 @@ class Battle
       battleP2(); 
       battleItems(); 
       spawn();
-    } else if (screen == 14)
-    {
-      bpbackground(); 
-      battleP1(); 
-      battleP2(); 
-      spawn(); 
-      image(bp[6], enemy[enemyCount].x, enemy[enemyCount].y);
-    } else if (screen == 15)
-    {
-      bpbackground(); 
-      battleP1(); 
-      battleP2(); 
-      spawn(); 
-      image(bp[7], enemy[enemyCount].x, enemy[enemyCount].y);
     }
+
     for (int i = 0; i < enemy.length; i++) {
       if (enemy[i].health <= 0)
         enemy[i].dead = true;
@@ -507,7 +501,7 @@ class Battle
         screen = 13;
       } else if (screen == 10 && blockTab.contains(mx, my))
       {
-        player[count].attackmove = 3; 
+        player[count].attackmove = 4; 
         player[count].playerSelect = true; 
         count++; 
         attackSelected();
@@ -524,8 +518,10 @@ class Battle
           world.gracePeriod = false; 
           world.encounterPer = 100;
           Player2.pause();
-          Player.loop();
-        } else if (willRun == false)
+          if (muteMusic)
+            Player.loop();
+        } 
+        else if (!willRun)
         {
           player[count].playerSelect = true; 
           count++; 

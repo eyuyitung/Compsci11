@@ -136,8 +136,11 @@ class World
       {
         index = int(random(mobName.length));
         enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
+        if (muteMusic == false) {
         Player.pause();
-        Player2.loop();
+        Player2.rewind();
+        Player2.play();
+        }
       }
       enemy[0].x = 690;
       enemy[0].y = 235;
@@ -308,7 +311,7 @@ class World
       if (inventory)
         inventory();
       else if (stats)
-        stats = false;// stats shit
+        screen = 1;// stats shit
       else if (options)
         options();
       else if (exit)
@@ -319,7 +322,7 @@ class World
       stroke(0);
       textSize(16);
     }
-    if (back)
+    if (back || menu.contains(mx,my) && frameCount > mDelay)
       inGameMenu = false;
   }
 
@@ -514,6 +517,7 @@ class World
           room -= 10;
           ypos = 690;
           down = false;
+          closed = true; //chest
         }
       }
       if (dp[1]) {
@@ -521,6 +525,7 @@ class World
           room += 1;
           xpos = 40;
           left = false;
+          closed = true; //chest
         }
       }
       if (dp[2]) {
@@ -528,6 +533,7 @@ class World
           room += 10;
           ypos = 120;
           up = false;
+          closed = true; //chest
         }
       }
       if (dp[3]) {
@@ -535,6 +541,7 @@ class World
           room -= 1;
           xpos = 920;
           right = false;
+          closed = true; //chest
         }
       }
     }
@@ -546,27 +553,25 @@ class World
   {
     int amount = (int)random(6);
     int item; 
-    int state;
-    // if (items.inv[4] > 0) {
-    if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
-      if (enter) 
-        closed = false;
-    }
-    if (closed)
-      state = 6;
-    else {
-      state = 7;
-      if (empty == false) {
-        for (int i = 1; i <= amount; i++) {
-          item = (int)random(5);
-          items.inv[item] += 1;
-          empty = true;
+    int state = 6;
+    if (items.inv[4] > 0) {
+      if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
+        if (enter) 
+          closed = false;
+      }
+      if (closed)
+        state = 6;
+      else {
+        state = 7;
+        if (empty == false) {
+          for (int i = 1; i <= amount; i++) {
+            item = (int)random(5);
+            items.inv[item] += 1;
+            empty = true;
+          }
         }
       }
     }
-
-
-    //  }
     rImages[state].resize(50, 40);
     image(rImages[state], 475, 430);
   }

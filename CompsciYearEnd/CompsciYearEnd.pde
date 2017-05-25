@@ -1,9 +1,3 @@
-import ddf.minim.*;
-import ddf.minim.analysis.*;
-import ddf.minim.effects.*;
-import ddf.minim.signals.*;
-import ddf.minim.spi.*;
-import ddf.minim.ugens.*;
 
 import ddf.minim.*;
 import ddf.minim.analysis.*;
@@ -20,9 +14,9 @@ import ddf.minim.ugens.*;
 Minim minim;
 AudioPlayer Player, Player2, Player3;
 
-
 boolean encounter;
 boolean up, down, left, right, shift, enter, back, esc;
+boolean muteMusic = true;
 int screen = 0;
 World world;
 float encounterPer;
@@ -63,12 +57,12 @@ Battle battlephase;
 void setup() {
   size(1000, 800);  
   frameRate(fr);
-   
+
   minim = new Minim(this);
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
-  Player.play();
-  
+  Player.loop();
+
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
@@ -76,10 +70,11 @@ void setup() {
   player[0] = new Entity(level, 10);
   player[0].name = "Adam";
   player[1] = new Entity(level, 11);
-
   player[1].name = "Someguy";
   playerMax[0] = new Entity();
   playerMax[1] = new Entity();
+  for (int i = 0; i < 5; i++)
+    items.inv[i]++;
 
   //Name, stamina, attack, accuracy, speed, critMult, crit%
   weapons[0] = new Weapon("Dagger", 9, 2, 90, 50, 2.5, 80);
@@ -98,11 +93,7 @@ void setup() {
     weaponSelection[i] = weapons[i];
   }
 
-
-
-
   main = new Menu();
-
   battlephase = new Battle();
   world = new World();
 }
@@ -112,7 +103,7 @@ void setup() {
 void draw() 
 {
   player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
-  
+
   //main menu
   if (screen <= 3)
     main.display();
@@ -121,7 +112,10 @@ void draw()
     world.display();
   if (encounter == true) 
     battlephase.display();
+  if (muteMusic) {
+    Player.pause();
 
+  }
   mx = mouseX;
   my = mouseY; 
 
