@@ -61,7 +61,8 @@ void setup() {
   minim = new Minim(this);
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
-  Player.loop();
+  Player3 = minim.loadFile("chest.mp3");
+  
 
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
@@ -96,6 +97,7 @@ void setup() {
   main = new Menu();
   battlephase = new Battle();
   world = new World();
+  Player.loop();
 }
 
 
