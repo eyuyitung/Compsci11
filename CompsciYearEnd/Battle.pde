@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-//<>// //<>// //<>// //<>// //<>//
-=======
-//<>// //<>// //<>// //<>// //<>// //<>//
->>>>>>> 6ff272ca29f323c749926ee11917657f9eca1738
+ //<>// //<>//
 
 class Battle
 {
@@ -67,6 +63,12 @@ class Battle
   int[] enemy2x = {760, 825, 825, 760};
   int[] enemy2y = {660, 660, 680, 680};
   Polygon enemy2 = new Polygon(enemy2x, enemy2y, 4);
+  int[] enemy3x = {860, 925, 925, 860};
+  int[] enemy3y = {560, 560, 580, 580};
+  Polygon enemy3 = new Polygon(enemy3x, enemy3y, 4);
+  int[] enemy4x = {760, 825, 825, 760};
+  int[] enemy4y = {560, 560, 580, 580}; 
+  Polygon enemy4 = new Polygon(enemy4x, enemy4y, 4);
 
 
   Battle()
@@ -360,7 +362,7 @@ class Battle
 
           if (willHit == true)
           {
-           if (player[j].attackmove == 1 ) {
+            if (player[j].attackmove == 1 ) {
               if (critTrigger == false)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
@@ -413,7 +415,6 @@ class Battle
             if (player[j].attackmove == 4)           
             {
               isBlock();
-
             }
             willHit = false;
           }
@@ -461,7 +462,7 @@ class Battle
   void display()
   {
     if (frameCount < world.bDelay)
-     screen = 10; 
+      screen = 10; 
     bpbackground(); 
 
 
@@ -469,7 +470,7 @@ class Battle
     attackHitbox(); 
     entityDeath(); 
 
-if (count == 2)
+    if (count == 2)
     {
       count = 0; 
       player[0].playerSelect = false; 
@@ -505,6 +506,7 @@ if (count == 2)
         bpbackground();
         for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
         {
+          
           int frame = 0;
           if (player[j].attackmove == 1)
             aBuffer = 6;
@@ -513,16 +515,16 @@ if (count == 2)
           for (int i = aBuffer; i <= aBuffer + 1; i++) {
             bp[i].resize(300, 300);
             image(bp[frame + aBuffer], enemy[enemyCount].x - 100, enemy[enemyCount].y + 50);
-            if (frameCount >= fDelay - fr/2 && frame <= 1){
+            if (frameCount >= fDelay - fr/2 && frame <= 1) {
               frame++;            
               println(frame);
-              image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y);  
-            }   
+              image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y);
+            }
           }
         }
       }
       if (frameCount > fDelay)
-      aSelect = false;
+        aSelect = false;
     }
     for (int i = 0; i < enemy.length; i++) {
       if (enemy[i].health <= 0)
@@ -615,6 +617,19 @@ if (count == 2)
         screen = 10; 
         count++; 
         attackSelected();
+      } else if (screen == 12 && enemy3.contains(mx, my))
+      {
+
+        player[count].enemyTarget = enemy[2].entityNumber;
+        player[count].playerSelect = true; 
+        screen = 10; 
+        count++;
+      } else if (screen == 12 && enemy4.contains(mx, my))
+      {
+        player[count].enemyTarget = enemy[3].entityNumber;
+        player[count].playerSelect = true; 
+        screen = 10; 
+        count++;
       }
     }
   }
