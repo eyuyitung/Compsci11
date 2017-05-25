@@ -1,4 +1,8 @@
+<<<<<<< HEAD
  //<>//
+=======
+ //<>// //<>//
+>>>>>>> 56199c40a69788d39150b4e9ecde03997f90463f
 
 class Battle
 {
@@ -528,8 +532,20 @@ class Battle
           screen = 11;
         } else if (screen == 10 && itemsTab.contains(mx, my))
         {
+<<<<<<< HEAD
           screen = 13;
         } else if (screen == 10 && blockTab.contains(mx, my))
+=======
+          screen = 5; 
+          willRun = false; 
+          encounter = false; 
+          world.gracePeriod = false; 
+          world.encounterPer = 100;
+          /*Player2.pause();
+          if (muteMusic)
+            Player.loop();*/
+        } else if (!willRun)
+>>>>>>> 56199c40a69788d39150b4e9ecde03997f90463f
         {
           player[count].attackmove = 4; 
           player[count].playerSelect = true; 
@@ -606,4 +622,9 @@ class Battle
         }
       }
     }
+<<<<<<< HEAD
   }
+=======
+  }
+}
+>>>>>>> 56199c40a69788d39150b4e9ecde03997f90463f

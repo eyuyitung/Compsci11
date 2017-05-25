@@ -375,6 +375,29 @@ class Menu
   void help()
   {
     background(21);
+      textSize(60);
+      textAlign(CENTER, 700);
+      fill(255, 255, 255);
+      text("Help", width/2, 100);
+      fill(255);
+      
+      textSize(40);
+      textAlign(150, 200);
+      fill(255, 255, 255);
+      text("-Use WASD or the arrow keys to travel", 50, 200);
+      
+      textSize(40);
+      textAlign(150, 250);
+      fill(255, 255, 255);
+      text("-Press ENTER to interact with treasure chests", 50, 250);
+      
+      textSize(40);
+      textAlign(150, 250);
+      fill(255, 255, 255);
+      text("-The rest of the game (Battles and etc) will be", 50, 300);
+      text(" click based", 50, 350);
+    
+    
   }
   void config()
   {
