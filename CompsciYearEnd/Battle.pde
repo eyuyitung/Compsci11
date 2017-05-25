@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-//<>// //<>// //<>// //<>// //<>//
-=======
-//<>// //<>// //<>// //<>// //<>// //<>//
->>>>>>> 6ff272ca29f323c749926ee11917657f9eca1738
+ //<>// //<>//
 
 class Battle
 {
@@ -559,9 +555,9 @@ if (count == 2)
           encounter = false; 
           world.gracePeriod = false; 
           world.encounterPer = 100;
-          Player2.pause();
+          /*Player2.pause();
           if (muteMusic)
-            Player.loop();
+            Player.loop();*/
         } else if (!willRun)
         {
           player[count].playerSelect = true; 

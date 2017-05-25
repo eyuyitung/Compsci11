@@ -58,10 +58,10 @@ void setup() {
   size(1000, 800);  
   frameRate(fr);
 
-  minim = new Minim(this);
+  /*minim = new Minim(this);
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
-  Player3 = minim.loadFile("chest.mp3");
+  Player3 = minim.loadFile("chest.mp3");*/
   
 
   characterS = loadImage("characterS.gif");
@@ -98,7 +98,7 @@ void setup() {
   main = new Menu();
   battlephase = new Battle();
   world = new World();
-  Player.loop();
+  //Player.loop();
 }
 
 
@@ -116,7 +116,7 @@ void draw()
   if (encounter == true) 
     battlephase.display();
   if (muteMusic) {
-    Player.pause();
+    //Player.pause();
 
   }
   mx = mouseX;
