@@ -8,7 +8,7 @@ class Battle
   boolean mr;
   PImage bpback;
   PImage [] bp = new PImage [15];
-  PImage[] mobPic = new PImage [4];
+  PImage[] mobPic = new PImage [8];
 
   int screen = 10;
   int enhancedAtt;
@@ -18,11 +18,14 @@ class Battle
   int runCount;
   int kills;
   int fDelay;
+  int aBuffer = 6;
+  boolean aSelect;
   boolean critTrigger;
   boolean willHit;
   boolean willBlock = false;
   boolean willRun = false;
   boolean isPoisoned = false;
+
   int critPer;
   int playerTotalspeed;
   int enemyTotalspeed;
@@ -79,18 +82,24 @@ class Battle
     bp[7] = loadImage("swing 2.png");
     bp[8] = loadImage("heavy swing.png");
     bp[9] = loadImage("heavy swing 2.png");
+    bp[10] = loadImage("main.png"); 
+    bp[11] = loadImage("mage.png");
     bpback = loadImage("battlebackground.png");
     mobPic[0] = loadImage("goblin.png");
     mobPic[1] = loadImage("hellhound.png");
     mobPic[2] = loadImage("skeleton.png");
     mobPic[3] = loadImage("boss.png");
+    mobPic[4] = loadImage("goblin sil.png");
+    mobPic[5] = loadImage("hellhound sil.png");
+    mobPic[6] = loadImage("skeleton sil.png");
+    mobPic[7] = loadImage("boss sil.png");
   }
 
   void defeatScreen()
   {
     textSize(60);
-    textAlign(CENTER, CENTER)
-      fill(255, 0, 0);
+    textAlign(CENTER, CENTER);
+    fill(255, 0, 0);
     println("YOU DIED HAHA", width/2, height/2);
     fill(255);
   }
@@ -162,6 +171,8 @@ class Battle
     if (player[0].playerSelect == true && player[1].playerSelect == true)
     {
       speedPriority();
+      aSelect = true;
+      fDelay = frameCount + fr;
     }
   }
 
@@ -194,6 +205,10 @@ class Battle
       {
         image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
       }
+    }
+    for (int i = 0; i < player.length; i++) {
+      if (player[i].dead == false)
+        image(bp[i+10], 100, 275 + i*75);
     }
   }
 
@@ -267,7 +282,6 @@ class Battle
       enemy[i].attackmove = ran2; 
       enemy[i].enemyTarget = ran1;
     }
-
     for (int j = 0; j < enemy.length; j++)
     {
       for (int i = 0; i < player.length; i++)
@@ -346,21 +360,13 @@ class Battle
               if (critTrigger == false)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
-                willHit = false; 
-                screen = 14; 
-                delay(100); 
-                screen = 15; 
-                delay(100); 
+
                 screen = 10;
               } else if (critTrigger == true)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (round(player[j].attack * player[j].critMult) - enemy[enemyCount].defence)); 
                 critTrigger = false; 
-                willHit = false; 
-                screen = 14; 
-                delay(200); 
-                screen = 15; 
-                delay(200); 
+
                 screen = 10;
               }
             } else if (player[j].attackmove == 2) {
@@ -368,28 +374,32 @@ class Battle
               {
                 player[j].stamina -= 2; 
                 enhancedAtt = (round(player[j].attack * 1.5)); 
-                enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
-                willHit = false;
+                enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence));
               } else if (critTrigger == true)
               {
                 player[j].stamina -=2; 
                 enhancedAtt = (round((player[j].attack * 1.5)*player[j].critMult)); 
                 enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
-                critTrigger = false; 
-                willHit = false;
+                critTrigger = false;
               }
             }
-
-            for (int i =6; i <= 7; i++) {
-              bp[i].resize(100, 100);
-              image(bp[i], enemy[enemyCount].x - 10, enemy[enemyCount].y + 50);
-              delay(500);
-            } 
+            /*
+            if (player[j].attackmove == 1)
+             aBuffer = 6;
+             else if (player[j].attackmove == 2)
+             aBuffer = 8;
+             for (int i = aBuffer; i <= aBuffer + 1; i++) {
+             bp[i].resize(300, 300);
+             image(bp[i], enemy[enemyCount].x - 50, enemy[enemyCount].y + 50);
+             delay(1000);
+             }
+             */
 
             if (player[j].attackmove == 4)           
             {
               isBlock();
             }
+            willHit = false;
           }
         }
       }
@@ -420,12 +430,12 @@ class Battle
     if (playerTotalspeed > enemyTotalspeed)
     {
       battleAnimations(); 
-      delay(1000); 
+      // delay(1000); 
       enemyAttack();
     } else
     {
       enemyAttack(); 
-      delay(1000); 
+      // delay(1000); 
       battleAnimations();
     }
   }
@@ -436,8 +446,8 @@ class Battle
   {
     if (frameCount < world.bDelay)
       screen = 10; 
+    bpbackground(); 
 
-    ellipse(mx, my, 10, 10); 
     screenSwitch(); 
     attackHitbox(); 
     entityDeath(); 
@@ -448,7 +458,7 @@ class Battle
       player[0].playerSelect = false; 
       player[1].playerSelect = false;
     }
-    bpbackground();
+
     if (screen == 6)
     {
       defeatScreen();
@@ -471,6 +481,28 @@ class Battle
         battleP2(); 
         battleItems();
       }
+    }
+    if (aSelect) {
+      for (int j = 0; j < player.length; j++) {
+        for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
+        {
+          int frame = 0;
+          if (player[j].attackmove == 1)
+            aBuffer = 6;
+          else if (player[j].attackmove == 2)
+            aBuffer = 8;
+          for (int i = aBuffer; i <= aBuffer + 1; i++) {
+            bp[i].resize(300, 300);
+            if (frameCount >= fDelay - fr/2 && frame <= 1)
+              frame++;            
+            image(bp[frame + aBuffer], enemy[enemyCount].x - 100, enemy[enemyCount].y + 50);
+            image(mobPic[enemy[enemyCount].mobNumber + 4], enemy[enemyCount].x, enemy[enemyCount].y);
+            
+          }
+        }
+      }
+      if (frameCount > fDelay)
+      aSelect = false;
     }
     for (int i = 0; i < enemy.length; i++) {
       if (enemy[i].health <= 0)
@@ -498,9 +530,7 @@ class Battle
       } else if (screen == 10 && runTab.contains(mx, my))
       {
         isRun(); 
-
         if (willRun)
-
         {
           screen = 5; 
           willRun = false; 
@@ -528,10 +558,8 @@ class Battle
 
   void attackHitbox()
   {
-
     if (this.mr == true)
     {
-
       if (screen == 11 && lightAtab.contains(mx, my))
       {
         player[count].attackmove = 1; 

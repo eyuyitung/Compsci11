@@ -225,7 +225,7 @@ class Menu
   void top()
   {
 
-    // if (frameCount % (fr/8) == 0)
+   
     image(frames[(frameCount / (fr/8)) % (frames.length - 1) + 1 ], 0, 0);
 
     textFont(startFont);
