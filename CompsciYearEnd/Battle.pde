@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-//<>// //<>// //<>// //<>// //<>//
-=======
-//<>// //<>// //<>// //<>// //<>// //<>//
->>>>>>> 6ff272ca29f323c749926ee11917657f9eca1738
+ //<>//
 
 class Battle
 {
@@ -175,8 +171,10 @@ class Battle
     if (player[0].playerSelect == true && player[1].playerSelect == true)
     {
       speedPriority();
-      aSelect = true;
-      fDelay = frameCount + fr;
+      if (!willRun) {
+        aSelect = true;
+        fDelay = frameCount + fr;
+      }
     }
   }
 
@@ -360,7 +358,7 @@ class Battle
 
           if (willHit == true)
           {
-           if (player[j].attackmove == 1 ) {
+            if (player[j].attackmove == 1 ) {
               if (critTrigger == false)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
@@ -398,22 +396,9 @@ class Battle
                 critTrigger = false;
               }
             }
-            /*
-            if (player[j].attackmove == 1)
-             aBuffer = 6;
-             else if (player[j].attackmove == 2)
-             aBuffer = 8;
-             for (int i = aBuffer; i <= aBuffer + 1; i++) {
-             bp[i].resize(300, 300);
-             image(bp[i], enemy[enemyCount].x - 50, enemy[enemyCount].y + 50);
-             delay(1000);
-             }
-             */
-
             if (player[j].attackmove == 4)           
             {
               isBlock();
-
             }
             willHit = false;
           }
@@ -461,7 +446,7 @@ class Battle
   void display()
   {
     if (frameCount < world.bDelay)
-     screen = 10; 
+      screen = 10; 
     bpbackground(); 
 
 
@@ -469,7 +454,7 @@ class Battle
     attackHitbox(); 
     entityDeath(); 
 
-if (count == 2)
+    if (count == 2)
     {
       count = 0; 
       player[0].playerSelect = false; 
@@ -502,120 +487,123 @@ if (count == 2)
     }
     if (aSelect) {
       for (int j = 0; j < player.length; j++) {
-        bpbackground();
-        for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
+        for (enemyCount = 0; enemyCount < 4; enemyCount++)
         {
           int frame = 0;
-          if (player[j].attackmove == 1)
-            aBuffer = 6;
-          else if (player[j].attackmove == 2)
-            aBuffer = 8;
-          for (int i = aBuffer; i <= aBuffer + 1; i++) {
-            bp[i].resize(300, 300);
-            image(bp[frame + aBuffer], enemy[enemyCount].x - 100, enemy[enemyCount].y + 50);
-            if (frameCount >= fDelay - fr/2 && frame <= 1){
-              frame++;            
-              println(frame);
-              image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y);  
-            }   
+          if (player[j].enemyTarget == enemy[enemyCount].entityNumber) {            
+            if (player[j].attackmove == 1)
+              aBuffer = 6;
+            else if (player[j].attackmove == 2)
+              aBuffer = 8;
+            for (int i = aBuffer; i <= aBuffer + 1; i++) {
+              bp[i].resize(300, 300);
+              image(bp[frame + aBuffer], enemy[enemyCount].x - 100, enemy[enemyCount].y + 50); // sword swing
+              if (frameCount >= fDelay - fr/2) {
+                frame++;            
+                println(frame);
+              }
+            }         
+            if (enemy[enemyCount].dead == false) {
+              if (frameCount >= fDelay - fr/2) 
+                image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
+              }
+            }
           }
+          if (frameCount > fDelay)
+            aSelect = false;
+        }
+        for (int i = 0; i < enemy.length; i++) {
+          if (enemy[i].health <= 0)
+            enemy[i].dead = true;
         }
       }
-      if (frameCount > fDelay)
-      aSelect = false;
     }
-    for (int i = 0; i < enemy.length; i++) {
-      if (enemy[i].health <= 0)
-        enemy[i].dead = true;
-    }
-  }
 
-
-  void screenSwitch()
-  {
-    if (this.mr == true)
+    void screenSwitch()
     {
-      if (screen == 10 && attackTab.contains(mx, my))
+      if (this.mr == true)
       {
-        screen = 11;
-      } else if (screen == 10 && itemsTab.contains(mx, my))
-      {
-        screen = 13;
-      } else if (screen == 10 && blockTab.contains(mx, my))
-      {
-        player[count].attackmove = 4; 
-        player[count].playerSelect = true; 
-        count++; 
-        attackSelected();
-      } else if (screen == 10 && runTab.contains(mx, my))
-      {
-        isRun(); 
-
-
-        if (willRun)
+        if (screen == 10 && attackTab.contains(mx, my))
         {
-          screen = 5; 
-          willRun = false; 
-          encounter = false; 
-          world.gracePeriod = false; 
-          world.encounterPer = 100;
-          Player2.pause();
-          if (muteMusic)
-            Player.loop();
-        } else if (!willRun)
+          screen = 11;
+        } else if (screen == 10 && itemsTab.contains(mx, my))
         {
+          screen = 13;
+        } else if (screen == 10 && blockTab.contains(mx, my))
+        {
+          player[count].attackmove = 4; 
           player[count].playerSelect = true; 
           count++; 
           attackSelected();
+        } else if (screen == 10 && runTab.contains(mx, my))
+        {
+          isRun(); 
+
+
+          if (willRun)
+          {
+            screen = 5; 
+            willRun = false; 
+            encounter = false; 
+            world.gracePeriod = false; 
+            world.encounterPer = 100;
+            Player2.pause();
+            if (muteMusic)
+              Player.loop();
+          } else if (!willRun)
+          {
+            player[count].playerSelect = true; 
+            count++; 
+            attackSelected();
+          }
+        } else if (screen == 11 && oattackTab.contains(mx, my) == false)
+        {
+          screen = 10;
+        } else if (screen == 13 && oitemsTab.contains(mx, my) == false)
+        {
+          screen = 10;
         }
-      } else if (screen == 11 && oattackTab.contains(mx, my) == false)
-      {
-        screen = 10;
-      } else if (screen == 13 && oitemsTab.contains(mx, my) == false)
-      {
-        screen = 10;
       }
     }
-  }
 
-  void attackHitbox()
-  {
-    if (this.mr == true)
+    void attackHitbox()
     {
-      if (screen == 11 && lightAtab.contains(mx, my))
+      if (this.mr == true)
       {
-        player[count].attackmove = 1; 
-        screen = 12;
-      } else if (screen == 11 && heavyAtab.contains(mx, my) && player[count].stamina > 2)
+        if (screen == 11 && lightAtab.contains(mx, my))
+        {
+          player[count].attackmove = 1; 
+          screen = 12;
+        } else if (screen == 11 && heavyAtab.contains(mx, my) && player[count].stamina > 2)
 
-      {
-        player[count].attackmove = 2; 
-        screen = 12;
-      } else if (screen == 11 && heavyAtab.contains(mx, my) && player[count].stamina < 2)
-      {
-        //make a popout saying that the current character doesnt have enough stamina
-      } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina == playerMax[count].stamina)
-      {
-        player[count].attackmove = 3; 
-        screen = 12;
-      } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina < playerMax[count].stamina)
-      {
-        // make a popout saying that the current character doesnt have enough stamina
-      } else if (screen == 12 && enemy1.contains(mx, my))
-      {
-        player[count].enemyTarget = enemy[0].entityNumber; 
-        player[count].playerSelect = true; 
-        screen = 10; 
-        count++; 
-        attackSelected();
-      } else if (screen == 12 && enemy2.contains(mx, my))
-      {
-        player[count].enemyTarget = enemy[1].entityNumber; 
-        player[count].playerSelect = true; 
-        screen = 10; 
-        count++; 
-        attackSelected();
+        {
+          player[count].attackmove = 2; 
+          screen = 12;
+        } else if (screen == 11 && heavyAtab.contains(mx, my) && player[count].stamina < 2)
+        {
+          //make a popout saying that the current character doesnt have enough stamina
+        } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina == playerMax[count].stamina)
+        {
+          player[count].attackmove = 3; 
+          screen = 12;
+        } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina < playerMax[count].stamina)
+        {
+          // make a popout saying that the current character doesnt have enough stamina
+        } else if (screen == 12 && enemy1.contains(mx, my))
+        {
+          player[count].enemyTarget = enemy[0].entityNumber; 
+          player[count].playerSelect = true; 
+          screen = 10; 
+          count++; 
+          attackSelected();
+        } else if (screen == 12 && enemy2.contains(mx, my))
+        {
+          player[count].enemyTarget = enemy[1].entityNumber; 
+          player[count].playerSelect = true; 
+          screen = 10; 
+          count++; 
+          attackSelected();
+        }
       }
     }
   }
-}

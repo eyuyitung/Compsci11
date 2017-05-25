@@ -134,11 +134,12 @@ class World
       bDelay = frameCount + fr/4;
       for (int i = 0; i < enemy.length; i++)
       {
-        enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
+        index = (int)random(mobName.length);
+          enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
         if (muteMusic == false) {
-        Player.pause();
-        Player2.rewind();
-        Player2.play();
+          Player.pause();
+          Player2.rewind();
+          Player2.play();
         }
       }
       enemy[0].x = 690;
@@ -321,7 +322,7 @@ class World
       stroke(0);
       textSize(16);
     }
-    if (back || menu.contains(mx,my) && frameCount > mDelay)
+    if (back || mr && menu.contains(mx, my) && frameCount > mDelay)
       inGameMenu = false;
   }
 
@@ -377,6 +378,7 @@ class World
     text("Player Health  :", 200, 20);
     rect(215, 7, 400, 15);
     fill(255, 0, 0);
+
     if (player[0].health >=0)
       rect(215, 7, 400 * (1.0*player[0].health/playerMax[0].health), 15);
     fill(255);
@@ -555,13 +557,13 @@ class World
     int state = 6;
     if (items.inv[4] > 0) {
       if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
-        if (enter){ 
+        if (enter) { 
           closed = false;
           Player.pause();
           Player3.play();
           Player.rewind();
-          Player.loop();
-        }    
+          Player.play();
+        }
       }
       if (closed)
         state = 6;
