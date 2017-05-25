@@ -1,4 +1,4 @@
-//<>// //<>//
+//<>// //<>// //<>//
 
 class Battle
 {
@@ -555,6 +555,7 @@ class Battle
           encounter = false; 
           world.gracePeriod = false; 
           world.encounterPer = 100;
+
 
           if (!muteMusic) {
             Player2.pause();
