@@ -6,7 +6,7 @@ class Items
 {
   int potion; //0 = attack, 1 = defence, 2 = speed, 3 = health
   int[] inv = new int [6]; // 0 = attack pot, 1 = defence pot, 2 = speed pot, 3 = health pot, 4 = keys, 5 = boss key
-
+  
 
 
 

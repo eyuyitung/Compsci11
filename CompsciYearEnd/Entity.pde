@@ -21,7 +21,7 @@ class Entity
   int exper;
   int x;
   int y;
-  boolean alive;
+  boolean dead;
 
 
 
@@ -46,7 +46,7 @@ class Entity
     exper = exp;
   }
   
-   Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps, int mn, int exp, int x1 , int y1, boolean live)
+   Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps, int mn, int exp, int x1 , int y1, boolean state)
   {
     attack=a;
     defence=d;
@@ -67,15 +67,15 @@ class Entity
     exper = exp;
     x = x1;
     y = y1;
-    alive = live;
+    dead = state;
   }
 
 
 
 
-  Entity (String na, int l, int en, int mn, int x, int y, boolean live)
+  Entity (String na, int l, int en, int mn, int x, int y, boolean state)
   {
-    this(l*15, l*5, l*50, l*50, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*20,x ,y, live);
+    this(l*15, l*5, l*50, l*50, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*20,x ,y, state);
   }
 
 
@@ -88,8 +88,6 @@ class Entity
   {  
     this(0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, false, 0, 0);
   }
-
-
 
 
   void copyInto (Entity n){

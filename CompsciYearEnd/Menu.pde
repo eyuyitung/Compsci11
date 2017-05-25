@@ -163,7 +163,7 @@ class Menu
           player[0].defence = round(player[0].defence * 1.5);
         }
         screen = 5;
-        
+        world.stats = false;
         
       }
       if (screen == 1 && csback.contains(mx, my))
@@ -225,7 +225,7 @@ class Menu
   void top()
   {
 
-    // if (frameCount % (fr/8) == 0)
+   
     image(frames[(frameCount / (fr/8)) % (frames.length - 1) + 1 ], 0, 0);
 
     textFont(startFont);

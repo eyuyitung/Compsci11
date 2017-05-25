@@ -15,6 +15,8 @@ class World
   boolean stats; 
   boolean options;
   boolean exit; // will exit to main menu
+  boolean closed = true;
+  boolean empty = false;
   int floor = 1; 
   int room = 45; // room numbers are row / column ex. 45 = row 4, col 5 (see drawings for map) 
   int speed = 10;
@@ -80,6 +82,8 @@ class World
     rImages[3] = loadImage("HoleDoorleft.png"); // left door
     rImages[4] = loadImage("StockRoom.png"); // background
     rImages[5] = loadImage("wall.jpg"); //
+    rImages[6] = loadImage("ClosedChest.png");
+    rImages[7] = loadImage("OpenChest.png");
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -90,20 +94,15 @@ class World
     loadRoom();
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
+  ////////////////// DISPLAY ////////////////////////////////////////////////////////////////
 
   void display()
   {
     playerEncounter();
-
     expLevelup();
-    //println(steps);
-
-
-
     backDrop(); // display background
     info(); // display health and exp
-    //  grid();
+    grid();
     room(); // display world elements
     if (inGameMenu == false && encounter == false)
       move();
@@ -127,47 +126,44 @@ class World
 
 
 
-    if (encounterPer == encounterVal && encounter == false)
 
     if (encounter == false && encounterPer == encounterVal )
-
     {
       encounter = true; 
       steps = 0;
       bDelay = frameCount + fr/4;
       for (int i = 0; i < enemy.length; i++)
       {
-        index = int(random(mobName.length));
-
-        enemy[i] = new Entity(mobName[index], level, i, index,0,0, true);
-
-
-        println("swap");
-
+        enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
+        if (muteMusic == false) {
+        Player.pause();
+        Player2.rewind();
+        Player2.play();
+        }
       }
       enemy[0].x = 690;
       enemy[0].y = 235;
-      
+
       enemy[1].x = 570;
       enemy[1].y = 235;
-      
+
       enemy[2].x = 690;
       enemy[2].y = 350;
-      
+
       enemy[3].x = 570;
       enemy[3].y = 350;
     }
   }
-  
+
   void expLevelup()
   {
-    for(int i = 1; i <= 10; i++)
+    for (int i = 1; i <= 10; i++)
     {
-      if(player[0].exper > (50 + i * 50) && level == i)
+      if (player[0].exper > (50 + i * 50) && level == i)
       {
         level = i + 1;
         player[0].exper = 0;
-      } 
+      }
     }
   }
 
@@ -205,7 +201,7 @@ class World
     }
     pFrames[b + frame].resize(40, 60);
     image(pFrames[b + frame], x, y);
-    println(xpos+ " " + ypos +  " " + player[0].health + " " + playerMax[0].health  + " " + encounter + " " + gracePeriod);
+    //println(xpos+ " " + ypos +  " "/* +  + " "*/ + encounter + " " + gracePeriod);
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -314,7 +310,7 @@ class World
       if (inventory)
         inventory();
       else if (stats)
-        stats = false;// stats shit
+        screen = 1;// stats shit
       else if (options)
         options();
       else if (exit)
@@ -325,7 +321,7 @@ class World
       stroke(0);
       textSize(16);
     }
-    if (back)
+    if (back || menu.contains(mx,my) && frameCount > mDelay)
       inGameMenu = false;
   }
 
@@ -402,6 +398,7 @@ class World
 
   void room() { // room # system working like coordinates 24 = row 2 column 4
     checkDoor();
+    chest();
     dp [0] = dp [1] = dp [2] = dp [3] = false;
     if (floor == 1)
     {
@@ -452,6 +449,7 @@ class World
         break;
       case 45 : // starting room
         dp [3] = true;
+
         break;
       default :
         background(255);
@@ -518,6 +516,7 @@ class World
           room -= 10;
           ypos = 690;
           down = false;
+          closed = true; //chest
         }
       }
       if (dp[1]) {
@@ -525,6 +524,7 @@ class World
           room += 1;
           xpos = 40;
           left = false;
+          closed = true; //chest
         }
       }
       if (dp[2]) {
@@ -532,6 +532,7 @@ class World
           room += 10;
           ypos = 120;
           up = false;
+          closed = true; //chest
         }
       }
       if (dp[3]) {
@@ -539,10 +540,44 @@ class World
           room -= 1;
           xpos = 920;
           right = false;
+          closed = true; //chest
         }
       }
     }
   }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
+  void chest()
+  {
+    int amount = (int)random(6);
+    int item; 
+    int state = 6;
+    if (items.inv[4] > 0) {
+      if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
+        if (enter) 
+          closed = false;
+      }
+      if (closed)
+        state = 6;
+      else {
+        state = 7;
+        if (empty == false) {
+          for (int i = 1; i <= amount; i++) {
+            item = (int)random(5);
+            items.inv[item] += 1;
+            empty = true;
+          }
+        }
+      }
+    }
+    rImages[state].resize(50, 40);
+    image(rImages[state], 475, 430);
+  }
+
+
+
+
 
   //////////////////////////////////////////////////////////////////////////////////
 
@@ -612,9 +647,10 @@ class World
     if (mr && (mExit.contains(mx, my) || mNo.contains(mx, my)) && frameCount > mDelay) 
       exit = false;
     if (mr && mYes.contains(mx, my)) {
-      screen = 0;
-      exit = false;
-      inGameMenu = false;
+      //screen = 0;
+      //exit = false;
+      //inGameMenu = false;
+      exit();
     }
     stroke(255);
     fill(255);
