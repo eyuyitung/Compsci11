@@ -135,7 +135,7 @@ class World
       for (int i = 0; i < enemy.length; i++)
       {
         index = (int)random(mobName.length);
-          enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
+        enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
         if (muteMusic == false) {
           Player.pause();
           Player2.rewind();
@@ -559,10 +559,12 @@ class World
       if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
         if (enter) { 
           closed = false;
-          Player.pause();
-          Player3.play();
-          Player.rewind();
-          Player.play();
+          if (!muteMusic) {
+            Player.pause();
+            Player3.play();
+            Player.rewind();
+            Player.play();
+          }
         }
       }
       if (closed)

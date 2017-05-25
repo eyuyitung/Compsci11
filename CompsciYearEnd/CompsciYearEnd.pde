@@ -17,7 +17,7 @@ AudioPlayer Player, Player2, Player3;
 boolean encounter;
 boolean up, down, left, right, shift, enter, back, esc;
 boolean muteMusic = true;
-int screen = 0;
+int screen = 5;
 World world;
 float encounterPer;
 PImage characterS;
