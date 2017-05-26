@@ -114,7 +114,6 @@ class Battle
     textAlign(CENTER, CENTER);
     fill(255);
     text("YOU DIED HAHA", width/2, height/2);
-    
   }
 
   //Action tab
@@ -150,34 +149,22 @@ class Battle
   {
     image(bp[4], 0, 0);
     textAlign(TOP, TOP);
-<<<<<<< HEAD
-    if (minibossEncounter == false)
-    {
-      text(enemy[2].name, 860, 660);
-      text(enemy[3].name, 760, 660);
-      text(enemy[0].name, 860, 560);
-      text(enemy[1].name, 760, 560);
-    } else
-    {
-      text(enemy[0].name, 860, 560);
-    }
-=======
+
     stroke(255);
     strokeWeight(3);
     text(enemy[2].name, 860, 660);
     if (enemy[2].dead)
-      line(860,670,textWidth(enemy[2].name) + 860,670);
+      line(860, 670, textWidth(enemy[2].name) + 860, 670);
     text(enemy[3].name, 760, 660);
     if (enemy[3].dead)
-      line(760,670,textWidth(enemy[3].name) + 760,670);  
+      line(760, 670, textWidth(enemy[3].name) + 760, 670);  
     text(enemy[0].name, 860, 560);
     if (enemy[0].dead)
-      line(860,570,textWidth(enemy[0].name) + 860,570);
+      line(860, 570, textWidth(enemy[0].name) + 860, 570);
     text(enemy[1].name, 760, 560);
     if (enemy[1].dead)
-      line(760,570,textWidth(enemy[1].name) + 760,570);
+      line(760, 570, textWidth(enemy[1].name) + 760, 570);
     strokeWeight(1);
->>>>>>> origin/elements
   }
 
 
@@ -221,7 +208,7 @@ class Battle
     }
     if (selection) {
       screen = 10;
-        player[count].playerSelect = true;
+      player[count].playerSelect = true;
     }
   }
 
@@ -276,17 +263,17 @@ class Battle
     enemyCount = 0;
     for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
     {
+      /*if (minibossEncounter == true)
+      {
+
+        mobPic[enemy[0].mobNumber].resize(250, 250); 
+        image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
+      } */
       if (enemy[enemyCount].dead == false && minibossEncounter == false)
       {
         mobPic[enemy[enemyCount].mobNumber].resize(150, 150);
         mobPic[enemy[enemyCount].mobNumber + 4].resize(150, 150);
         image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
-      }
-      if (enemy[0].dead == false && minibossEncounter == true)
-      {
-        
-        mobPic[enemy[0].mobNumber].resize(250, 250); 
-        image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
       }
     }
     for (int i = 0; i < player.length; i++) {
@@ -588,14 +575,13 @@ class Battle
             }
             spawn();
             if (enemy[h].dead == false) {
-<<<<<<< HEAD
+
               if (frameCount >= fDelay) 
                 mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150, 150);
               image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
-=======
+
               if (frameCount >= fDelay - fr/2) 
                 image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
->>>>>>> origin/elements
             }
           }
         }
@@ -685,6 +671,8 @@ class Battle
       {
         // make a popout saying that the current character doesnt have enough stamina
       } else if (!enemy[2].dead && screen == 12 && enemy1.contains(mx, my))
+
+
       {
         player[count].enemyTarget = enemy[2].entityNumber; 
         player[count].playerSelect = true; 
@@ -692,6 +680,9 @@ class Battle
         count++; 
         attackSelected();
       } else if (!enemy[3].dead && screen == 12 && enemy2.contains(mx, my))
+
+
+
       {
         player[count].enemyTarget = enemy[3].entityNumber; 
         player[count].playerSelect = true; 
@@ -699,14 +690,21 @@ class Battle
         count++; 
         attackSelected();
       } else if (!enemy[0].dead && screen == 12 && enemy3.contains(mx, my))
+
+
+
       {
 
         player[count].enemyTarget = enemy[0].entityNumber;
         player[count].playerSelect = true; 
         screen = 10; 
         count++;
+
         attackSelected();
       } else if (!enemy[1].dead && screen == 12 && enemy4.contains(mx, my))
+
+
+
       {
         player[count].enemyTarget = enemy[1].entityNumber;
         player[count].playerSelect = true; 

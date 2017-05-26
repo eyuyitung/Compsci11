@@ -145,14 +145,7 @@ class World
           Player2.play();
         }
       }
-      if (minibossEncounter == true)
-      {
-        enemy[0].health += 50;
-        enemy[0].attack += 20;
-        enemy[0].defence += 20;
-        enemy[0].speed += 10;
-        enemy[0].critChance += 10;
-      }
+
       enemy[0].x += 690;
       enemy[0].y += 235;
 
@@ -165,23 +158,36 @@ class World
       enemy[3].x += 570;
       enemy[3].y += 350;
     }
+    /*if (encounter == false && encounterPer == encounterVal && minibossEncounter == true)
+    {
+      encounter = true; 
+      steps = 0;
+      bDelay = frameCount + fr/4;
+      index = (int)random(mobName.length);
+      enemy[0] = new Entity(mobName[index], level, 0, index, 0, 0, false);
+      enemy[0].health += 50;
+      enemy[0].attack += 20;
+      enemy[0].defence += 20;
+      enemy[0].speed += 10;
+      enemy[0].critChance += 10;
+    }*/
+    
   }
 
-<<<<<<< HEAD
+
   void minibossFight()
   {
     if (items.inv[4] >= 5 && minibossCount == 0)
     {
       minibossEncounter = true;
-    }
-    else 
+    } else 
     {
-    minibossEncounter = false;
+      minibossEncounter = false;
     }
   }
-=======
+
   //////////////////////////////////////////////////////////////////////////////////
->>>>>>> origin/elements
+
 
   void expLevelup()
   {
@@ -300,7 +306,7 @@ class World
       spacing [j] = i;
       j++;
     }
-    if (!inGameMenu && (esc && frameCount > eDelay || mr && menu.contains(mx, my))){
+    if (!inGameMenu && (esc && frameCount > eDelay || mr && menu.contains(mx, my))) {
       inGameMenu = true;
       eDelay = frameCount + fr/2;
       //println(eDelay + " " + frameCount);
@@ -350,8 +356,8 @@ class World
       strokeWeight(1);
       stroke(0);
       textSize(16);
-      
-      if (back || (esc && frameCount > eDelay || mr && menu.contains(mx, my) && frameCount > eDelay)){
+
+      if (back || (esc && frameCount > eDelay || mr && menu.contains(mx, my) && frameCount > eDelay)) {
         inGameMenu = false;
         eDelay = frameCount + fr/2;
         println(eDelay + " " + frameCount);
@@ -697,18 +703,17 @@ class World
 
   void mute() 
   {
-    if (muteMusic == false && mMute.contains(mx, my) && mr && frameCount > cDelay){
+    if (muteMusic == false && mMute.contains(mx, my) && mr && frameCount > cDelay) {
       muteMusic = true; 
       Player.pause(); 
       Player.rewind();
       cDelay = frameCount + fr/2;
     }
-    if (muteMusic == true && mMute.contains(mx, my) && mr && frameCount > cDelay){
+    if (muteMusic == true && mMute.contains(mx, my) && mr && frameCount > cDelay) {
       muteMusic = false; 
       Player.loop(); 
       cDelay = frameCount + fr/2;
     }
-      
   }
 
   //////////////////////////////////////////////////////////////////////////////////
