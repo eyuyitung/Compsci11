@@ -5,14 +5,16 @@ class Armor
   int speed;
   int accuracy;
   int setNumber;
+  String setBonus;
   
-  Armor(String na, int hp, int spd, int acc, int sn)
+  Armor(String na, int hp, int spd, int acc, int sn, String sb)
   {
     name = na;
     health = hp;
     speed = spd;
     accuracy = acc;
     setNumber = sn;
+    setBonus = sb;
   }
   
   

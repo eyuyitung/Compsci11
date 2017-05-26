@@ -1,4 +1,4 @@
- //<>//
+ //<>// //<>//
 class Battle
 {
   int count = 0;
@@ -105,7 +105,7 @@ class Battle
     textSize(60);
     textAlign(CENTER, CENTER);
     fill(255, 0, 0);
-    println("YOU DIED HAHA", width/2, height/2);
+    text("YOU DIED HAHA", width/2, height/2);
     fill(255);
   }
 
@@ -212,6 +212,7 @@ class Battle
       if (enemy[enemyCount].dead == false)
       {
         mobPic[enemy[enemyCount].mobNumber].resize(150, 150);
+        mobPic[enemy[enemyCount].mobNumber + 4].resize(150,150);
         image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
       }
     }
@@ -514,9 +515,8 @@ class Battle
             }
             spawn();
             if (enemy[h].dead == false) {
-              if (frameCount >= fDelay) 
-                mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150,150);
-                image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
+              if (frameCount >= fDelay - fr/2) 
+               image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
             }
           }
         }
@@ -559,7 +559,8 @@ class Battle
           encounter = false; 
           world.gracePeriod = false; 
           world.encounterPer = 100;
-
+          if (player[1].health <= playerMax[1].health/2) // if sidekick < 50% health
+            player[1].health <= playerMax[1].health/2; // health resets to 50%
 
           if (!muteMusic) {
             Player2.pause();
@@ -606,14 +607,14 @@ class Battle
         // make a popout saying that the current character doesnt have enough stamina
       } else if (screen == 12 && enemy1.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[3].entityNumber; 
+        player[count].enemyTarget = enemy[2].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
         attackSelected();
       } else if (screen == 12 && enemy2.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[2].entityNumber; 
+        player[count].enemyTarget = enemy[3].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
@@ -621,14 +622,14 @@ class Battle
       } else if (screen == 12 && enemy3.contains(mx, my))
       {
 
-        player[count].enemyTarget = enemy[1].entityNumber;
+        player[count].enemyTarget = enemy[0].entityNumber;
         player[count].playerSelect = true; 
         screen = 10; 
         count++;
         attackSelected();
       } else if (screen == 12 && enemy4.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[0].entityNumber;
+        player[count].enemyTarget = enemy[1].entityNumber;
         player[count].playerSelect = true; 
         screen = 10; 
         count++;

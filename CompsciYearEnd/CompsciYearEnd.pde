@@ -16,7 +16,7 @@ AudioPlayer Player, Player2, Player3;
 
 boolean encounter;
 boolean up, down, left, right, shift, enter, back, esc;
-boolean muteMusic = false;
+boolean muteMusic = true;
 int screen = 0;
 World world;
 float encounterPer;
@@ -88,9 +88,9 @@ void setup() {
   weapons[4] = new Weapon("Greatsword", 4, 15, 70, 20, 1.1, 10);
   shield[0] = new Weapon("Shield", 0, 0, 0, 0, 0, 0, 20, 10);
   //Name, health, speed, accuracy, setNumber
-  armorSet[0] = new Armor("Leather", 10, 20, 5, 0);
-  armorSet[1] = new Armor("Chainmail", 20, 10, 0, 1);
-  armorSet[2] = new Armor("Steel", 35, 0, 0, 2);
+  armorSet[0] = new Armor("Leather", 10, 20, 5, 0, "+ 10% Run Rate");
+  armorSet[1] = new Armor("Chainmail", 20, 10, 0, 1, "+ 15% Attack");
+  armorSet[2] = new Armor("Steel", 35, 0, 0, 2, "+ 50% Defence");
 
   for (int i = 0; i < weaponSelection.length; i++)
   {
@@ -200,7 +200,7 @@ void keyReleased() {
   }
 }
 
-void mouseClicked()
+void mouseClicked() ////////////////////////////////////////////////////////////////////////
  {
  
  println(mx +" " + my); 

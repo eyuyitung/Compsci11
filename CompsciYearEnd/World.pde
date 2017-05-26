@@ -122,7 +122,7 @@ class World
 
   void playerEncounter()
   {
-    if (steps < 50)
+    if (steps < 1)
       gracePeriod = true;
     else 
     gracePeriod = false;

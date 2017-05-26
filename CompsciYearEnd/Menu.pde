@@ -173,7 +173,7 @@ class Menu
         statpoints = 30;
 
         player[0].health = 50;
-        player[0].attack = 5;
+        player[0].attack = 10;
         player[0].defence = 5;
         player[0].speed = 5;
       }
@@ -322,6 +322,20 @@ class Menu
     text(player[0].speed, 726, 678);
     textSize(17);
     text(statpoints, 925, 131);
+    textSize(15);
+    text(weapons[weaponCount].name, 175, 370);
+    text(weapons[weaponCount].stamina,150,420);
+    text(weapons[weaponCount].attack, 150, 470);
+    text(weapons[weaponCount].accuracy, 150, 520);
+    text(weapons[weaponCount].speed, 150, 570);
+    text(weapons[weaponCount].critMultiplyer, 150, 620);
+    text(weapons[weaponCount].critChance, 150, 670);
+    text(armorSet[count2].name, 390, 370);
+    text(armorSet[count2].health, 365, 420);
+    text(armorSet[count2].speed, 365, 470);
+    text(armorSet[count2].accuracy, 365, 520);
+    textSize(14);
+    text(armorSet[count2].setBonus, 397, 570);
 
     if (this.mr == true)
     {
