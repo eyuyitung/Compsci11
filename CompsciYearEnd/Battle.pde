@@ -604,28 +604,28 @@ class Battle
       } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina < playerMax[count].stamina)
       {
         // make a popout saying that the current character doesnt have enough stamina
-      } else if (screen == 12 && enemy1.contains(mx, my))
+      } else if (screen == 12 && enemy3.contains(mx, my))
       {
         player[count].enemyTarget = enemy[0].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
         attackSelected();
-      } else if (screen == 12 && enemy2.contains(mx, my))
+      } else if (screen == 12 && enemy4.contains(mx, my))
       {
         player[count].enemyTarget = enemy[1].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
         attackSelected();
-      } else if (screen == 12 && enemy3.contains(mx, my))
+      } else if (screen == 12 && enemy1.contains(mx, my))
       {
 
         player[count].enemyTarget = enemy[2].entityNumber;
         player[count].playerSelect = true; 
         screen = 10; 
         count++;
-      } else if (screen == 12 && enemy4.contains(mx, my))
+      } else if (screen == 12 && enemy2.contains(mx, my))
       {
         player[count].enemyTarget = enemy[3].entityNumber;
         player[count].playerSelect = true; 
