@@ -514,7 +514,8 @@ class Battle
             }
             spawn();
             if (enemy[h].dead == false) {
-              if (frameCount >= fDelay - fr/2) 
+              if (frameCount >= fDelay) 
+                mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150,150);
                 image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
             }
           }
