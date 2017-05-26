@@ -142,10 +142,16 @@ class Battle
   {
     image(bp[4], 0, 0);
     textAlign(TOP, TOP);
-    text(enemy[2].name, 860, 660);
-    text(enemy[3].name, 760, 660);
-    text(enemy[0].name, 860, 560);
-    text(enemy[1].name, 760, 560);
+    if (minibossEncounter == false)
+    {
+      text(enemy[2].name, 860, 660);
+      text(enemy[3].name, 760, 660);
+      text(enemy[0].name, 860, 560);
+      text(enemy[1].name, 760, 560);
+    } else
+    {
+      text(enemy[0].name, 860, 560);
+    }
   }
 
 
@@ -202,6 +208,15 @@ class Battle
       for (int j = 0; j < enemy.length; j ++)
         player[0].exper += enemy[j].exper;
     }
+    if (minibossEncounter == true && enemy[0].dead == true)
+    {
+      screen = 10; 
+      world.gracePeriod = true;
+      encounter = false;
+      minibossEncounter = false;
+      minibossCount++;
+      player[0].exper += enemy[0].exper;
+    }
   }
 
   void spawn()
@@ -209,10 +224,16 @@ class Battle
     enemyCount = 0;
     for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
     {
-      if (enemy[enemyCount].dead == false)
+      if (enemy[enemyCount].dead == false && minibossEncounter == false)
       {
         mobPic[enemy[enemyCount].mobNumber].resize(150, 150);
         image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
+      }
+      if (enemy[0].dead == false && minibossEncounter == true)
+      {
+        
+        mobPic[enemy[0].mobNumber].resize(250, 250); 
+        image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
       }
     }
     for (int i = 0; i < player.length; i++) {
@@ -515,8 +536,8 @@ class Battle
             spawn();
             if (enemy[h].dead == false) {
               if (frameCount >= fDelay) 
-                mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150,150);
-                image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
+                mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150, 150);
+              image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
             }
           }
         }

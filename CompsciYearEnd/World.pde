@@ -102,6 +102,7 @@ class World
   {
     playerEncounter();
     expLevelup();
+    minibossFight();
     backDrop(); // display background
     info(); // display health and exp
     grid();
@@ -124,7 +125,8 @@ class World
       gracePeriod = true;
     else 
     gracePeriod = false;
-    if (encounter == false && encounterPer == encounterVal )
+
+    if (encounter == false && encounterPer == encounterVal)
     {
       encounter = true; 
       steps = 0;
@@ -141,6 +143,14 @@ class World
           Player2.play();
         }
       }
+      if (minibossEncounter == true)
+      {
+        enemy[0].health += 50;
+        enemy[0].attack += 20;
+        enemy[0].defence += 20;
+        enemy[0].speed += 10;
+        enemy[0].critChance += 10;
+      }
       enemy[0].x += 690;
       enemy[0].y += 235;
 
@@ -152,6 +162,18 @@ class World
 
       enemy[3].x += 570;
       enemy[3].y += 350;
+    }
+  }
+
+  void minibossFight()
+  {
+    if (items.inv[4] >= 5 && minibossCount == 0)
+    {
+      minibossEncounter = true;
+    }
+    else 
+    {
+    minibossEncounter = false;
     }
   }
 

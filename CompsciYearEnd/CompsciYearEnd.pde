@@ -14,7 +14,9 @@ import ddf.minim.ugens.*;
 Minim minim;
 AudioPlayer Player, Player2, Player3;
 
+int minibossCount = 0;
 boolean encounter;
+boolean minibossEncounter = false;
 boolean up, down, left, right, shift, enter, back, esc;
 boolean muteMusic = true;
 int screen = 0;
@@ -122,6 +124,8 @@ void draw()
   }
   mx = mouseX;
   my = mouseY; 
+  items.inv[4] = 5;
+  println(minibossEncounter);
 
 
   main.mr = battlephase.mr = false;
