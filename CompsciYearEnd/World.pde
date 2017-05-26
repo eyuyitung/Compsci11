@@ -167,6 +167,7 @@ class World
       {
         level = i + 1;
         player[0].exper = 0;
+        statpoints +=5;
       }
     }
   }
