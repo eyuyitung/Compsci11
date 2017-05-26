@@ -118,7 +118,7 @@ class World
 
   void playerEncounter()
   {
-    if (steps < 10)
+    if (steps < 50)
       gracePeriod = true;
     else 
     gracePeriod = false;
@@ -557,10 +557,6 @@ class World
     int state = 6;
     if (items.inv[4] > 0) {
       if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
-<<<<<<< HEAD
-        if (enter) 
-          closed = false;
-=======
         if (enter) { 
           closed = false;
           if (!muteMusic) {
@@ -570,7 +566,6 @@ class World
             Player.play();
           }
         }
->>>>>>> origin/elements
       }
       if (closed)
         state = 6;
