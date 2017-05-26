@@ -89,7 +89,7 @@ class Battle
   void defeatScreen()
   {
     textSize(60);
-    textAlign(CENTER, CENTER)
+    textAlign(CENTER, CENTER);
       fill(255, 0, 0);
     println("YOU DIED HAHA", width/2, height/2);
     fill(255);
@@ -346,6 +346,7 @@ class Battle
               if (critTrigger == false)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
+
                 willHit = false; 
                 screen = 14; 
                 delay(100); 
@@ -355,6 +356,7 @@ class Battle
               } else if (critTrigger == true)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (round(player[j].attack * player[j].critMult) - enemy[enemyCount].defence)); 
+
                 critTrigger = false; 
                 willHit = false; 
                 screen = 14; 
