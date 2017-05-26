@@ -112,9 +112,9 @@ class Battle
   {
     textSize(60);
     textAlign(CENTER, CENTER);
-    fill(255, 0, 0);
-    text("YOU DIED HAHA", width/2, height/2);
     fill(255);
+    text("YOU DIED HAHA", width/2, height/2);
+    
   }
 
   //Action tab
@@ -150,11 +150,21 @@ class Battle
   {
     image(bp[4], 0, 0);
     textAlign(TOP, TOP);
+    stroke(255);
+    strokeWeight(3);
     text(enemy[2].name, 860, 660);
+    if (enemy[2].dead)
+      line(860,670,textWidth(enemy[2].name) + 860,670);
     text(enemy[3].name, 760, 660);
+    if (enemy[3].dead)
+      line(760,670,textWidth(enemy[3].name) + 760,670);  
     text(enemy[0].name, 860, 560);
+    if (enemy[0].dead)
+      line(860,570,textWidth(enemy[0].name) + 860,570);
     text(enemy[1].name, 760, 560);
-    // add strikethrough stuff ///////////////
+    if (enemy[1].dead)
+      line(760,570,textWidth(enemy[1].name) + 760,570);
+    strokeWeight(1);
   }
 
 
@@ -225,9 +235,11 @@ class Battle
 
     if (true && enemy[0].dead && enemy[1].dead && enemy[2].dead && enemy[3].dead)
     {
-      screen = 10;
+      screen = 5;
+      world.steps = 0;
       world.gracePeriod = true;
       encounter = false;
+      world.encounterPer = 100;
       Player2.pause();
       Player.rewind();
       if (muteMusic)
