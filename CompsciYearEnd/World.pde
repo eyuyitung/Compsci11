@@ -5,7 +5,8 @@ class World
   int encounterVal = (int)random(1, 20);
   int steps = 0;
   int xpos = 480;
-  int ypos = 440;
+  int ypos = 300;
+  boolean boss;
   boolean moving = false;
   boolean kp; // key pressed
   boolean mKey; // movement key currently pressed
@@ -13,7 +14,7 @@ class World
   boolean mr; // mouse released
   boolean inventory; // if true will bring up inventory screen
   boolean stats; 
-  boolean options;
+  boolean mute;
   boolean exit; // will exit to main menu
   boolean closed = true;
   boolean empty = false;
@@ -24,6 +25,8 @@ class World
   int frameDelay = 0;
   int mDelay = 0;
   int bDelay = 0;
+  int cDelay = 0;
+  int eDelay = 0;
   PImage[] pFrames = new PImage [13];
   PImage[] rImages = new PImage [15];
   PFont [] igFonts = new PFont [5];
@@ -31,7 +34,7 @@ class World
   int f = 1;
   int dir = 0;
   int [] c = {480, 110, 960, 430, 480, 750, 0, 430}; // door image coordinates Clockwise order beginning at top
-  boolean [] dp = new boolean[4]; //door position array 0 = top 1 = right 2 = bottom 3 = left 
+  boolean [] dp = new boolean[6]; //door position array 0 = top 1 = right 2 = bottom 3 = left 
 
   //menu hitboxes
 
@@ -44,9 +47,9 @@ class World
   int [] statsx = {810, 880, 880, 810};
   int [] statsy = {260, 260, 295, 295};
   Polygon mStats = new Polygon(statsx, statsy, 4);
-  int [] optionsx = {810, 910, 910, 810};
-  int [] optionsy = {390, 390, 420, 420};
-  Polygon mOptions = new Polygon(optionsx, optionsy, 4);
+  int [] mutex = {810, 880, 880, 810};
+  int [] mutey = {390, 390, 420, 420};
+  Polygon mMute = new Polygon(mutex, mutey, 4);
   int [] exitx = {810, 860, 860, 810};
   int [] exity = {520, 520, 550, 550};
   Polygon mExit = new Polygon(exitx, exity, 4);
@@ -79,11 +82,12 @@ class World
     rImages[0] = loadImage("HoleDoorup.png"); //top door
     rImages[1] = loadImage("HoleDoorright.png");//right door 
     rImages[2] = loadImage("HoleDoordown.png"); //bottom door
-    rImages[3] = loadImage("HoleDoorleft.png"); // left door
-    rImages[4] = loadImage("StockRoom.png"); // background
-    rImages[5] = loadImage("wall.jpg"); //
-    rImages[6] = loadImage("ClosedChest.png");
-    rImages[7] = loadImage("OpenChest.png");
+    rImages[3] = loadImage("HoleDoorleft.png"); // left door 
+    rImages[4] = loadImage("BossDoor.png");
+    rImages[5] = loadImage("LadderDown.png");
+    rImages[6] = loadImage("StockRoom.png");// background
+    rImages[7] = loadImage("ClosedChest.png");
+    rImages[8] = loadImage("OpenChest.png");
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -99,8 +103,8 @@ class World
   void display()
   {
     playerEncounter();
-
     expLevelup();
+    minibossFight();
     backDrop(); // display background
     info(); // display health and exp
     grid();
@@ -119,42 +123,65 @@ class World
 
   void playerEncounter()
   {
-    if (steps < 10)
+    if (steps < 1)
       gracePeriod = true;
     else 
     gracePeriod = false;
 
-
-
-
-    if (encounter == false && encounterPer == encounterVal )
+    if (encounter == false && encounterPer == encounterVal)
     {
       encounter = true; 
       steps = 0;
       bDelay = frameCount + fr/4;
       for (int i = 0; i < enemy.length; i++)
       {
-        index = int(random(mobName.length));
+        index = (int)random(mobName.length);
         enemy[i] = new Entity(mobName[index], level, i, index, 0, 0, false);
+        if (index == 1)
+          enemy[i].x += 30;
         if (muteMusic == false) {
-        Player.pause();
-        Player2.rewind();
-        Player2.play();
+          Player.pause();
+          Player2.rewind();
+          Player2.play();
         }
       }
-      enemy[0].x = 690;
-      enemy[0].y = 235;
+      if (minibossEncounter == true)
+      {
+        enemy[0].health += 50;
+        enemy[0].attack += 20;
+        enemy[0].defence += 20;
+        enemy[0].speed += 10;
+        enemy[0].critChance += 10;
+      }
+      enemy[0].x += 690;
+      enemy[0].y += 235;
 
-      enemy[1].x = 570;
-      enemy[1].y = 235;
+      enemy[1].x += 570;
+      enemy[1].y += 235;
 
-      enemy[2].x = 690;
-      enemy[2].y = 350;
+      enemy[2].x += 690;
+      enemy[2].y += 350;
 
-      enemy[3].x = 570;
-      enemy[3].y = 350;
+      enemy[3].x += 570;
+      enemy[3].y += 350;
     }
   }
+
+<<<<<<< HEAD
+  void minibossFight()
+  {
+    if (items.inv[4] >= 5 && minibossCount == 0)
+    {
+      minibossEncounter = true;
+    }
+    else 
+    {
+    minibossEncounter = false;
+    }
+  }
+=======
+  //////////////////////////////////////////////////////////////////////////////////
+>>>>>>> origin/elements
 
   void expLevelup()
   {
@@ -164,6 +191,7 @@ class World
       {
         level = i + 1;
         player[0].exper = 0;
+        statpoints +=5;
       }
     }
   }
@@ -272,8 +300,11 @@ class World
       spacing [j] = i;
       j++;
     }
-    if (esc || mr && menu.contains(mx, my))
+    if (!inGameMenu && (esc && frameCount > eDelay || mr && menu.contains(mx, my))){
       inGameMenu = true;
+      eDelay = frameCount + fr/2;
+      //println(eDelay + " " + frameCount);
+    }
     if (inGameMenu) {
       fill(100);
       stroke(0);
@@ -290,20 +321,20 @@ class World
       line(810, spacing[0] + 5, 810 + textWidth("Inventory"), spacing [0] +5);
       text("Stats", 810, spacing[1]);
       line(810, spacing[1] + 5, 810 + textWidth("Stats"), spacing [1] +5);  
-      text("Options", 810, spacing[2]);
-      line(810, spacing[2] + 5, 810 + textWidth("Options"), spacing [2] +5);   
+      text("Mute", 810, spacing[2]);
+      line(810, spacing[2] + 5, 810 + textWidth("Mute"), spacing [2] +5);   
       text("Exit", 810, spacing[3]);
       line(810, spacing[3] + 5, 810 + textWidth("Exit"), spacing [3] +5);
       if (mr)
       {
-        if (inventory == false && stats == false && options == false && exit == false)
-          mDelay = frameCount + fr/2;
-        if (mInventory.contains(mx, my))
+        if (!inventory && !stats && !mute && !exit)
+          mDelay = frameCount + fr/2;        
+        if (mInventory.contains(mx, my)) 
           inventory = true; //inventory screen
         else if (mStats.contains(mx, my))
           stats = true; //stats screen
-        else if (mOptions.contains(mx, my))
-          options = true; //options screen
+        else if (mMute.contains(mx, my))
+          mute = true; //mute button
         else if (mExit.contains(mx, my))
           exit = true; //are you sure screen
       }
@@ -312,26 +343,28 @@ class World
         inventory();
       else if (stats)
         screen = 1;// stats shit
-      else if (options)
-        options();
+      else if (mute)
+        mute();
       else if (exit)
-        mainMenu();
-
-
+        exit();
       strokeWeight(1);
       stroke(0);
       textSize(16);
+      
+      if (back || (esc && frameCount > eDelay || mr && menu.contains(mx, my) && frameCount > eDelay)){
+        inGameMenu = false;
+        eDelay = frameCount + fr/2;
+        println(eDelay + " " + frameCount);
+      }
     }
-    if (back || menu.contains(mx,my) && frameCount > mDelay)
-      inGameMenu = false;
   }
 
   //////////////////////////////////////////////////////////////////////////////////
 
   void backDrop() {
     strokeWeight(1);
-    rImages[4].resize(1000, 700);
-    image(rImages[4], 0, 100);
+    rImages[6].resize(1000, 700);
+    image(rImages[6], 0, 100);
     fill(50);
     rect(0, 0, width, 100);
     fill (255);
@@ -357,6 +390,16 @@ class World
       rImages[3].resize(40, 40);
       image (rImages[3], c[6], c[7]);
     }
+    if (dp[4])
+    {//stairs down to next floor
+      rImages[5].resize(60, 60);
+      image (rImages[5], 470, 440);
+    }
+    if (dp[5])
+    {//boss door
+      rImages[4].resize(60, 60);
+      image (rImages[4], 470, c[5]);
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -378,6 +421,7 @@ class World
     text("Player Health  :", 200, 20);
     rect(215, 7, 400, 15);
     fill(255, 0, 0);
+
     if (player[0].health >=0)
       rect(215, 7, 400 * (1.0*player[0].health/playerMax[0].health), 15);
     fill(255);
@@ -388,7 +432,9 @@ class World
       rect(215, 32, 400 * (1.0*player[1].health/playerMax[1].health), 15);
     fill(255);
     text("XP :", 200, 96);
-    rect (215, 82, 600, 15);
+    text("Lvl : " + level, 665, 96);
+    rect (215, 82, 400, 15);
+    rect(215, 82, 400 * (1.0*player[0].exper/ (50 + level* 50)), 15);
     text("Keys :", 200, 70);
     text(items.inv[4], 215, 70); 
     stroke(0);
@@ -399,26 +445,30 @@ class World
 
   void room() { // room # system working like coordinates 24 = row 2 column 4
     checkDoor();
-    chest();
-    dp [0] = dp [1] = dp [2] = dp [3] = false;
+
+    dp [0] = dp [1] = dp [2] = dp [3] = dp[4] = dp[5] = false;
     if (floor == 1)
     {
       switch (room)
       {
 
       case 11 : //end room
-        dp [1] = dp [2] = true; 
+
+        dp [1] = dp [2] = dp[4] = true; 
         break;
       case 12 :
         dp [1] = dp [2] = dp [3] = true;
         break;
       case 13 :
+        chest();
         dp [3] = true;
         break;
       case 14 :
+        chest();
         dp [2] = true;
         break;
       case 21 :
+        chest();
         dp [0] = true;
         break;
       case 22 :
@@ -434,7 +484,9 @@ class World
         dp [1] = dp [2] = dp [3] = true;
         break;
       case 26 :
+        chest();
         dp [3] = true;
+
         break;
       case 33 :
         dp [0] = dp [1] = true;
@@ -465,7 +517,7 @@ class World
       case 14 :
         dp [1] = dp [3] = true;
         break;
-      case 15 :
+      case 15 : // start room
         dp [2] = dp [3] = true;
         break;
       case 21 :
@@ -478,13 +530,14 @@ class World
         dp [0] = dp [2] = dp [3] = true;
         break;
       case 24 :
+        chest();
         dp [1] = true;
         break;
       case 25 :
         dp [0] = dp [3] = true;
         break;
       case 31 :
-        dp [0] = dp [1] = dp [2] = true;
+        dp [0] = dp [1] = dp[5] = true;
         break;
       case 32 :
         dp [1] = dp [3] = true;
@@ -493,12 +546,14 @@ class World
         dp [0] = dp [1] = dp [2] = dp [3] = true;
         break;
       case 34 :
+        chest();
         dp [3] = true;
         break;
-      case 41 :
-        dp [0] = true;
+      case 41 : // boss room
+        boss = true;
         break;
       case 43 :
+        chest();
         dp [0] = true;
         break;
       default :
@@ -512,7 +567,7 @@ class World
   void checkDoor() {
     if (room > 10 && room < 50)
     {
-      if (dp[0]) {
+      if (dp[0]) { // left
         if (xpos >= 460 && xpos <= 520 && ypos == 120 && up) {
           room -= 10;
           ypos = 690;
@@ -520,15 +575,15 @@ class World
           closed = true; //chest
         }
       }
-      if (dp[1]) {
+      if (dp[1]) { // right
         if (xpos == 920 && ypos >= 380 && ypos <= 420 && right) {
-          room += 1;
+          room++;
           xpos = 40;
           left = false;
           closed = true; //chest
         }
       }
-      if (dp[2]) {
+      if (dp[2]) { // down
         if (xpos >= 460 && xpos <= 520 && ypos == 690 && down) {
           room += 10;
           ypos = 120;
@@ -536,13 +591,33 @@ class World
           closed = true; //chest
         }
       }
-      if (dp[3]) {
+      if (dp[3]) { // left
         if (xpos == 40 && ypos >= 380 && ypos <= 420 && left) {
-          room -= 1;
+          room--;
           xpos = 920;
           right = false;
           closed = true; //chest
         }
+      }
+      if (dp[4]) { // stairs down
+        if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440 && room == 11) {
+          floor++;
+          room = 15;
+          xpos = 480;
+          ypos = 440;
+        }
+      }
+      if (dp[5]) { // boss door
+        if (items.inv[5] >= 1) { // if player has boss key
+          if (xpos >= 460 && xpos <= 520 && ypos == 690 && down) {
+            room += 10;
+          }
+        } else 
+        textSize(22);
+        textAlign(CENTER, CENTER);
+        text("Boss Key Req.", 500, 750);
+        textSize(16);
+        textAlign(LEFT, BOTTOM);
       }
     }
   }
@@ -553,16 +628,23 @@ class World
   {
     int amount = (int)random(6);
     int item; 
-    int state = 6;
+    int state = 7;
     if (items.inv[4] > 0) {
       if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440) {
-        if (enter) 
+        if (enter) { 
           closed = false;
+          if (!muteMusic) {
+            Player.pause();
+            Player3.play();
+            Player.rewind();
+            Player.play();
+          }
+        }
       }
       if (closed)
-        state = 6;
-      else {
         state = 7;
+      else {
+        state = 8;
         if (empty == false) {
           for (int i = 1; i <= amount; i++) {
             item = (int)random(5);
@@ -613,18 +695,25 @@ class World
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  void options() 
+  void mute() 
   {
-    fill(255, 0, 0);
-    rect(180, 120, 400, 400);
-    fill(255);
-    if (mOptions.contains(mx, my) && mr && frameCount > mDelay)
-      options = false;
+    if (muteMusic == false && mMute.contains(mx, my) && mr && frameCount > cDelay){
+      muteMusic = true; 
+      Player.pause(); 
+      Player.rewind();
+      cDelay = frameCount + fr/2;
+    }
+    if (muteMusic == true && mMute.contains(mx, my) && mr && frameCount > cDelay){
+      muteMusic = false; 
+      Player.loop(); 
+      cDelay = frameCount + fr/2;
+    }
+      
   }
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  void mainMenu()
+  void exit()
   {
     int [] yesx = {405, 480, 480, 405};
     int [] yesy = {370, 370, 445, 445};
@@ -648,9 +737,6 @@ class World
     if (mr && (mExit.contains(mx, my) || mNo.contains(mx, my)) && frameCount > mDelay) 
       exit = false;
     if (mr && mYes.contains(mx, my)) {
-      //screen = 0;
-      //exit = false;
-      //inGameMenu = false;
       exit();
     }
     stroke(255);

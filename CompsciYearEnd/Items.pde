@@ -18,7 +18,10 @@ class Items
     else if (potion == 2)
       player[n].speed *= 1.25;
     else if (potion == 3)
-      player[n].health += playerMax[n].health * 0.5;
+    if (player[n].health >= playerMax[n].health/2 )
+      player[n].health = playerMax[n].health;
+    else
+      player[n].health += playerMax[n].health/2;
       
       
   }

@@ -14,7 +14,9 @@ import ddf.minim.ugens.*;
 Minim minim;
 AudioPlayer Player, Player2, Player3;
 
+int minibossCount = 0;
 boolean encounter;
+boolean minibossEncounter = false;
 boolean up, down, left, right, shift, enter, back, esc;
 boolean muteMusic = true;
 int screen = 0;
@@ -61,7 +63,10 @@ void setup() {
   minim = new Minim(this);
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
+  Player3 = minim.loadFile("chest.mp3");
   Player.loop();
+
+ 
 
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
@@ -70,6 +75,7 @@ void setup() {
   player[0] = new Entity(level, 10);
   player[0].name = "Adam";
   player[1] = new Entity(level, 11);
+
   player[1].name = "Someguy";
   playerMax[0] = new Entity();
   playerMax[1] = new Entity();
@@ -84,9 +90,9 @@ void setup() {
   weapons[4] = new Weapon("Greatsword", 4, 15, 70, 20, 1.1, 10);
   shield[0] = new Weapon("Shield", 0, 0, 0, 0, 0, 0, 20, 10);
   //Name, health, speed, accuracy, setNumber
-  armorSet[0] = new Armor("Leather", 10, 20, 5, 0);
-  armorSet[1] = new Armor("Chainmail", 20, 10, 0, 1);
-  armorSet[2] = new Armor("Steel", 35, 0, 0, 2);
+  armorSet[0] = new Armor("Leather", 10, 20, 5, 0, "+ 10% Run Rate");
+  armorSet[1] = new Armor("Chainmail", 20, 10, 0, 1, "+ 15% Attack");
+  armorSet[2] = new Armor("Steel", 35, 0, 0, 2, "+ 50% Defence");
 
   for (int i = 0; i < weaponSelection.length; i++)
   {
@@ -102,7 +108,7 @@ void setup() {
 
 void draw() 
 {
-  player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
+ //player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
 
   //main menu
   if (screen <= 3)
@@ -118,6 +124,8 @@ void draw()
   }
   mx = mouseX;
   my = mouseY; 
+  items.inv[4] = 5;
+  println(minibossEncounter);
 
 
   main.mr = battlephase.mr = false;
@@ -195,13 +203,13 @@ void keyReleased() {
     esc = false;
   }
 }
-/*
-void mouseClicked()
+
+void mouseClicked() ////////////////////////////////////////////////////////////////////////
  {
- if (screen > 3)
+ 
  println(mx +" " + my); 
  }
- */
+ 
 void mouseReleased()
 {
   main.mr = world.mr = battlephase.mr = true;
