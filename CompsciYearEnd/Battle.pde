@@ -154,6 +154,7 @@ class Battle
     text(enemy[3].name, 760, 660);
     text(enemy[0].name, 860, 560);
     text(enemy[1].name, 760, 560);
+    // add strikethrough stuff ///////////////
   }
 
 
@@ -637,21 +638,21 @@ class Battle
       } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina < playerMax[count].stamina)
       {
         // make a popout saying that the current character doesnt have enough stamina
-      } else if (screen == 12 && enemy1.contains(mx, my))
+      } else if (!enemy[2].dead && screen == 12 && enemy1.contains(mx, my))
       {
         player[count].enemyTarget = enemy[2].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
         attackSelected();
-      } else if (screen == 12 && enemy2.contains(mx, my))
+      } else if (!enemy[3].dead && screen == 12 && enemy2.contains(mx, my))
       {
         player[count].enemyTarget = enemy[3].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
         attackSelected();
-      } else if (screen == 12 && enemy3.contains(mx, my))
+      } else if (!enemy[0].dead && screen == 12 && enemy3.contains(mx, my))
       {
 
         player[count].enemyTarget = enemy[0].entityNumber;
@@ -659,7 +660,7 @@ class Battle
         screen = 10; 
         count++;
         attackSelected();
-      } else if (screen == 12 && enemy4.contains(mx, my))
+      } else if (!enemy[1].dead && screen == 12 && enemy4.contains(mx, my))
       {
         player[count].enemyTarget = enemy[1].entityNumber;
         player[count].playerSelect = true; 
