@@ -27,6 +27,7 @@ PImage cslayout;
 int weaponCount = 0;
 int enemyCount;
 String[] mobName = {"Goblin", "Hellhound", "Skeleton"};
+String[] bossName = {"boss"}; ////////////////////////////////////////////////////////////////////////////
 int index;
 int level = 1;
 int j;
@@ -120,6 +121,7 @@ void draw()
     battlephase.display();
   if (muteMusic) {
     Player.pause();
+
 
   }
   mx = mouseX;

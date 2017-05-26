@@ -111,16 +111,16 @@ class Battle
   void defeatScreen()
   {
     textSize(60);
-<<<<<<< HEAD
+//<<<<<<< HEAD
     textAlign(CENTER, CENTER);
-<<<<<<< HEAD
-=======
-    textAlign(CENTER, CENTER)
->>>>>>> parent of 89d10f6... death message
+//<<<<<<< HEAD
+//=======
+    textAlign(CENTER, CENTER);
+//>>>>>>> parent of 89d10f6... death message
       fill(255, 0, 0);
     println("YOU DIED HAHA", width/2, height/2);
-=======
->>>>>>> origin/elements
+//=======
+//>>>>>>> origin/elements
     fill(255);
     text("YOU DIED HAHA", width/2, height/2);
     
@@ -159,7 +159,7 @@ class Battle
   {
     image(bp[4], 0, 0);
     textAlign(TOP, TOP);
-<<<<<<< HEAD
+//<<<<<<< HEAD
     if (minibossEncounter == false)
     {
       text(enemy[2].name, 860, 660);
@@ -170,7 +170,7 @@ class Battle
     {
       text(enemy[0].name, 860, 560);
     }
-=======
+//=======
     stroke(255);
     strokeWeight(3);
     text(enemy[2].name, 860, 660);
@@ -186,7 +186,7 @@ class Battle
     if (enemy[1].dead)
       line(760,570,textWidth(enemy[1].name) + 760,570);
     strokeWeight(1);
->>>>>>> origin/elements
+//>>>>>>> origin/elements
   }
 
 
@@ -453,34 +453,34 @@ class Battle
               if (critTrigger == false)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
-<<<<<<< HEAD
-=======
->>>>>>> parent of 89d10f6... death message
+//<<<<<<< HEAD
+//=======
+//>>>>>>> parent of 89d10f6... death message
                 willHit = false; 
                 screen = 14; 
                 delay(100); 
                 screen = 15; 
                 delay(100); 
-=======
->>>>>>> origin/elements
+//=======
+//>>>>>>> origin/elements
                 screen = 10;
               } else if (critTrigger == true)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (round(player[j].attack * player[j].critMult) - enemy[enemyCount].defence)); 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//<<<<<<< HEAD
+//=======
                 textSize(30);
                 textAlign(CENTER, 700);
                 fill(255, 0, 0);
                 text("Critical Hit!", width/2, 100);
                 fill(255);
->>>>>>> origin/elements
+//>>>>>>> origin/elements
 
-=======
->>>>>>> parent of 89d10f6... death message
+//=======
+//>>>>>>> parent of 89d10f6... death message
                 critTrigger = false; 
 
                 screen = 10;
@@ -614,14 +614,14 @@ class Battle
             }
             spawn();
             if (enemy[h].dead == false) {
-<<<<<<< HEAD
+//<<<<<<< HEAD
               if (frameCount >= fDelay) 
                 mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150, 150);
               image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
-=======
+//=======
               if (frameCount >= fDelay - fr/2) 
                 image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
->>>>>>> origin/elements
+//>>>>>>> origin/elements
             }
           }
         }

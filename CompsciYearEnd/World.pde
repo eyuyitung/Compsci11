@@ -6,7 +6,7 @@ class World
   int steps = 0;
   int xpos = 480;
   int ypos = 300;
-  boolean boss;
+  boolean boss = false;
   boolean moving = false;
   boolean kp; // key pressed
   boolean mKey; // movement key currently pressed
@@ -88,6 +88,7 @@ class World
     rImages[6] = loadImage("StockRoom.png");// background
     rImages[7] = loadImage("ClosedChest.png");
     rImages[8] = loadImage("OpenChest.png");
+    rImages[9] = loadImage("boss.png");
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -123,6 +124,21 @@ class World
 
   void playerEncounter()
   {
+    /*if (boss == true){
+      rImages[9].resize(150, 150);
+      image(rImages[9], 400, 300); 
+        if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440){
+          if (enter){
+            encounter = true;
+            rImages[9].resize(300, 300);
+            image(rImages[9], 600, 300); 
+          }
+        }     
+    }  */    
+           
+        
+    
+     
     if (steps < 1)
       gracePeriod = true;
     else 
@@ -167,7 +183,7 @@ class World
     }
   }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
   void minibossFight()
   {
     if (items.inv[4] >= 5 && minibossCount == 0)
@@ -179,9 +195,9 @@ class World
     minibossEncounter = false;
     }
   }
-=======
+//=======
   //////////////////////////////////////////////////////////////////////////////////
->>>>>>> origin/elements
+//>>>>>>> origin/elements
 
   void expLevelup()
   {
