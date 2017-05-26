@@ -111,8 +111,12 @@ class Battle
   void defeatScreen()
   {
     textSize(60);
+<<<<<<< HEAD
     textAlign(CENTER, CENTER);
 <<<<<<< HEAD
+=======
+    textAlign(CENTER, CENTER)
+>>>>>>> parent of 89d10f6... death message
       fill(255, 0, 0);
     println("YOU DIED HAHA", width/2, height/2);
 =======
@@ -449,8 +453,11 @@ class Battle
               if (critTrigger == false)
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (player[j].attack - enemy[enemyCount].defence)); 
+<<<<<<< HEAD
 
 <<<<<<< HEAD
+=======
+>>>>>>> parent of 89d10f6... death message
                 willHit = false; 
                 screen = 14; 
                 delay(100); 
@@ -463,6 +470,7 @@ class Battle
               {
                 enemy[enemyCount].health = (enemy[enemyCount].health - (round(player[j].attack * player[j].critMult) - enemy[enemyCount].defence)); 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 textSize(30);
                 textAlign(CENTER, 700);
@@ -471,6 +479,8 @@ class Battle
                 fill(255);
 >>>>>>> origin/elements
 
+=======
+>>>>>>> parent of 89d10f6... death message
                 critTrigger = false; 
 
                 screen = 10;
