@@ -206,7 +206,8 @@ class Menu
       }
       else if (screen == 1 && statpoints == 0)
       {
-        screen = 5;         
+        screen = 5;   
+        world.stats = false;
       }
     }
     if (back == true)

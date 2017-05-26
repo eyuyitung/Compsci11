@@ -1,4 +1,4 @@
- //<>//
+//<>// //<>//
 class Battle
 {
   int count = 0;
@@ -68,7 +68,15 @@ class Battle
   int[] enemy4x = {760, 825, 825, 760};
   int[] enemy4y = {560, 560, 580, 580}; 
   Polygon enemy4 = new Polygon(enemy4x, enemy4y, 4);
-
+  int [] potx = {220, 405, 405, 220};
+  int [] pot0y = {365, 365, 380, 380};
+  int [] pot1y = {410, 410, 425, 425};
+  int [] pot2y = {455, 455, 470, 470};
+  int [] pot3y = {500, 500, 515, 515};
+  Polygon items0 = new Polygon (potx, pot0y, 4);
+  Polygon items1 = new Polygon (potx, pot1y, 4);
+  Polygon items2 = new Polygon (potx, pot2y, 4);
+  Polygon items3 = new Polygon (potx, pot3y, 4);
 
   Battle()
   {
@@ -104,9 +112,9 @@ class Battle
   {
     textSize(60);
     textAlign(CENTER, CENTER);
-    fill(255, 0, 0);
-    println("YOU DIED HAHA", width/2, height/2);
     fill(255);
+    text("YOU DIED HAHA", width/2, height/2);
+    
   }
 
   //Action tab
@@ -142,6 +150,7 @@ class Battle
   {
     image(bp[4], 0, 0);
     textAlign(TOP, TOP);
+<<<<<<< HEAD
     if (minibossEncounter == false)
     {
       text(enemy[2].name, 860, 660);
@@ -152,6 +161,23 @@ class Battle
     {
       text(enemy[0].name, 860, 560);
     }
+=======
+    stroke(255);
+    strokeWeight(3);
+    text(enemy[2].name, 860, 660);
+    if (enemy[2].dead)
+      line(860,670,textWidth(enemy[2].name) + 860,670);
+    text(enemy[3].name, 760, 660);
+    if (enemy[3].dead)
+      line(760,670,textWidth(enemy[3].name) + 760,670);  
+    text(enemy[0].name, 860, 560);
+    if (enemy[0].dead)
+      line(860,570,textWidth(enemy[0].name) + 860,570);
+    text(enemy[1].name, 760, 560);
+    if (enemy[1].dead)
+      line(760,570,textWidth(enemy[1].name) + 760,570);
+    strokeWeight(1);
+>>>>>>> origin/elements
   }
 
 
@@ -172,7 +198,31 @@ class Battle
   //items tab
   void battleItems()
   {
+    boolean selection = false;
     image(bp[5], 0, 0);
+    textAlign(LEFT, BOTTOM);
+    for (int i = 0; i < 4; i++) {
+      text(items.inv[i], 395, 385 + 45*i);
+    }
+    if (mr) {
+      if (items0.contains(mx, my)) {
+        items.use(0, count);
+        selection = true;
+      } else if (items1.contains(mx, my)) {
+        items.use(1, count);
+        selection = true;
+      } else if (items2.contains(mx, my)) {
+        items.use(2, count);
+        selection = true;
+      } else if (items3.contains(mx, my)) {
+        items.use(3, count);
+        selection = true;
+      }
+    }
+    if (selection) {
+      screen = 10;
+        player[count].playerSelect = true;
+    }
   }
 
 
@@ -198,9 +248,11 @@ class Battle
 
     if (true && enemy[0].dead && enemy[1].dead && enemy[2].dead && enemy[3].dead)
     {
-      screen = 10;
+      screen = 5;
+      world.steps = 0;
       world.gracePeriod = true;
       encounter = false;
+      world.encounterPer = 100;
       Player2.pause();
       Player.rewind();
       if (muteMusic)
@@ -227,6 +279,7 @@ class Battle
       if (enemy[enemyCount].dead == false && minibossEncounter == false)
       {
         mobPic[enemy[enemyCount].mobNumber].resize(150, 150);
+        mobPic[enemy[enemyCount].mobNumber + 4].resize(150, 150);
         image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
       }
       if (enemy[0].dead == false && minibossEncounter == true)
@@ -535,9 +588,14 @@ class Battle
             }
             spawn();
             if (enemy[h].dead == false) {
+<<<<<<< HEAD
               if (frameCount >= fDelay) 
                 mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150, 150);
               image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
+=======
+              if (frameCount >= fDelay - fr/2) 
+                image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
+>>>>>>> origin/elements
             }
           }
         }
@@ -557,7 +615,7 @@ class Battle
   {
     if (this.mr == true)
     {
-      if (screen == 10 && attackTab.contains(mx, my))
+      if (screen == 10 &&  attackTab.contains(mx, my))
       {
         screen = 11;
       } else if (screen == 10 && itemsTab.contains(mx, my))
@@ -580,7 +638,8 @@ class Battle
           encounter = false; 
           world.gracePeriod = false; 
           world.encounterPer = 100;
-
+          if (player[1].health <= playerMax[1].health/2) // if sidekick < 50% health
+            player[1].health = playerMax[1].health/2; // health resets to 50%
 
           if (!muteMusic) {
             Player2.pause();
@@ -625,33 +684,35 @@ class Battle
       } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina < playerMax[count].stamina)
       {
         // make a popout saying that the current character doesnt have enough stamina
-      } else if (screen == 12 && enemy3.contains(mx, my))
+      } else if (!enemy[2].dead && screen == 12 && enemy1.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[0].entityNumber; 
+        player[count].enemyTarget = enemy[2].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
         attackSelected();
-      } else if (screen == 12 && enemy4.contains(mx, my))
+      } else if (!enemy[3].dead && screen == 12 && enemy2.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[1].entityNumber; 
+        player[count].enemyTarget = enemy[3].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
         attackSelected();
-      } else if (screen == 12 && enemy1.contains(mx, my))
+      } else if (!enemy[0].dead && screen == 12 && enemy3.contains(mx, my))
       {
 
-        player[count].enemyTarget = enemy[2].entityNumber;
+        player[count].enemyTarget = enemy[0].entityNumber;
         player[count].playerSelect = true; 
         screen = 10; 
         count++;
-      } else if (screen == 12 && enemy2.contains(mx, my))
+        attackSelected();
+      } else if (!enemy[1].dead && screen == 12 && enemy4.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[3].entityNumber;
+        player[count].enemyTarget = enemy[1].entityNumber;
         player[count].playerSelect = true; 
         screen = 10; 
         count++;
+        attackSelected();
       }
     }
   }

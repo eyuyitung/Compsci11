@@ -46,7 +46,7 @@ class Entity
     exper = exp;
   }
   
-   Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps, int mn, int exp, int x1 , int y1, boolean state)
+   Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps, int mn, int exp, int x1 , int y1, boolean state, int xp)
   {
     attack=a;
     defence=d;
@@ -68,6 +68,7 @@ class Entity
     x = x1;
     y = y1;
     dead = state;
+    exper = xp;
   }
 
 
@@ -75,7 +76,7 @@ class Entity
 
   Entity (String na, int l, int en, int mn, int x, int y, boolean state)
   {
-    this(l*15, l*5, l*50, l*50, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*20,x ,y, state);
+    this(l*15, l*5, l*50, l*20, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*20,x ,y, state, 50*l);
   }
 
 
