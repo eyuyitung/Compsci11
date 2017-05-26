@@ -128,7 +128,7 @@ class World
     else 
     gracePeriod = false;
 
-    if (encounter == false && encounterPer == encounterVal)
+    if (encounter == false && encounterPer == encounterVal && minibossEncounter == false)
     {
       encounter = true; 
       steps = 0;
@@ -158,7 +158,7 @@ class World
       enemy[3].x += 570;
       enemy[3].y += 350;
     }
-    /*if (encounter == false && encounterPer == encounterVal && minibossEncounter == true)
+    if (encounter == false && encounterPer == encounterVal && minibossEncounter == true)
     {
       encounter = true; 
       steps = 0;
@@ -170,7 +170,10 @@ class World
       enemy[0].defence += 20;
       enemy[0].speed += 10;
       enemy[0].critChance += 10;
-    }*/
+      
+      enemy[0].x += 670;
+      enemy[0].y += 280;
+    }
     
   }
 

@@ -261,19 +261,33 @@ class Battle
   void spawn()
   {
     enemyCount = 0;
-    for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
+    if (minibossEncounter == false)
     {
-      /*if (minibossEncounter == true)
+      for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
       {
 
-        mobPic[enemy[0].mobNumber].resize(250, 250); 
-        image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
-      } */
-      if (enemy[enemyCount].dead == false && minibossEncounter == false)
+        if (enemy[enemyCount].dead == false)
+        {
+          mobPic[enemy[enemyCount].mobNumber].resize(150, 150);
+          mobPic[enemy[enemyCount].mobNumber + 4].resize(150, 150);
+          image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
+        }
+      }
+    }
+
+    if (minibossEncounter == true)
+    {
+      for (enemyCount = 0; enemyCount < 1; enemyCount++)
       {
-        mobPic[enemy[enemyCount].mobNumber].resize(150, 150);
-        mobPic[enemy[enemyCount].mobNumber + 4].resize(150, 150);
-        image(mobPic[enemy[enemyCount].mobNumber], enemy[enemyCount].x, enemy[enemyCount].y);
+        if (index > 1)
+        {
+          mobPic[enemy[0].mobNumber].resize(230, 230); 
+          image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
+        } else if (index == 1)
+        {
+          mobPic[enemy[0].mobNumber].resize(300, 300); 
+          image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
+        }
       }
     }
     for (int i = 0; i < player.length; i++) {
@@ -670,6 +684,19 @@ class Battle
       } else if (count == 0 && screen == 11 && specialAtab.contains(mx, my) && player[count].stamina < playerMax[count].stamina)
       {
         // make a popout saying that the current character doesnt have enough stamina
+      } 
+
+
+
+      if (!enemy[0].dead && screen == 12 && enemy3.contains(mx, my))
+      {
+
+        player[count].enemyTarget = enemy[0].entityNumber;
+        player[count].playerSelect = true; 
+        screen = 10; 
+        count++;
+
+        attackSelected();
       } else if (!enemy[2].dead && screen == 12 && enemy1.contains(mx, my))
 
 
@@ -688,18 +715,6 @@ class Battle
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
-        attackSelected();
-      } else if (!enemy[0].dead && screen == 12 && enemy3.contains(mx, my))
-
-
-
-      {
-
-        player[count].enemyTarget = enemy[0].entityNumber;
-        player[count].playerSelect = true; 
-        screen = 10; 
-        count++;
-
         attackSelected();
       } else if (!enemy[1].dead && screen == 12 && enemy4.contains(mx, my))
 
