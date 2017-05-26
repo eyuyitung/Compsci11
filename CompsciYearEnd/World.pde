@@ -14,17 +14,19 @@ class World
   boolean mr; // mouse released
   boolean inventory; // if true will bring up inventory screen
   boolean stats; 
-  boolean options;
+  boolean mute;
   boolean exit; // will exit to main menu
   boolean closed = true;
   boolean empty = false;
-  int floor = 2; 
-  int room = 32; // room numbers are row / column ex. 45 = row 4, col 5 (see drawings for map) 
+  int floor = 1; 
+  int room = 45; // room numbers are row / column ex. 45 = row 4, col 5 (see drawings for map) 
   int speed = 10;
   int sprint = 20;
   int frameDelay = 0;
   int mDelay = 0;
   int bDelay = 0;
+  int cDelay = 0;
+  int eDelay = 0;
   PImage[] pFrames = new PImage [13];
   PImage[] rImages = new PImage [15];
   PFont [] igFonts = new PFont [5];
@@ -45,9 +47,9 @@ class World
   int [] statsx = {810, 880, 880, 810};
   int [] statsy = {260, 260, 295, 295};
   Polygon mStats = new Polygon(statsx, statsy, 4);
-  int [] optionsx = {810, 910, 910, 810};
-  int [] optionsy = {390, 390, 420, 420};
-  Polygon mOptions = new Polygon(optionsx, optionsy, 4);
+  int [] mutex = {810, 880, 880, 810};
+  int [] mutey = {390, 390, 420, 420};
+  Polygon mMute = new Polygon(mutex, mutey, 4);
   int [] exitx = {810, 860, 860, 810};
   int [] exity = {520, 520, 550, 550};
   Polygon mExit = new Polygon(exitx, exity, 4);
@@ -154,6 +156,8 @@ class World
       enemy[3].y += 350;
     }
   }
+
+  //////////////////////////////////////////////////////////////////////////////////
 
   void expLevelup()
   {
@@ -271,8 +275,11 @@ class World
       spacing [j] = i;
       j++;
     }
-    if (esc || mr && menu.contains(mx, my))
+    if (!inGameMenu && (esc && frameCount > eDelay || mr && menu.contains(mx, my))){
       inGameMenu = true;
+      eDelay = frameCount + fr/2;
+      //println(eDelay + " " + frameCount);
+    }
     if (inGameMenu) {
       fill(100);
       stroke(0);
@@ -289,20 +296,20 @@ class World
       line(810, spacing[0] + 5, 810 + textWidth("Inventory"), spacing [0] +5);
       text("Stats", 810, spacing[1]);
       line(810, spacing[1] + 5, 810 + textWidth("Stats"), spacing [1] +5);  
-      text("Options", 810, spacing[2]);
-      line(810, spacing[2] + 5, 810 + textWidth("Options"), spacing [2] +5);   
+      text("Mute", 810, spacing[2]);
+      line(810, spacing[2] + 5, 810 + textWidth("Mute"), spacing [2] +5);   
       text("Exit", 810, spacing[3]);
       line(810, spacing[3] + 5, 810 + textWidth("Exit"), spacing [3] +5);
       if (mr)
       {
-        if (inventory == false && stats == false && options == false && exit == false)
-          mDelay = frameCount + fr/2;
-        if (mInventory.contains(mx, my))
+        if (!inventory && !stats && !mute && !exit)
+          mDelay = frameCount + fr/2;        
+        if (mInventory.contains(mx, my)) 
           inventory = true; //inventory screen
         else if (mStats.contains(mx, my))
           stats = true; //stats screen
-        else if (mOptions.contains(mx, my))
-          options = true; //options screen
+        else if (mMute.contains(mx, my))
+          mute = true; //mute button
         else if (mExit.contains(mx, my))
           exit = true; //are you sure screen
       }
@@ -311,18 +318,20 @@ class World
         inventory();
       else if (stats)
         screen = 1;// stats shit
-      else if (options)
-        options();
+      else if (mute)
+        mute();
       else if (exit)
-        mainMenu();
-
-
+        exit();
       strokeWeight(1);
       stroke(0);
       textSize(16);
+      
+      if (back || (esc && frameCount > eDelay || mr && menu.contains(mx, my) && frameCount > eDelay)){
+        inGameMenu = false;
+        eDelay = frameCount + fr/2;
+        println(eDelay + " " + frameCount);
+      }
     }
-    if (back || mr && menu.contains(mx, my) && frameCount > mDelay)
-      inGameMenu = false;
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -398,7 +407,9 @@ class World
       rect(215, 32, 400 * (1.0*player[1].health/playerMax[1].health), 15);
     fill(255);
     text("XP :", 200, 96);
-    rect (215, 82, 600, 15);
+    text("Lvl : " + level, 665, 96);
+    rect (215, 82, 400, 15);
+    rect(215, 82, 400 * (1.0*player[0].exper/ (50 + level* 50)), 15);
     text("Keys :", 200, 70);
     text(items.inv[4], 215, 70); 
     stroke(0);
@@ -572,11 +583,16 @@ class World
         }
       }
       if (dp[5]) { // boss door
-        if (items.inv[5] <= 1) { // if player has boss key
+        if (items.inv[5] >= 1) { // if player has boss key
           if (xpos >= 460 && xpos <= 520 && ypos == 690 && down) {
             room += 10;
           }
-        }
+        } else 
+        textSize(22);
+        textAlign(CENTER, CENTER);
+        text("Boss Key Req.", 500, 750);
+        textSize(16);
+        textAlign(LEFT, BOTTOM);
       }
     }
   }
@@ -654,18 +670,25 @@ class World
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  void options() 
+  void mute() 
   {
-    fill(255, 0, 0);
-    rect(180, 120, 400, 400);
-    fill(255);
-    if (mOptions.contains(mx, my) && mr && frameCount > mDelay)
-      options = false;
+    if (muteMusic == false && mMute.contains(mx, my) && mr && frameCount > cDelay){
+      muteMusic = true; 
+      Player.pause(); 
+      Player.rewind();
+      cDelay = frameCount + fr/2;
+    }
+    if (muteMusic == true && mMute.contains(mx, my) && mr && frameCount > cDelay){
+      muteMusic = false; 
+      Player.loop(); 
+      cDelay = frameCount + fr/2;
+    }
+      
   }
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  void mainMenu()
+  void exit()
   {
     int [] yesx = {405, 480, 480, 405};
     int [] yesy = {370, 370, 445, 445};
@@ -689,9 +712,6 @@ class World
     if (mr && (mExit.contains(mx, my) || mNo.contains(mx, my)) && frameCount > mDelay) 
       exit = false;
     if (mr && mYes.contains(mx, my)) {
-      //screen = 0;
-      //exit = false;
-      //inGameMenu = false;
       exit();
     }
     stroke(255);

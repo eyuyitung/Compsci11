@@ -536,7 +536,7 @@ class Battle
   {
     if (this.mr == true)
     {
-      if (screen == 10 && attackTab.contains(mx, my))
+      if (screen == 10 &&  attackTab.contains(mx, my))
       {
         screen = 11;
       } else if (screen == 10 && itemsTab.contains(mx, my))
@@ -606,14 +606,14 @@ class Battle
         // make a popout saying that the current character doesnt have enough stamina
       } else if (screen == 12 && enemy1.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[0].entityNumber; 
+        player[count].enemyTarget = enemy[3].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
         attackSelected();
       } else if (screen == 12 && enemy2.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[1].entityNumber; 
+        player[count].enemyTarget = enemy[2].entityNumber; 
         player[count].playerSelect = true; 
         screen = 10; 
         count++; 
@@ -621,16 +621,18 @@ class Battle
       } else if (screen == 12 && enemy3.contains(mx, my))
       {
 
-        player[count].enemyTarget = enemy[2].entityNumber;
+        player[count].enemyTarget = enemy[1].entityNumber;
         player[count].playerSelect = true; 
         screen = 10; 
         count++;
+        attackSelected();
       } else if (screen == 12 && enemy4.contains(mx, my))
       {
-        player[count].enemyTarget = enemy[3].entityNumber;
+        player[count].enemyTarget = enemy[0].entityNumber;
         player[count].playerSelect = true; 
         screen = 10; 
         count++;
+        attackSelected();
       }
     }
   }

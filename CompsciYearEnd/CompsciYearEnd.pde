@@ -16,8 +16,8 @@ AudioPlayer Player, Player2, Player3;
 
 boolean encounter;
 boolean up, down, left, right, shift, enter, back, esc;
-boolean muteMusic = true;
-int screen = 5;
+boolean muteMusic = false;
+int screen = 0;
 World world;
 float encounterPer;
 PImage characterS;
@@ -106,7 +106,7 @@ void setup() {
 
 void draw() 
 {
-  player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
+ //player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
 
   //main menu
   if (screen <= 3)
@@ -199,13 +199,13 @@ void keyReleased() {
     esc = false;
   }
 }
-/*
+
 void mouseClicked()
  {
- if (screen > 3)
+ 
  println(mx +" " + my); 
  }
- */
+ 
 void mouseReleased()
 {
   main.mr = world.mr = battlephase.mr = true;
