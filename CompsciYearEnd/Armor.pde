@@ -7,6 +7,7 @@ class Armor
   int setNumber;
   String setBonus;
   
+  //Armor constructor
   Armor(String na, int hp, int spd, int acc, int sn, String sb)
   {
     name = na;

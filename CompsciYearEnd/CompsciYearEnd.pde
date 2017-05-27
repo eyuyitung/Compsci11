@@ -11,6 +11,7 @@ import ddf.minim.ugens.*;
  assignement due may 24th
  */
 
+//Global variables
 Minim minim;
 AudioPlayer Player, Player2, Player3, Player4;
 
@@ -58,10 +59,12 @@ Menu main;
 Items items = new Items();
 Battle battlephase;
 
+
 void setup() {
   size(1000, 800);  
   frameRate(fr);
 
+  //For all the audio used in the game
   minim = new Minim(this);
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
@@ -70,7 +73,7 @@ void setup() {
   Player.loop();
 
 
-
+ 
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
@@ -119,6 +122,7 @@ void draw()
   //in game
   else if (screen == 5)
     world.display();
+  //battle scrrem
   if (encounter == true) 
     battlephase.display();
   if (muteMusic) {
@@ -135,7 +139,7 @@ void draw()
 
 
 
-
+//Detect the keys pressed by the user
 void keyPressed() {
   world.kp = true;
 
@@ -171,6 +175,8 @@ void keyPressed() {
     esc = true;
   }
 }
+
+//Detect when the keys are released 
 void keyReleased() {
   world.kp = false;
   if (key == CODED && keyCode == UP || key == 'w') {
@@ -206,12 +212,14 @@ void keyReleased() {
   }
 }
 
+//Detect when the mouse is clicked
 void mouseClicked() ////////////////////////////////////////////////////////////////////////
 {
 
   println(mx +" " + my);
 }
 
+//Detect when the mouse is released
 void mouseReleased()
 {
   main.mr = world.mr = battlephase.mr = true;

@@ -57,7 +57,7 @@ class Menu
   Polygon armorSel2 = new Polygon(armorSel2x, armorSel2y, 3);
 
 
-
+  //All images used for the starting menu background
   void loadPictures()
   {
     frames [1] = loadImage("1.gif");
@@ -70,7 +70,7 @@ class Menu
     frames [8] = loadImage("8.gif");
   }
 
-
+  //Loads all starting menu images
   Menu () {
     loadPictures();
   }
@@ -115,6 +115,7 @@ class Menu
 
   ////////////////////////////////////////////////////////////////////////////////
 
+  //selections for weapons, armor and etc
   void mouseKey()
   {
     if (this.mr == true) 
@@ -214,7 +215,7 @@ class Menu
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //For the first 2 buttons in the starting menu
   void top()
   {
 
@@ -234,7 +235,7 @@ class Menu
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  
   void keyControl()
   {
     // triangle pointer for keyboard controls
@@ -269,7 +270,7 @@ class Menu
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //For the status screen
   void stats()
   {
     image(characterS, 0, 0);
@@ -358,7 +359,7 @@ class Menu
       }
     }
   }
-  void help()
+  void help() //For the Help button on the starting screen, gives the user basic info and background to the game
   {
     background(21);
       textSize(60);

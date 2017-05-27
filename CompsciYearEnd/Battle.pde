@@ -78,12 +78,13 @@ class Battle
   Polygon items2 = new Polygon (potx, pot2y, 4);
   Polygon items3 = new Polygon (potx, pot3y, 4);
 
+  //Loading the pictures used in battle 
   Battle()
   {
     loadPics();
   }
 
-
+  //All pictures used in battle
   void loadPics()
   {
     bp[1] = loadImage("Battlephase.png");
@@ -108,6 +109,7 @@ class Battle
     mobPic[7] = loadImage("boss sil.png");
   }
 
+  //Death Message
   void defeatScreen()
   {
     textSize(60);
@@ -236,6 +238,7 @@ class Battle
     }
   }
 
+  
   void entityDeath()
   {
     if (player[0].health < 0 && player[1].health < 0)
@@ -268,6 +271,7 @@ class Battle
     }
   }
 
+  //Spawning the enemies
   void spawn()
   {
     enemyCount = 0;
@@ -307,6 +311,7 @@ class Battle
     }
   }
 
+  //Detects for a critical hit
   void isCrit()
   {
     critCount = (int)random(0, 100); 
@@ -316,6 +321,7 @@ class Battle
     }
   }
 
+  //Detect for an attack that hits
   void accHit()
   {
     accCount = (int)random(0, 100); 
@@ -325,6 +331,7 @@ class Battle
     }
   }
 
+  //Detect for a successful block
   void isBlock()
   {
     blockCount = (int)random(0, 100); 
@@ -334,6 +341,7 @@ class Battle
     }
   }
 
+  //Detect for a successful escape
   void isRun()
   {
     runCount = (int)random(0, 100); 
@@ -343,6 +351,7 @@ class Battle
     }
   }
 
+  //Enemies switches target once the current target is dead
   void switchTarget()
   {
     for (int i = 0; i < enemy.length; i++)
@@ -357,6 +366,7 @@ class Battle
     }
   }
 
+  //Damages the enemies with poison (enemies afflicted by poison effect)
   void daggerSpecial()
   {
     if (isPoisoned == true)
@@ -368,6 +378,7 @@ class Battle
     }
   }
 
+  //method for when the enemies attack
   void enemyAttack()
   {
     for (int i = 0; i < enemy.length; i++)
@@ -410,7 +421,7 @@ class Battle
     }
   }
 
-
+  //methods for battle animations (sword swing animation)
   void battleAnimations()
   {
     for (j = 0; j < player.length; j++)
@@ -510,6 +521,8 @@ class Battle
       }
     }
   }
+  
+  //methods for detecting if enemy strikes first or player strikes first
   void speedPriority()
   {
     for (int i = 0; i < player.length; i++)
@@ -535,7 +548,7 @@ class Battle
   }
 
 
-
+  //methods for all displays during battle
   void display()
   {
     if (frameCount < world.bDelay)
@@ -671,6 +684,7 @@ class Battle
     }
   }
 
+  //method for all the tabs for attacks choices (light, heavy and special) and target selections during battle
   void attackHitbox()
   {
     if (this.mr == true)

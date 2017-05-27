@@ -56,7 +56,7 @@ class World
 
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //Loading the frames for the character's walking animation in the world map
   void loadFrames () {
     pFrames [1] = loadImage("dleft.png"); //1-3 down
     pFrames [2] = loadImage("dstat.png"); 
@@ -76,7 +76,7 @@ class World
   }
 
 
-
+  //All images used for the world map
   void loadRoom() {
 
     rImages[0] = loadImage("HoleDoorup.png"); //top door
@@ -92,7 +92,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //Loads all the images
   World()
   {
     loadFrames();
@@ -100,7 +100,7 @@ class World
   }
 
   ////////////////// DISPLAY ////////////////////////////////////////////////////////////////
-
+  //Displays various screens (battle and world map and etc)
   void display()
   {
     playerEncounter();
@@ -121,7 +121,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //Detects for encounters with enemies
   void playerEncounter()
   {
     if (boss == true){
@@ -195,7 +195,7 @@ class World
     
   }
 
-
+  //methods for presence of miniboss 
   void minibossFight()
   {
     if (items.inv[4] >= 5 && minibossCount == 0)
@@ -209,7 +209,7 @@ class World
 
   //////////////////////////////////////////////////////////////////////////////////
 
-
+  //methods for leveling
   void expLevelup()
   {
     for (int i = 1; i <= 10; i++)
@@ -261,7 +261,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //For the grids on the floor
   void grid() {
     stroke(0);
     for (int i = 40; i <= width - 40; i += 40) {
@@ -274,7 +274,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //For when the character moves around the world map
   void move () {
     if (screen == 5) {
       if (frameCount >= frameDelay) {       
@@ -319,7 +319,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////  
-
+  //Displays the ingame menu
   void igMenu() {
     int [] spacing = new int [5];
     int j = 0;  
@@ -387,7 +387,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  
   void backDrop() {
     strokeWeight(1);
     rImages[6].resize(1000, 700);
@@ -430,7 +430,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //In game information of the play and ally (top of the screen when in world map)
   void info() {
     fill(200);
     rect(890, 10, 80, 40); // menu button box
@@ -594,7 +594,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //Detects for entrances to another room
   void checkDoor() {
     if (room > 10 && room < 50)
     {
@@ -654,7 +654,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //Interactions with a treasure chest
   void chest()
   {
     int amount = (int)random(6);
@@ -694,7 +694,7 @@ class World
 
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //Displays information of the inventory
   void inventory() {
 
     fill(170);
@@ -725,7 +725,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //Option to mute the background music
   void mute() 
   {
     if (muteMusic == false && mMute.contains(mx, my) && mr && frameCount > cDelay) {
@@ -742,7 +742,7 @@ class World
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //Option to exit the game
   void exit()
   {
     int [] yesx = {405, 480, 480, 405};
