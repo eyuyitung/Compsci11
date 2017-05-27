@@ -82,7 +82,7 @@ class Entity
 
   Entity (int l, int en) //player
   {  
-    this(l*10, l*5, l*5, l*60, 5, 100, 15, 50, "", 0, 1.0, 0, 0, en, false, 0, 0);
+    this(l*30, l*25, l*25, l*125, 5, 100, 15, 50, "", 0, 1.0, 0, 0, en, false, 0, 0);
   }
 
   Entity () //player
