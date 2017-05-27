@@ -152,19 +152,29 @@ class Battle
 
     stroke(255);
     strokeWeight(3);
-    text(enemy[2].name, 860, 660);
-    if (enemy[2].dead)
-      line(860, 670, textWidth(enemy[2].name) + 860, 670);
-    text(enemy[3].name, 760, 660);
-    if (enemy[3].dead)
-      line(760, 670, textWidth(enemy[3].name) + 760, 670);  
-    text(enemy[0].name, 860, 560);
-    if (enemy[0].dead)
-      line(860, 570, textWidth(enemy[0].name) + 860, 570);
-    text(enemy[1].name, 760, 560);
-    if (enemy[1].dead)
-      line(760, 570, textWidth(enemy[1].name) + 760, 570);
-    strokeWeight(1);
+    if (minibossEncounter == false)
+    {
+      text(enemy[2].name, 860, 660);
+      if (enemy[2].dead)
+        line(860, 670, textWidth(enemy[2].name) + 860, 670);
+      text(enemy[3].name, 760, 660);
+      if (enemy[3].dead)
+        line(760, 670, textWidth(enemy[3].name) + 760, 670);  
+      text(enemy[0].name, 860, 560);
+      if (enemy[0].dead)
+        line(860, 570, textWidth(enemy[0].name) + 860, 570);
+      text(enemy[1].name, 760, 560);
+      if (enemy[1].dead)
+        line(760, 570, textWidth(enemy[1].name) + 760, 570);
+      strokeWeight(1);
+    }
+
+    if (minibossEncounter == true)
+    {
+      text(enemy[0].name, 860, 560);
+      if (enemy[0].dead)
+        line(860, 570, textWidth(enemy[0].name) + 860, 570);
+    }
   }
 
 
@@ -686,46 +696,60 @@ class Battle
         // make a popout saying that the current character doesnt have enough stamina
       } 
 
-
-
-      if (!enemy[0].dead && screen == 12 && enemy3.contains(mx, my))
+      if (minibossEncounter == false)
       {
 
-        player[count].enemyTarget = enemy[0].entityNumber;
-        player[count].playerSelect = true; 
-        screen = 10; 
-        count++;
+        if (!enemy[0].dead && screen == 12 && enemy3.contains(mx, my))
+        {
 
-        attackSelected();
-      } else if (!enemy[2].dead && screen == 12 && enemy1.contains(mx, my))
+          player[count].enemyTarget = enemy[0].entityNumber;
+          player[count].playerSelect = true; 
+          screen = 10; 
+          count++;
+
+          attackSelected();
+        } else if (!enemy[2].dead && screen == 12 && enemy1.contains(mx, my))
 
 
+        {
+          player[count].enemyTarget = enemy[2].entityNumber; 
+          player[count].playerSelect = true; 
+          screen = 10; 
+          count++; 
+          attackSelected();
+        } else if (!enemy[3].dead && screen == 12 && enemy2.contains(mx, my))
+
+
+
+        {
+          player[count].enemyTarget = enemy[3].entityNumber; 
+          player[count].playerSelect = true; 
+          screen = 10; 
+          count++; 
+          attackSelected();
+        } else if (!enemy[1].dead && screen == 12 && enemy4.contains(mx, my))
+
+
+
+        {
+          player[count].enemyTarget = enemy[1].entityNumber;
+          player[count].playerSelect = true; 
+          screen = 10; 
+          count++;
+          attackSelected();
+        }
+      } else if (minibossEncounter == true)
       {
-        player[count].enemyTarget = enemy[2].entityNumber; 
-        player[count].playerSelect = true; 
-        screen = 10; 
-        count++; 
-        attackSelected();
-      } else if (!enemy[3].dead && screen == 12 && enemy2.contains(mx, my))
+        if (!enemy[0].dead && screen == 12 && enemy3.contains(mx, my))
+        {
 
+          player[count].enemyTarget = enemy[0].entityNumber;
+          player[count].playerSelect = true; 
+          screen = 10; 
+          count++;
 
-
-      {
-        player[count].enemyTarget = enemy[3].entityNumber; 
-        player[count].playerSelect = true; 
-        screen = 10; 
-        count++; 
-        attackSelected();
-      } else if (!enemy[1].dead && screen == 12 && enemy4.contains(mx, my))
-
-
-
-      {
-        player[count].enemyTarget = enemy[1].entityNumber;
-        player[count].playerSelect = true; 
-        screen = 10; 
-        count++;
-        attackSelected();
+          attackSelected();
+        }
       }
     }
   }
