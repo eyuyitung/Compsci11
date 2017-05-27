@@ -6,7 +6,7 @@ class World
   int steps = 0;
   int xpos = 480;
   int ypos = 300;
-  boolean boss;
+  boolean boss = false;
   boolean moving = false;
   boolean kp; // key pressed
   boolean mKey; // movement key currently pressed
@@ -88,6 +88,7 @@ class World
     rImages[6] = loadImage("StockRoom.png");// background
     rImages[7] = loadImage("ClosedChest.png");
     rImages[8] = loadImage("OpenChest.png");
+     rImages[9] = loadImage("boss.png");
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -123,6 +124,23 @@ class World
 
   void playerEncounter()
   {
+    if (boss == true){
+      bossEncounter = true;
+        if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440){
+          if (enter){
+            encounter = true;
+            if (muteMusic == false) {
+              Player.pause();
+              Player4.rewind();
+              Player4.play();
+            }
+            enemy[0].health += 75;
+            enemy[0].attack += 25;
+            enemy[0].speed += 15;
+            enemy[0].critChance += 10;
+          }
+        }     
+    }      
     if (steps < 1)
       gracePeriod = true;
     else 

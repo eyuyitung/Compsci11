@@ -12,11 +12,12 @@ import ddf.minim.ugens.*;
  */
 
 Minim minim;
-AudioPlayer Player, Player2, Player3;
+AudioPlayer Player, Player2, Player3, Player4;
 
 int minibossCount = 0;
 boolean encounter;
 boolean minibossEncounter = false;
+boolean bossEncounter=false;
 boolean up, down, left, right, shift, enter, back, esc;
 boolean muteMusic = true;
 int screen = 0;
@@ -27,6 +28,7 @@ PImage cslayout;
 int weaponCount = 0;
 int enemyCount;
 String[] mobName = {"Goblin", "Hellhound", "Skeleton"};
+String[] bossName = {"boss"};
 int index;
 int level = 1;
 int j;
@@ -64,9 +66,10 @@ void setup() {
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
   Player3 = minim.loadFile("chest.mp3");
+  Player4= minim.loadFile("boss.mp3");
   Player.loop();
 
- 
+
 
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
@@ -108,7 +111,7 @@ void setup() {
 
 void draw() 
 {
- //player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
+  //player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
 
   //main menu
   if (screen <= 3)
@@ -120,7 +123,6 @@ void draw()
     battlephase.display();
   if (muteMusic) {
     Player.pause();
-
   }
   mx = mouseX;
   my = mouseY; 
@@ -205,11 +207,11 @@ void keyReleased() {
 }
 
 void mouseClicked() ////////////////////////////////////////////////////////////////////////
- {
- 
- println(mx +" " + my); 
- }
- 
+{
+
+  println(mx +" " + my);
+}
+
 void mouseReleased()
 {
   main.mr = world.mr = battlephase.mr = true;
