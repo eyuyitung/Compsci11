@@ -1,4 +1,4 @@
-//<>// //<>//
+//<>// //<>// //<>//
 class Battle
 {
   int count = 0;
@@ -256,6 +256,10 @@ class Battle
         Player.loop();
       for (int j = 0; j < enemy.length; j ++)
         player[0].exper += enemy[j].exper;
+      for (int i = 0; i <= player.length; i++) {
+        if (player[i].health <= playerMax[i].health/2) // if < 50% health
+          player[i].health = playerMax[i].health/2; // health resets to 50%
+      }
     }
     if (minibossEncounter == true && enemy[0].dead == true)
     {
@@ -265,6 +269,10 @@ class Battle
       minibossEncounter = false;
       minibossCount++;
       player[0].exper += enemy[0].exper;
+      for (int i = 0; i <= player.length; i++) {
+        if (player[i].health <= playerMax[i].health/2) // if < 50% health
+          player[i].health = playerMax[i].health/2; // health resets to 50%
+      }
     }
   }
 
@@ -287,15 +295,14 @@ class Battle
 
     if (minibossEncounter == true)
     {
-      for (enemyCount = 0; enemyCount < 1; enemyCount++)
       {
-        if (index > 1)
-        {
-          mobPic[enemy[0].mobNumber].resize(230, 230); 
-          image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
-        } else if (index == 1)
+        if (index == 1)
         {
           mobPic[enemy[0].mobNumber].resize(300, 300); 
+          image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
+        } else
+        {
+          mobPic[enemy[0].mobNumber].resize(230, 230); 
           image(mobPic[enemy[0].mobNumber], enemy[0].x, enemy[0].y);
         }
       }
@@ -345,7 +352,7 @@ class Battle
 
   void switchTarget()
   {
-    for (int i = 0; i < enemy.length; i++)
+    for (int i = 0; i < enemies; i++)
     {
       if (player[0].health <= 0)
       {
@@ -370,14 +377,14 @@ class Battle
 
   void enemyAttack()
   {
-    for (int i = 0; i < enemy.length; i++)
+    for (int i = 0; i < enemies; i++)
     {
       int ran1 = (int)random(2)+10; 
       int ran2 = (int)random(2)+1; 
       enemy[i].attackmove = ran2; 
       enemy[i].enemyTarget = ran1;
     }
-    for (int j = 0; j < enemy.length; j++)
+    for (int j = 0; j < enemies; j++)
     {
       for (int i = 0; i < player.length; i++)
       {
@@ -405,6 +412,8 @@ class Battle
               player[i].health = (player[i].health - (round(enemy[j].attack * 1.5) - player[i].defence));
             }
           }
+          if (player[i].health > playerMax[i].health) //prevents overcharging health
+            player[i].health = playerMax[i].health;
         }
       }
     }
@@ -415,40 +424,13 @@ class Battle
   {
     for (j = 0; j < player.length; j++)
     {
-      for (enemyCount = 0; enemyCount < enemy.length; enemyCount++)
+      for (enemyCount = 0; enemyCount < enemies; enemyCount++)
       {
         if (player[j].enemyTarget == enemy[enemyCount].entityNumber)
         {
           isCrit(); 
           accHit(); 
           daggerSpecial(); 
-          if (player[0].attackmove == 3)
-          {
-            if (weaponCount == 0)
-            {
-              isPoisoned = true;
-            } else if (weaponCount == 1)
-            {
-              enemy[enemyCount].health -= player[j].attack * 5;
-            } else if (weaponCount == 2)
-            {
-              player[0].critChance += 10; 
-              player[1].critChance += 10;
-            } else if (weaponCount == 3)
-            {
-              for (int k = 0; k <enemy.length; k++)
-              {
-                enemy[k].defence -= round(enemy[k].defence * 0.2);
-              }
-            } else if (weaponCount == 4)
-            {
-              for (int k = 0; k < player.length; k++)
-              {
-                player[k].attack += 20;
-              }
-            }
-          }
-
           if (willHit == true)
           {
             if (player[j].attackmove == 1 ) {
@@ -488,8 +470,30 @@ class Battle
                 enemy[enemyCount].health = (enemy[enemyCount].health - (enhancedAtt - enemy[enemyCount].defence)); 
                 critTrigger = false;
               }
-            }
-            if (player[j].attackmove == 4)           
+            } else if (player[j].attackmove == 3) {
+              if (weaponCount == 0)
+              {
+                isPoisoned = true;
+              } else if (weaponCount == 1)
+              {
+                enemy[enemyCount].health -= player[j].attack * 5;
+              } else if (weaponCount == 2)
+              {
+                player[0].critChance += 10; 
+                player[1].critChance += 10;
+              } else if (weaponCount == 3)
+              {
+                for (int k = 0; k <enemies; k++)
+                {
+                  enemy[k].defence -= round(enemy[k].defence * 0.2);
+                }
+              } else if (weaponCount == 4) {
+                for (int k = 0; k < player.length; k++)
+                {
+                  player[k].attack += 20;
+                }
+              }
+            } else if (player[j].attackmove == 4)           
             {
               isBlock();
             }
@@ -516,7 +520,7 @@ class Battle
     {
       playerTotalspeed += player[i].speed;
     }
-    for (int i = 0; i < enemy.length; i++)
+    for (int i = 0; i < enemies; i++)
     {
       enemyTotalspeed += enemy[i].speed;
     }
@@ -581,7 +585,7 @@ class Battle
     if (aSelect) {
       for (int j = 0; j < player.length; j++) {
 
-        for (int h = 0; h < 4; h++)
+        for (int h = 0; h < enemies; h++)
         {
           int frame = 0;
           if (player[j].enemyTarget == enemy[h].entityNumber) {            
@@ -598,12 +602,15 @@ class Battle
               }
             }
             spawn();
-            if (enemy[h].dead == false) {
-
-              if (frameCount >= fDelay) 
-                mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150, 150);
-              image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
-
+            if (enemy[h].dead == false) {   
+              if (enemies > 1)
+                mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(150, 150); //sillouette resize
+              else
+              {
+                mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(230, 230); //sillouette resize
+                if (enemy[0].name.equals("Hellhound"))
+                  mobPic[enemy[player[j].enemyTarget].mobNumber + 4].resize(300, 300); //sillouette resize
+              }
               if (frameCount >= fDelay - fr/2) 
                 image(mobPic[enemy[player[j].enemyTarget].mobNumber + 4], enemy[player[j].enemyTarget].x, enemy[player[j].enemyTarget].y); // silouette
             }
@@ -612,7 +619,7 @@ class Battle
         if (frameCount > fDelay)
           aSelect = false;
       }
-      for (int i = 0; i < enemy.length; i++) {
+      for (int i = 0; i < enemies; i++) {
         if (enemy[i].health <= 0)
           enemy[i].dead = true;
       }
@@ -648,9 +655,10 @@ class Battle
           encounter = false; 
           world.gracePeriod = false; 
           world.encounterPer = 100;
-          if (player[1].health <= playerMax[1].health/2) // if sidekick < 50% health
-            player[1].health = playerMax[1].health/2; // health resets to 50%
-
+          for (int i = 0; i <= player.length; i++) {
+            if (player[i].health <= playerMax[i].health/2) // if < 50% health
+              player[i].health = playerMax[i].health/2; // health resets to 50%
+          }
           if (!muteMusic) {
             Player2.pause();
             Player.loop();

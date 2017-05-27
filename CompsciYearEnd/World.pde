@@ -88,7 +88,7 @@ class World
     rImages[6] = loadImage("StockRoom.png");// background
     rImages[7] = loadImage("ClosedChest.png");
     rImages[8] = loadImage("OpenChest.png");
-     rImages[9] = loadImage("boss.png");
+    rImages[9] = loadImage("boss.png");
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ class World
     minibossFight();
     backDrop(); // display background
     info(); // display health and exp
-    grid();
+   // grid();
     room(); // display world elements
     if (inGameMenu == false && encounter == false)
       move();
@@ -126,7 +126,10 @@ class World
   {
     if (boss == true){
       bossEncounter = true;
+      enemies = 1;
         if (xpos >= 440 && xpos <= 520 && ypos >= 360 && ypos <= 440){
+          rImages[9].resize(150,150);  
+          image(rImages[9],425,500);
           if (enter){
             encounter = true;
             if (muteMusic == false) {
@@ -141,7 +144,7 @@ class World
           }
         }     
     }      
-    if (steps < 1)
+    if (steps < 50)
       gracePeriod = true;
     else 
     gracePeriod = false;
@@ -151,6 +154,7 @@ class World
       encounter = true; 
       steps = 0;
       bDelay = frameCount + fr/4;
+      enemies = 4;
       for (int i = 0; i < enemy.length; i++)
       {
         index = (int)random(mobName.length);
@@ -181,6 +185,7 @@ class World
       encounter = true; 
       steps = 0;
       bDelay = frameCount + fr/4;
+      enemies = 1;
       index = (int)random(mobName.length);
       enemy[0] = new Entity(mobName[index], level, 0, index, 0, 0, false);
       enemy[0].health += 50;
@@ -768,4 +773,8 @@ class World
     stroke(255);
     fill(255);
   }
+
+    
+  
+    
 }

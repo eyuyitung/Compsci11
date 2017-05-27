@@ -9,11 +9,17 @@ import ddf.minim.ugens.*;
 /*compsci year end assignment
  group Eric, Brian, Kaizen
  assignement due may 24th
+ 
+ 
+ SET MAX AVAILABLE MEMORY TO 512 MB FOR OPTIMAL PLAYING
+ 
+ FILE>PREFERENCES>INCREASE MAXIMUM AVAILABLE MEMORY
  */
 
 Minim minim;
 AudioPlayer Player, Player2, Player3, Player4;
 
+int enemies;
 int minibossCount = 0;
 boolean encounter;
 boolean minibossEncounter = false;
@@ -126,8 +132,8 @@ void draw()
   }
   mx = mouseX;
   my = mouseY; 
-  items.inv[4] = 5;
-  println(minibossEncounter);
+
+  
 
 
   main.mr = battlephase.mr = false;

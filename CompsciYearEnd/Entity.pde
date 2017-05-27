@@ -45,8 +45,8 @@ class Entity
     mobNumber = mn;
     exper = exp;
   }
-  
-   Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps, int mn, int exp, int x1 , int y1, boolean state, int xp)
+
+  Entity (int a, int d, int s, int h, int sta, int acc, int bC, int rC, String n, int cc, float cm, int am, int et, int en, boolean ps, int mn, int exp, int x1, int y1, boolean state, int xp)
   {
     attack=a;
     defence=d;
@@ -76,14 +76,14 @@ class Entity
 
   Entity (String na, int l, int en, int mn, int x, int y, boolean state)
   {
-    this(l*15, l*5, l*50, l*20, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*20,x ,y, state, 50*l);
+    this(l*15, l*5, l*50, l*20, 0, 100, 0, 0, na, 0, 1.5, 0, 0, en, true, mn, l*20, x, y, state, 50*l);
   }
 
 
   Entity (int l, int en) //player
-  {  
-    this(l*10, l*5, l*5, l*60, 5, 100, 15, 50, "", 0, 1.0, 0, 0, en, false, 0, 0);
-  }
+  {
+    this(l*30, l*25, l*25, l*125, 5, 100, 15, 50, "", 0, 1.0, 0, 0, en, false, 0, 0);
+  }      
 
   Entity () //player
   {  
@@ -91,7 +91,7 @@ class Entity
   }
 
 
-  void copyInto (Entity n){
+  void copyInto (Entity n) {
     attack= n.attack;
     defence= n.defence;
     speed= n.speed;
@@ -109,11 +109,6 @@ class Entity
     playerSelect = n.playerSelect;
     mobNumber = n.mobNumber;
     exper = n.exper;
-    
-    
-    
-    
-    
   }
 
   /*
