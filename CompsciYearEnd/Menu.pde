@@ -364,7 +364,7 @@ class Menu
       textSize(60);
       textAlign(CENTER, 700);
       fill(255, 255, 255);
-      text("Help", width/2, 100);
+      text("CONTROLS", width/2, 100);
       fill(255);
       
       textSize(40);
@@ -382,6 +382,23 @@ class Menu
       fill(255, 255, 255);
       text("-The rest of the game (Battles and etc) will be", 50, 300);
       text(" click based", 50, 350);
+      
+      textSize(60);
+      textAlign(CENTER, 700);
+      fill(255, 255, 255);
+      text("OBJECTIVE", width/2, 400);
+      fill(255);
+      
+      textSize(40);
+      textAlign(150, 250);
+      fill(255, 255, 255);
+      text("-The objective of the game is to explore the", 50, 450);
+      text("mysterious dungeon our hero have wondered into.", 50,500);
+      text("Defeat the enemies you will encounter, collect 5", 50, 550);
+      text("keys scattered around the map in various treasure", 50, 600);
+      text("chests. Defeat the mini-boss, and finally battle", 50, 650);
+      text("the dungeon master to win the game.", 50, 700);
+      
     
     
   }
