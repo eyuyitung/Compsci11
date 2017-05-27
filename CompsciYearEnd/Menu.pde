@@ -57,7 +57,7 @@ class Menu
   Polygon armorSel2 = new Polygon(armorSel2x, armorSel2y, 3);
 
 
-
+  //All images used for the starting menu background
   void loadPictures()
   {
     frames [1] = loadImage("1.gif");
@@ -70,7 +70,7 @@ class Menu
     frames [8] = loadImage("8.gif");
   }
 
-
+  //Loads all starting menu images
   Menu () {
     loadPictures();
   }
@@ -115,6 +115,7 @@ class Menu
 
   ////////////////////////////////////////////////////////////////////////////////
 
+  //selections for weapons, armor and etc
   void mouseKey()
   {
     if (this.mr == true) 
@@ -214,7 +215,7 @@ class Menu
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //For the first 2 buttons in the starting menu
   void top()
   {
 
@@ -234,7 +235,7 @@ class Menu
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  
   void keyControl()
   {
     // triangle pointer for keyboard controls
@@ -269,7 +270,7 @@ class Menu
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  //For the status screen
   void stats()
   {
     image(characterS, 0, 0);
@@ -358,13 +359,13 @@ class Menu
       }
     }
   }
-  void help()
+  void help() //For the Help button on the starting screen, gives the user basic info and background to the game
   {
     background(21);
       textSize(60);
       textAlign(CENTER, 700);
       fill(255, 255, 255);
-      text("Help", width/2, 100);
+      text("CONTROLS", width/2, 100);
       fill(255);
       
       textSize(40);
@@ -382,6 +383,23 @@ class Menu
       fill(255, 255, 255);
       text("-The rest of the game (Battles and etc) will be", 50, 300);
       text(" click based", 50, 350);
+      
+      textSize(60);
+      textAlign(CENTER, 700);
+      fill(255, 255, 255);
+      text("OBJECTIVE", width/2, 400);
+      fill(255);
+      
+      textSize(40);
+      textAlign(150, 250);
+      fill(255, 255, 255);
+      text("-The objective of the game is to explore the", 50, 450);
+      text("mysterious dungeon our hero have wondered into.", 50,500);
+      text("Defeat the enemies you will encounter, collect 5", 50, 550);
+      text("keys scattered around the map in various treasure", 50, 600);
+      text("chests. Defeat the mini-boss, and finally battle", 50, 650);
+      text("the dungeon master to win the game.", 50, 700);
+      
     
     
   }

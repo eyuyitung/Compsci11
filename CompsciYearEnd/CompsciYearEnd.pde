@@ -16,6 +16,7 @@ import ddf.minim.ugens.*;
  FILE>PREFERENCES>INCREASE MAXIMUM AVAILABLE MEMORY
  */
 
+//Global variables
 Minim minim;
 AudioPlayer Player, Player2, Player3, Player4;
 
@@ -25,7 +26,7 @@ boolean encounter;
 boolean minibossEncounter = false;
 boolean bossEncounter=false;
 boolean up, down, left, right, shift, enter, back, esc;
-boolean muteMusic = true;
+boolean muteMusic = false;
 int screen = 0;
 World world;
 float encounterPer;
@@ -64,10 +65,12 @@ Menu main;
 Items items = new Items();
 Battle battlephase;
 
+
 void setup() {
   size(1000, 800);  
   frameRate(fr);
 
+  //For all the audio used in the game
   minim = new Minim(this);
   Player = minim.loadFile("lavender.mp3");
   Player2 = minim.loadFile("battle.mp3");
@@ -76,7 +79,7 @@ void setup() {
   Player.loop();
 
 
-
+ 
   characterS = loadImage("characterS.gif");
   cslayout = loadImage("RPG layout.png");
   startFont = createFont("Century Gothic Italic", 38);
@@ -117,14 +120,13 @@ void setup() {
 
 void draw() 
 {
-  //player[0].health = player[1].health = 70; ////////////////// MAKES PLAYER INVINCIBLE REMOVE WHEN DONE ///////////////////////////
-
   //main menu
   if (screen <= 3)
     main.display();
   //in game
   else if (screen == 5)
     world.display();
+  //battle scrrem
   if (encounter == true) 
     battlephase.display();
   if (muteMusic) {
@@ -141,7 +143,7 @@ void draw()
 
 
 
-
+//Detect the keys pressed by the user
 void keyPressed() {
   world.kp = true;
 
@@ -177,6 +179,8 @@ void keyPressed() {
     esc = true;
   }
 }
+
+//Detect when the keys are released 
 void keyReleased() {
   world.kp = false;
   if (key == CODED && keyCode == UP || key == 'w') {
@@ -212,12 +216,7 @@ void keyReleased() {
   }
 }
 
-void mouseClicked() ////////////////////////////////////////////////////////////////////////
-{
-
-  println(mx +" " + my);
-}
-
+//Detect when the mouse is released
 void mouseReleased()
 {
   main.mr = world.mr = battlephase.mr = true;
