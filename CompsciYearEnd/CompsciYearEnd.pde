@@ -19,7 +19,7 @@ boolean encounter;
 boolean minibossEncounter = false;
 boolean bossEncounter=false;
 boolean up, down, left, right, shift, enter, back, esc;
-boolean muteMusic = true;
+boolean muteMusic = false;
 int screen = 0;
 World world;
 float encounterPer;

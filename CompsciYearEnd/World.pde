@@ -526,6 +526,9 @@ class World
         break;
       case 44 :
         dp [0] = dp [1] = true;
+        boss = true;
+        rImages[9].resize(150, 150);
+        image(rImages[9], 400, 350);
         break;
       case 45 : // starting room
         dp [3] = true;
@@ -578,6 +581,7 @@ class World
         break;
       case 41 : // boss room
         boss = true;
+        
         break;
       case 43 :
         chest();
