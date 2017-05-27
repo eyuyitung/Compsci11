@@ -18,9 +18,7 @@ class Menu
   int[] helpx = {725, 815, 815, 725};
   int[] helpy = {600, 600, 650, 650};
   Polygon help = new Polygon(helpx, helpy, 4);
-  int[] configx = {700, 820, 820, 700};
-  int[] configy = {700, 700, 750, 750};
-  Polygon config = new Polygon(configx, configy, 4);
+  
 
   //Character selection button hitboxes
   int[] csstartx = {900, 965, 965, 900};
@@ -111,8 +109,7 @@ class Menu
       stats();
     } else if (screen == 2) {
       help();
-    } else if (screen == 3) {
-      config();
+    
     }
   }
 
@@ -126,8 +123,7 @@ class Menu
         screen = 1;
       else if (screen == 0 && help.contains(mx, my))
         screen = 2;      
-      else if (screen == 0 && config.contains(mx, my))
-        screen = 3;
+      
       else if (screen == 1 && csstart.contains(mx, my))
       {
         player[0].attack += weaponSelection[weaponCount].attack;
@@ -201,8 +197,6 @@ class Menu
           screen = 1;
         else if (selection == 2)
           screen = 2;
-        else if (selection == 3)
-          screen = 3;
       }
       else if (screen == 1 && statpoints == 0)
       {
@@ -215,8 +209,6 @@ class Menu
       if (screen == 1)
         screen = 0;
       if (screen == 2)
-        screen = 0;
-      if (screen == 3)
         screen = 0;
     }
   }
@@ -238,9 +230,7 @@ class Menu
     line(725, 550, width, 550);
     text("Help", 725, 600);
     line(700, 650, width, 650);
-    text("Config", 700, 700);
-    line(675, 750, width, 750);
-    line(675, 750, width, 750);
+    
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -264,26 +254,7 @@ class Menu
       y3 += 100;
       selection = 2;
       frameDelay = frameCount + fr/4;
-    } else if (selection == 2 && down == true && frameCount > frameDelay)
-    {
-      x1 -= 25;
-      x2 -= 25;
-      x3 -= 25;
-      y1 += 100;
-      y2 += 100;
-      y3 += 100;
-      selection = 3;
-      frameDelay = frameCount + fr/4;
-    } else if (selection == 3 && up == true && frameCount > frameDelay)
-    {
-      x1 += 25;
-      x2 += 25;
-      x3 += 25;
-      y1 -= 100;
-      y2 -= 100;
-      y3 -= 100;
-      selection = 2;
-      frameDelay = frameCount + fr/4;
+    
     } else if (selection == 2 && up == true && frameCount > frameDelay)
     {
       x1 += 25;
@@ -413,9 +384,5 @@ class Menu
       text(" click based", 50, 350);
     
     
-  }
-  void config()
-  {
-    background(81);
   }
 }
